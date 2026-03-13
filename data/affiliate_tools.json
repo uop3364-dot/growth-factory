@@ -1,0 +1,254 @@
+[
+  {
+    "tool_name": "vidIQ",
+    "slug": "vidiq",
+    "category": "youtube-growth",
+    "priority": 1,
+    "backup": false,
+    "official_site": "https://vidiq.com",
+    "affiliate_page": "https://vidiq.com/affiliates",
+    "application_required": true,
+    "application_status": "not_applied",
+    "affiliate_url": "",
+    "fallback_url": "https://vidiq.com",
+    "approval_notes": "Impact Radius platform. Requires active site or channel with YouTube/creator content.",
+    "payment_notes": "Net-30 via PayPal or direct deposit. 25% recurring commission.",
+    "landing_pages": [
+      "/youtube-title-generator",
+      "/youtube-description-generator",
+      "/best-youtube-seo-tools",
+      "/vidiq-vs-tubebuddy"
+    ],
+    "cta_texts": [
+      "Start free with vidIQ",
+      "Grow your channel with vidIQ",
+      "Try vidIQ free today"
+    ],
+    "comparison_pages": [
+      "/vidiq-vs-tubebuddy",
+      "/best-youtube-seo-tools"
+    ],
+    "social_angles": [
+      "Problem: Stop guessing which tags and titles actually rank — vidIQ shows you the data",
+      "Comparison: vidIQ vs TubeBuddy — which one gives better keyword insights?",
+      "Speed: Find winning video topics in under 60 seconds with vidIQ",
+      "Beginner: New to YouTube SEO? vidIQ makes optimization dead simple",
+      "ROI: One viral title suggestion from vidIQ can pay for a year of the tool"
+    ],
+    "applied_at": "",
+    "approved_at": "",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": ""
+  },
+  {
+    "tool_name": "Canva",
+    "slug": "canva",
+    "category": "thumbnail-design",
+    "priority": 2,
+    "backup": false,
+    "official_site": "https://www.canva.com",
+    "affiliate_page": "https://www.canva.com/affiliates/",
+    "application_required": true,
+    "application_status": "not_applied",
+    "affiliate_url": "",
+    "fallback_url": "https://www.canva.com",
+    "approval_notes": "Impact Radius platform. Requires content site with design/creator audience.",
+    "payment_notes": "Up to $36 per Canva Pro subscription. Net-30 via PayPal or bank transfer.",
+    "landing_pages": [
+      "/youtube-thumbnail-maker",
+      "/best-thumbnail-tools",
+      "/canva-vs-capcut-thumbnails"
+    ],
+    "cta_texts": [
+      "Create thumbnails in Canva",
+      "Design for free with Canva",
+      "Try Canva Pro free for 30 days"
+    ],
+    "comparison_pages": [
+      "/canva-vs-capcut-thumbnails",
+      "/best-thumbnail-tools"
+    ],
+    "social_angles": [
+      "Problem: Ugly thumbnails killing your CTR? Canva templates fix that in 2 minutes",
+      "Comparison: Canva vs CapCut for thumbnails — which is actually faster?",
+      "Speed: Batch-create 10 YouTube thumbnails in under 15 minutes with Canva",
+      "Beginner: No design skills? Canva's drag-and-drop makes pro thumbnails easy",
+      "ROI: Better thumbnails = higher CTR = more views — Canva Pro pays for itself fast"
+    ],
+    "applied_at": "",
+    "approved_at": "",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": ""
+  },
+  {
+    "tool_name": "OpusClip",
+    "slug": "opusclip",
+    "category": "short-form-repurposing",
+    "priority": 3,
+    "backup": false,
+    "official_site": "https://www.opus.pro",
+    "affiliate_page": "https://www.opus.pro/affiliate",
+    "application_required": true,
+    "application_status": "not_applied",
+    "affiliate_url": "",
+    "fallback_url": "https://www.opus.pro",
+    "approval_notes": "Direct affiliate program. Apply via their affiliate page. Requires creator/video content niche.",
+    "payment_notes": "30% recurring commission. Paid via PayPal monthly.",
+    "landing_pages": [
+      "/long-video-to-shorts",
+      "/best-ai-shorts-tools",
+      "/opusclip-vs-caption-tools"
+    ],
+    "cta_texts": [
+      "Try OpusClip free",
+      "Turn long videos into Shorts instantly",
+      "Repurpose content with OpusClip"
+    ],
+    "comparison_pages": [
+      "/opusclip-vs-caption-tools",
+      "/best-ai-shorts-tools"
+    ],
+    "social_angles": [
+      "Problem: Sitting on hours of long-form content that nobody sees? OpusClip turns them into viral Shorts",
+      "Comparison: OpusClip vs manual editing — I made 10 Shorts in 5 minutes vs 3 hours",
+      "Speed: Upload one video, get 10 ready-to-post Shorts in under 3 minutes",
+      "Beginner: Never edited a Short before? OpusClip does it all with AI — zero editing skills needed",
+      "ROI: One repurposed Short can drive more views than the original long video"
+    ],
+    "applied_at": "",
+    "approved_at": "",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": ""
+  },
+  {
+    "tool_name": "Pictory",
+    "slug": "pictory",
+    "category": "ai-video-generation",
+    "priority": 4,
+    "backup": false,
+    "official_site": "https://pictory.ai",
+    "affiliate_page": "https://pictory.ai/affiliates",
+    "application_required": true,
+    "application_status": "not_applied",
+    "affiliate_url": "",
+    "fallback_url": "https://pictory.ai",
+    "approval_notes": "Direct program or via PartnerStack. Requires content in video/AI/marketing niche.",
+    "payment_notes": "20% recurring commission. Paid via PayPal or Stripe. Net-30.",
+    "landing_pages": [
+      "/ai-video-generator",
+      "/turn-blog-into-video",
+      "/pictory-vs-opusclip"
+    ],
+    "cta_texts": [
+      "Turn content into video with Pictory",
+      "Try Pictory AI free",
+      "Create videos from text instantly"
+    ],
+    "comparison_pages": [
+      "/pictory-vs-opusclip",
+      "/ai-video-generator"
+    ],
+    "social_angles": [
+      "Problem: Want to post videos but hate being on camera? Pictory creates them from text",
+      "Comparison: Pictory vs OpusClip — which AI video tool is better for faceless content?",
+      "Speed: Blog post to YouTube video in under 5 minutes with Pictory",
+      "Beginner: No filming, no editing, no experience needed — just paste your script",
+      "ROI: Turn every blog post into a video — double your content output with zero extra effort"
+    ],
+    "applied_at": "",
+    "approved_at": "",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": ""
+  },
+  {
+    "tool_name": "Descript",
+    "slug": "descript",
+    "category": "editing-transcription",
+    "priority": 5,
+    "backup": false,
+    "official_site": "https://www.descript.com",
+    "affiliate_page": "https://www.descript.com/affiliates",
+    "application_required": true,
+    "application_status": "not_applied",
+    "affiliate_url": "",
+    "fallback_url": "https://www.descript.com",
+    "approval_notes": "Direct program or via Impact. Requires content creator / video editing audience.",
+    "payment_notes": "15-20% recurring commission. Paid via PayPal. Net-30.",
+    "landing_pages": [
+      "/ai-video-editor",
+      "/auto-subtitle-generator",
+      "/descript-vs-capcut"
+    ],
+    "cta_texts": [
+      "Edit faster with Descript",
+      "Try Descript free",
+      "Edit video like editing a doc"
+    ],
+    "comparison_pages": [
+      "/descript-vs-capcut",
+      "/ai-video-editor"
+    ],
+    "social_angles": [
+      "Problem: Spending hours editing videos? Descript lets you edit by editing the transcript",
+      "Comparison: Descript vs CapCut — which is faster for YouTube editing?",
+      "Speed: Remove all filler words from your video in one click with Descript",
+      "Beginner: If you can edit a Google Doc, you can edit video in Descript",
+      "ROI: Cut your editing time by 60% — that's hours back every week"
+    ],
+    "applied_at": "",
+    "approved_at": "",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": ""
+  },
+  {
+    "tool_name": "TubeBuddy",
+    "slug": "tubebuddy",
+    "category": "youtube-growth",
+    "priority": 99,
+    "backup": true,
+    "official_site": "https://www.tubebuddy.com",
+    "affiliate_page": "https://www.tubebuddy.com/affiliates",
+    "application_required": true,
+    "application_status": "not_applied",
+    "affiliate_url": "",
+    "fallback_url": "https://www.tubebuddy.com",
+    "approval_notes": "Direct affiliate program. Easy approval. Good for comparison content with vidIQ.",
+    "payment_notes": "Up to 50% recurring commission. Paid via PayPal. Net-30.",
+    "landing_pages": [
+      "/youtube-tag-generator",
+      "/tubebuddy-vs-vidiq"
+    ],
+    "cta_texts": [
+      "Try TubeBuddy free",
+      "Boost your YouTube SEO with TubeBuddy",
+      "Get TubeBuddy for free"
+    ],
+    "comparison_pages": [
+      "/tubebuddy-vs-vidiq",
+      "/best-youtube-seo-tools"
+    ],
+    "social_angles": [
+      "Problem: Your videos aren't ranking because your tags and metadata are wrong — TubeBuddy fixes that",
+      "Comparison: TubeBuddy vs vidIQ — honest breakdown of which is better for small channels",
+      "Speed: Optimize your entire video's SEO in under 2 minutes with TubeBuddy",
+      "Beginner: Brand new to YouTube? TubeBuddy's free plan gives you everything to start ranking",
+      "ROI: 50% commission on recurring plans — one of the highest-paying creator tool affiliates"
+    ],
+    "applied_at": "",
+    "approved_at": "",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": ""
+  }
+]
