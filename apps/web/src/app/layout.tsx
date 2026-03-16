@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'CreatorAITools - Free AI Caption Generator for Instagram, TikTok & YouTube',
+    default: 'CreatorAITools - Free AI Tools for Social Media Creators',
     template: '%s | CreatorAITools',
   },
-  description: 'Free AI-powered caption generator for social media creators. Generate captions, hashtags & CTAs for Instagram, TikTok, YouTube, X and Facebook — no signup required.',
+  description: 'Free AI-powered tools for creators: Caption Generator, Title Generator, Bio Generator & Hashtag Generator. Optimized for Instagram, TikTok, YouTube, X, LinkedIn — no signup required.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools'),
   alternates: {
     canonical: '/',
@@ -48,9 +48,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 CreatorAITools
               </Link>
               <div className="flex gap-6 text-sm">
-                <Link href="/caption-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Caption Generator</Link>
-                <Link href="/title-generator" className="text-gray-400 cursor-default">Title Generator</Link>
-                <Link href="/bio-generator" className="text-gray-400 cursor-default">Bio Generator</Link>
+                <Link href="/caption-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Captions</Link>
+                <Link href="/title-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Titles</Link>
+                <Link href="/bio-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Bios</Link>
+                <Link href="/hashtag-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Hashtags</Link>
               </div>
             </div>
           </div>
@@ -63,8 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <h4 className="font-semibold text-gray-800 mb-3">Tools</h4>
                 <div className="space-y-2 text-sm text-gray-600">
                   <Link href="/caption-generator" className="block hover:text-blue-600">Caption Generator</Link>
-                  <span className="block text-gray-400">Title Generator (Soon)</span>
-                  <span className="block text-gray-400">Bio Generator (Soon)</span>
+                  <Link href="/title-generator" className="block hover:text-blue-600">Title Generator</Link>
+                  <Link href="/bio-generator" className="block hover:text-blue-600">Bio Generator</Link>
+                  <Link href="/hashtag-generator" className="block hover:text-blue-600">Hashtag Generator</Link>
                 </div>
               </div>
               <div>
