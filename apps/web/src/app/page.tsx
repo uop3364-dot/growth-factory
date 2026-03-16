@@ -4,9 +4,9 @@ import FAQ from '@/components/FAQ';
 import { buildFaqSchema, buildToolSchema } from '@/lib/jsonld';
 
 const homeFaqs = [
-  { question: 'What is GrowthFactory?', answer: 'GrowthFactory is a free suite of AI-powered tools for social media creators. Generate captions, titles, and bios instantly for any platform.' },
-  { question: 'Is it really free?', answer: 'Yes! Our core tools are completely free. Generate unlimited captions with no sign-up required.' },
-  { question: 'Which platforms do you support?', answer: 'We support Instagram, TikTok, YouTube, X (Twitter), and Facebook. Each platform has optimized caption formats.' },
+  { question: 'What is CreatorAITools?', answer: 'CreatorAITools is a free suite of AI-powered tools for social media creators. Generate captions, titles, and bios instantly for Instagram, TikTok, YouTube, X, and Facebook.' },
+  { question: 'Is it really free?', answer: 'Yes! All our tools are completely free with no limits. Generate unlimited captions with no sign-up required.' },
+  { question: 'Which platforms do you support?', answer: 'We support Instagram, TikTok, YouTube, X (Twitter), and Facebook. Each platform has optimized caption formats with relevant hashtags.' },
   { question: 'Do I need an account?', answer: 'No account needed! Just select your platform, topic, and tone, then generate captions instantly.' },
   { question: 'Can I use the captions commercially?', answer: 'Absolutely! All generated captions are free to use for personal and commercial purposes.' },
 ];
@@ -14,7 +14,7 @@ const homeFaqs = [
 export default function Home() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'GrowthFactory AI Caption Generator', description: 'Free AI-powered caption generator for social media', path: '/' })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'CreatorAITools - Free AI Caption Generator', description: 'Free AI-powered caption generator for Instagram, TikTok, YouTube, X and Facebook. Generate captions, hashtags and CTAs instantly.', path: '/' })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(homeFaqs)) }} />
 
       {/* Hero */}
@@ -92,7 +92,7 @@ export default function Home() {
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Create Amazing Captions?</h2>
-          <p className="text-blue-100 mb-8">Join thousands of creators using GrowthFactory to level up their social media game.</p>
+          <p className="text-blue-100 mb-8">Join thousands of creators using CreatorAITools to level up their social media game.</p>
           <Link href="/caption-generator" className="inline-block bg-white text-blue-600 font-semibold px-8 py-4 rounded-xl text-lg hover:bg-blue-50 transition-colors shadow-lg">
             Generate Free Captions
           </Link>

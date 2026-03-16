@@ -1,7 +1,7 @@
 import { Platform, Topic, Tone, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from './seo-data';
 import type { Metadata } from 'next';
 
-const SITE_NAME = 'GrowthFactory';
+const SITE_NAME = 'CreatorAITools';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools';
 
 export function buildMetadata(opts: {

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'AI Title Generator (Coming Soon) | GrowthFactory',
+  title: 'AI Title Generator (Coming Soon) | CreatorAITools',
   description: 'AI Title Generator is coming soon. Use Caption Generator now and stay tuned for high-converting title generation.',
   alternates: { canonical: '/title-generator' },
 };

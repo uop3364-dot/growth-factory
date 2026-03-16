@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'AI Bio Generator (Coming Soon) | GrowthFactory',
+  title: 'AI Bio Generator (Coming Soon) | CreatorAITools',
   description: 'AI Bio Generator is coming soon. Use Caption Generator now and prepare for multi-tool rollout.',
   alternates: { canonical: '/bio-generator' },
 };

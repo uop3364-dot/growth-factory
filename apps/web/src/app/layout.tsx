@@ -6,9 +6,27 @@ import Link from 'next/link';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'GrowthFactory - Free AI Caption Generator for Social Media',
-  description: 'Generate engaging social media captions, titles, and bios instantly with AI. Free tools for Instagram, TikTok, YouTube, X, and Facebook creators.',
+  title: {
+    default: 'CreatorAITools - Free AI Caption Generator for Instagram, TikTok & YouTube',
+    template: '%s | CreatorAITools',
+  },
+  description: 'Free AI-powered caption generator for social media creators. Generate captions, hashtags & CTAs for Instagram, TikTok, YouTube, X and Facebook — no signup required.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'CreatorAITools',
+    title: 'CreatorAITools - Free AI Caption Generator for Social Media',
+    description: 'Generate engaging captions, hashtags & CTAs for Instagram, TikTok, YouTube, X and Facebook. 100% free, no signup.',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CreatorAITools - Free AI Caption Generator',
+    description: 'Generate engaging captions for Instagram, TikTok, YouTube, X and Facebook. Free AI tool for creators.',
+  },
   robots: {
     index: true,
     follow: true,
@@ -23,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <Link href="/" className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                GrowthFactory
+                CreatorAITools
               </Link>
               <div className="flex gap-6 text-sm">
                 <Link href="/caption-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Caption Generator</Link>
@@ -66,14 +84,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-3">GrowthFactory</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">CreatorAITools</h4>
                 <div className="space-y-2 text-sm text-gray-600">
                   <span className="block">Free AI-powered tools for social media creators.</span>
                 </div>
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-100 text-center text-sm text-gray-400">
-              &copy; 2026 GrowthFactory. All rights reserved.
+              &copy; 2026 CreatorAITools. All rights reserved.
             </div>
           </div>
         </footer>
