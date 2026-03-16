@@ -83,7 +83,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
         </div>
 
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA />
+        <AffiliateCTA pageType="platform" />
         <RelatedTopics platform={platform} />
         <RelatedPlatforms currentPlatform={platform} />
         <FAQ items={allFaqs} />

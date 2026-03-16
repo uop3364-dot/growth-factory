@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { trackEvent } from '@/lib/analytics';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from '@/lib/seo-data';
 import type { Platform, Topic, Tone } from '@/lib/seo-data';
 
@@ -47,6 +48,7 @@ export default function CaptionGenerator({
       });
       const data = await res.json();
       setResult(data);
+      trackEvent('tool_generate', { platform, topic, tone });
     } catch (e) {
       console.error(e);
     } finally {
@@ -57,6 +59,7 @@ export default function CaptionGenerator({
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
     setCopied(index);
+    trackEvent('tool_copy', { platform, topic, tone });
     setTimeout(() => setCopied(null), 2000);
   };
 

@@ -101,7 +101,7 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
         </div>
 
         <AdPlaceholder slot="after-samples" />
-        <AffiliateCTA />
+        <AffiliateCTA pageType="topic" />
         <RelatedTones platform={platform} topic={topic} />
         <RelatedTopics platform={platform} currentTopic={topic} />
         <RelatedPlatforms currentPlatform={platform} />

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 const SITE_NAME = 'CreatorAITools';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools';
+const OG_IMAGE = `${SITE_URL}/og-default.png`;
 
 export function buildMetadata(opts: {
   title: string;
@@ -21,11 +22,13 @@ export function buildMetadata(opts: {
       url,
       siteName: SITE_NAME,
       type: (opts.type as "website" | "article") || 'website',
+      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
     },
     twitter: {
       card: 'summary_large_image',
       title: opts.title,
       description: opts.description,
+      images: [OG_IMAGE],
     },
   };
 }

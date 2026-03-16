@@ -22,11 +22,13 @@ export const metadata: Metadata = {
     title: 'CreatorAITools - Free AI Caption Generator for Social Media',
     description: 'Generate engaging captions, hashtags & CTAs for Instagram, TikTok, YouTube, X and Facebook. 100% free, no signup.',
     url: '/',
+    images: [{ url: 'https://creatoraitools.tools/og-default.png', width: 1200, height: 630, alt: 'CreatorAITools' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'CreatorAITools - Free AI Caption Generator',
     description: 'Generate engaging captions for Instagram, TikTok, YouTube, X and Facebook. Free AI tool for creators.',
+    images: ['https://creatoraitools.tools/og-default.png'],
   },
   robots: {
     index: true,
