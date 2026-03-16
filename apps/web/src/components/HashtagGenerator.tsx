@@ -46,9 +46,14 @@ interface HashtagResult {
   tip: string;
 }
 
-export default function HashtagGenerator() {
-  const [platform, setPlatform] = useState('instagram');
-  const [niche, setNiche] = useState('travel');
+interface HashtagGeneratorProps {
+  defaultPlatform?: string;
+  defaultNiche?: string;
+}
+
+export default function HashtagGenerator({ defaultPlatform, defaultNiche }: HashtagGeneratorProps = {}) {
+  const [platform, setPlatform] = useState(defaultPlatform || 'instagram');
+  const [niche, setNiche] = useState(defaultNiche || 'travel');
   const [purpose, setPurpose] = useState('grow_followers');
   const [language, setLanguage] = useState('english');
   const [keywords, setKeywords] = useState('');

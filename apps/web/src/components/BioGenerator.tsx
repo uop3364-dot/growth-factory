@@ -20,9 +20,14 @@ interface BioResult {
   callToAction: string;
 }
 
-export default function BioGenerator() {
-  const [platform, setPlatform] = useState<BioPlatform>('instagram');
-  const [niche, setNiche] = useState<BioNiche>('creator');
+interface BioGeneratorProps {
+  defaultPlatform?: BioPlatform;
+  defaultNiche?: BioNiche;
+}
+
+export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGeneratorProps = {}) {
+  const [platform, setPlatform] = useState<BioPlatform>(defaultPlatform || 'instagram');
+  const [niche, setNiche] = useState<BioNiche>(defaultNiche || 'creator');
   const [style, setStyle] = useState<BioStyle>('professional');
   const [language, setLanguage] = useState('english');
   const [keywords, setKeywords] = useState('');
