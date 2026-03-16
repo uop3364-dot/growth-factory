@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PLATFORMS, TOPICS, PLATFORM_INFO, TOPIC_INFO } from '@/lib/seo-data';
 import FAQ from '@/components/FAQ';
-import { buildFaqSchema, buildToolSchema } from '@/lib/jsonld';
+import { buildFaqSchema, buildToolSchema, buildWebSiteSchema, buildOrganizationSchema } from '@/lib/jsonld';
 
 const homeFaqs = [
   { question: 'What is CreatorAITools?', answer: 'CreatorAITools is a free suite of AI-powered tools for social media creators. Generate captions, titles, and bios instantly for Instagram, TikTok, YouTube, X, and Facebook.' },
@@ -14,6 +14,8 @@ const homeFaqs = [
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildWebSiteSchema()) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema()) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'CreatorAITools - Free AI Caption Generator', description: 'Free AI-powered caption generator for Instagram, TikTok, YouTube, X and Facebook. Generate captions, hashtags and CTAs instantly.', path: '/' })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(homeFaqs)) }} />
 

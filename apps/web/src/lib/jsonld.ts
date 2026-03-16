@@ -1,6 +1,7 @@
 import { Platform, Topic, Tone, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from './seo-data';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools';
+const SITE_NAME = 'CreatorAITools';
 
 export function buildFaqSchema(faqs: { question: string; answer: string }[]) {
   return {
@@ -24,6 +25,11 @@ export function buildToolSchema(opts: { name: string; description: string; path:
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    provider: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
   };
 }
 
@@ -37,6 +43,37 @@ export function buildBreadcrumbSchema(items: { name: string; path: string }[]) {
       name: item.name,
       item: `${SITE_URL}${item.path}`,
     })),
+  };
+}
+
+export function buildWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: 'Free AI-powered tools for social media creators. Generate captions, hashtags and CTAs for Instagram, TikTok, YouTube, X and Facebook.',
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${SITE_URL}/caption-generator/{search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+export function buildOrganizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: 'Free AI-powered tools for social media creators.',
+    sameAs: [],
   };
 }
 
@@ -55,11 +92,11 @@ export function getCaptionPageFaqs(platform?: string, topic?: string, _tone?: st
     },
     {
       question: `Can I customize the tone of my captions?`,
-      answer: `Absolutely! Choose from 7 different tones: funny, cute, professional, luxury, minimalist, friendly, and persuasive. Each tone produces captions perfectly suited for your brand voice.`,
+      answer: `Absolutely! Choose from 9 different tones: funny, cute, professional, luxury, minimalist, friendly, persuasive, inspirational, and sarcastic. Each tone produces captions perfectly suited for your brand voice.`,
     },
     {
       question: `What topics can I generate captions for?`,
-      answer: `We support 10+ popular topics including travel, food, fitness, beauty, business, marketing, gaming, pets, fashion, and motivation. Each topic generates specialized captions with relevant hashtags.`,
+      answer: `We support 15+ popular topics including travel, food, fitness, beauty, business, marketing, gaming, pets, fashion, motivation, technology, education, photography, music, and lifestyle. Each topic generates specialized captions with relevant hashtags.`,
     },
     {
       question: `Do you suggest hashtags too?`,

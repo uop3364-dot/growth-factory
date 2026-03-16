@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import CaptionGenerator from '@/components/CaptionGenerator';
 import { RelatedPlatforms, RelatedTopics, RelatedTones } from '@/components/InternalLinks';
 import FAQ from '@/components/FAQ';
@@ -8,7 +9,8 @@ import AffiliateCTA from '@/components/AffiliateCTA';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO, type Platform, type Topic, type Tone } from '@/lib/seo-data';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
-import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema, getCaptionPageFaqs } from '@/lib/jsonld';
+import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { TONE_CONTENT, getToneFaqs, getTopicFaqs } from '@/lib/content-config';
 
 export function generateStaticParams() {
   const params: { platform: string; topic: string; tone: string }[] = [];
@@ -38,13 +40,16 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
   const pInfo = PLATFORM_INFO[platform];
   const tInfo = TOPIC_INFO[topic];
   const tnInfo = TONE_INFO[tone];
-  const faqs = getCaptionPageFaqs(platform, topic, tone);
+  const toneContent = TONE_CONTENT[tone];
+  const toneFaqs = getToneFaqs(tone);
+  const topicFaqs = getTopicFaqs(topic, pInfo.name);
+  const allFaqs = [...toneFaqs.slice(0, 3), ...topicFaqs.slice(0, 2)];
   const sampleCaptions = generateCaptions({ platform, topic, tone });
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${tnInfo.name} ${tInfo.name} ${pInfo.name} Caption Generator`, description: `Generate ${tone} ${topic} captions for ${pInfo.name}`, path: `/caption-generator/${platform}/${topic}/${tone}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(allFaqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
         { name: 'Home', path: '/' },
         { name: 'Caption Generator', path: '/caption-generator' },
@@ -63,6 +68,54 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} defaultTone={tone} />
 
+        {/* Tone guide section */}
+        <div className="mt-8 bg-white rounded-xl shadow p-6">
+          <h2 className="text-xl font-semibold mb-4">Writing in a {tnInfo.name} Tone</h2>
+          <p className="text-gray-700 mb-4">{toneContent.definition}</p>
+
+          {/* Before/After */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-red-50 rounded-lg p-4">
+              <h3 className="font-medium text-red-800 mb-2 text-sm uppercase tracking-wide">Before</h3>
+              <p className="text-gray-700 italic">&ldquo;{toneContent.beforeAfter.before}&rdquo;</p>
+            </div>
+            <div className="bg-green-50 rounded-lg p-4">
+              <h3 className="font-medium text-green-800 mb-2 text-sm uppercase tracking-wide">After ({tnInfo.name})</h3>
+              <p className="text-gray-700 italic">&ldquo;{toneContent.beforeAfter.after}&rdquo;</p>
+            </div>
+          </div>
+
+          {/* Best for / Not for */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h3 className="font-medium text-gray-800 mb-2">Best For</h3>
+              <ul className="space-y-1 text-sm text-gray-600">
+                {toneContent.bestFor.map((item, i) => (
+                  <li key={i} className="flex gap-2"><span className="text-green-600">&#10003;</span> {item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h3 className="font-medium text-gray-800 mb-2">Consider Other Tones For</h3>
+              <ul className="space-y-1 text-sm text-gray-600">
+                {toneContent.notBestFor.map((item, i) => (
+                  <li key={i} className="flex gap-2"><span className="text-amber-500">&#9888;</span> {item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Writing tips */}
+          <div className="bg-blue-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Writing Tips</h3>
+            <ul className="space-y-1 text-sm text-gray-700">
+              {toneContent.writingTips.map((tip, i) => (
+                <li key={i} className="pl-3 border-l-2 border-blue-300">{tip}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
         {/* Pre-generated sample captions for SEO */}
         <div className="mt-8 bg-white rounded-xl shadow p-6">
           <h2 className="text-xl font-semibold mb-4">{tnInfo.name} {tInfo.name} Caption Examples for {pInfo.name}</h2>
@@ -80,10 +133,22 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
 
         <AdPlaceholder slot="after-samples" />
         <AffiliateCTA />
+
+        {/* Breadcrumb navigation back to parent pages */}
+        <div className="my-6 flex flex-wrap items-center gap-2 text-sm text-gray-500">
+          <Link href="/caption-generator" className="hover:text-blue-600">Caption Generator</Link>
+          <span>/</span>
+          <Link href={`/caption-generator/${platform}`} className="hover:text-blue-600">{pInfo.name}</Link>
+          <span>/</span>
+          <Link href={`/caption-generator/${platform}/${topic}`} className="hover:text-blue-600">{tInfo.name}</Link>
+          <span>/</span>
+          <span className="text-gray-800 font-medium">{tnInfo.name}</span>
+        </div>
+
         <RelatedTones platform={platform} topic={topic} currentTone={tone} />
         <RelatedTopics platform={platform} currentTopic={topic} />
         <RelatedPlatforms currentPlatform={platform} />
-        <FAQ items={faqs} />
+        <FAQ items={allFaqs} />
       </section>
     </>
   );

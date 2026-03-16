@@ -8,7 +8,8 @@ import AffiliateCTA from '@/components/AffiliateCTA';
 import { PLATFORMS, TOPICS, PLATFORM_INFO, TOPIC_INFO, type Platform, type Topic } from '@/lib/seo-data';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
-import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema, getCaptionPageFaqs } from '@/lib/jsonld';
+import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { TOPIC_CONTENT, getTopicFaqs } from '@/lib/content-config';
 
 export function generateStaticParams() {
   const params: { platform: string; topic: string }[] = [];
@@ -34,7 +35,8 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
 
   const pInfo = PLATFORM_INFO[platform];
   const tInfo = TOPIC_INFO[topic];
-  const faqs = getCaptionPageFaqs(platform, topic);
+  const topicContent = TOPIC_CONTENT[topic];
+  const faqs = getTopicFaqs(topic, pInfo.name);
   const sampleCaptions = generateCaptions({ platform, topic, tone: 'friendly' });
 
   return (
@@ -57,6 +59,36 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} />
+
+        {/* Topic-specific writing guide */}
+        <div className="mt-8 bg-white rounded-xl shadow p-6">
+          <h2 className="text-xl font-semibold mb-4">Writing {tInfo.name} Captions for {pInfo.name}</h2>
+          <p className="text-gray-700 mb-4">{topicContent.captionAngle}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h3 className="font-medium text-gray-800 mb-2">Caption Hooks That Work</h3>
+              <ul className="space-y-1 text-sm text-gray-600">
+                {topicContent.exampleHooks.map((hook, i) => (
+                  <li key={i} className="pl-3 border-l-2 border-blue-200">&ldquo;{hook}&rdquo;</li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h3 className="font-medium text-gray-800 mb-2">Effective CTAs</h3>
+              <ul className="space-y-1 text-sm text-gray-600">
+                {topicContent.ctaTypes.map((cta, i) => (
+                  <li key={i} className="pl-3 border-l-2 border-purple-200">{cta}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Pro Tip</h3>
+            <p className="text-sm text-gray-700">{topicContent.contentTips}</p>
+          </div>
+        </div>
 
         {/* Sample captions for SEO */}
         <div className="mt-8 bg-white rounded-xl shadow p-6">

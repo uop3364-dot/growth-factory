@@ -2,7 +2,7 @@
 module.exports = {
   siteUrl: "https://creatoraitools.tools",
   generateRobotsTxt: true,
-  exclude: ["/api/*", "/api/internal/*"],
+  exclude: ["/api/*", "/api/internal/*", "/title-generator", "/bio-generator"],
   robotsTxtOptions: {
     policies: [
       { userAgent: "*", allow: "/", disallow: ["/api/internal/"] },
