@@ -8,13 +8,15 @@ import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/js
 export const metadata: Metadata = {
   title: 'Free AI Hashtag Generator for Instagram, TikTok, YouTube & More | CreatorAITools',
   description: 'Generate trending hashtags for Instagram, TikTok, YouTube, X, and LinkedIn. Get 30+ hashtags with niche-specific, trending, and ready-to-copy hashtag sets. Free, instant, no sign-up.',
+  robots: { index: true, follow: true },
   alternates: {
-    canonical: '/hashtag-generator',
+    canonical: 'https://creatoraitools.tools/hashtag-generator',
   },
   openGraph: {
     title: 'Free AI Hashtag Generator | CreatorAITools',
     description: 'Generate 30+ trending hashtags for any social media platform. Niche-specific, copy-ready hashtag sets for maximum reach.',
-    url: '/hashtag-generator',
+    url: 'https://creatoraitools.tools/hashtag-generator',
+    siteName: 'CreatorAITools',
     type: 'website',
   },
   twitter: {
