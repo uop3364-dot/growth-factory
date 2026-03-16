@@ -1,0 +1,13 @@
+{
+  "name": "growth-factory",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "worker": "cd apps/worker && python -m worker.main",
+    "seed": "cd apps/worker && python -m worker.seed_keywords",
+    "test": "pnpm --filter web test && cd apps/worker && python -m pytest tests/ -v",
+    "lint": "pnpm --filter web lint"
+  }
+}

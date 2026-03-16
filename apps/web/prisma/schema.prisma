@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Keyword {
+  id        String   @id @default(cuid())
+  term      String
+  platform  String?
+  topic     String?
+  tone      String?
+  volume    Int?
+  difficulty Float?
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("keywords")
+}
+
+model PageCandidate {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  pageType  String   @map("page_type")
+  platform  String?
+  topic     String?
+  tone      String?
+  title     String
+  priority  Float    @default(0.5)
+  status    String   @default("pending")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  generatedPage GeneratedPage?
+
+  @@map("page_candidates")
+}
+
+model GeneratedPage {
+  id              String   @id @default(cuid())
+  candidateId     String   @unique @map("candidate_id")
+  candidate       PageCandidate @relation(fields: [candidateId], references: [id])
+  content         String   @db.Text
+  metaTitle       String   @map("meta_title")
+  metaDescription String   @map("meta_description")
+  jsonLd          String?  @map("json_ld") @db.Text
+  status          String   @default("draft")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  publishedPage PublishedPage?
+
+  @@map("generated_pages")
+}
+
+model PublishedPage {
+  id              String   @id @default(cuid())
+  generatedPageId String   @unique @map("generated_page_id")
+  generatedPage   GeneratedPage @relation(fields: [generatedPageId], references: [id])
+  url             String   @unique
+  publishedAt     DateTime @default(now()) @map("published_at")
+  status          String   @default("published")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("published_pages")
+}
+
+model PageGenerationRun {
+  id          String   @id @default(cuid())
+  runType     String   @map("run_type")
+  totalPages  Int      @map("total_pages")
+  generated   Int      @default(0)
+  failed      Int      @default(0)
+  status      String   @default("pending")
+  startedAt   DateTime? @map("started_at")
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("page_generation_runs")
+}
+
+model InternalLink {
+  id         String   @id @default(cuid())
+  sourcePath String   @map("source_path")
+  targetPath String   @map("target_path")
+  anchorText String   @map("anchor_text")
+  linkType   String   @default("related") @map("link_type")
+  status     String   @default("active")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("internal_links")
+}
+
+model MonetizationBlock {
+  id        String   @id @default(cuid())
+  blockType String   @map("block_type")
+  name      String
+  content   String   @db.Text
+  config    String?  @db.Text
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("monetization_blocks")
+}
+
+model AffiliateLink {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  provider    String
+  category    String?
+  commission  String?
+  status      String   @default("active")
+  clicks      Int      @default(0)
+  conversions Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("affiliate_links")
+}
+
+model PageMetric {
+  id         String   @id @default(cuid())
+  pagePath   String   @map("page_path")
+  date       DateTime
+  pageviews  Int      @default(0)
+  uniqueVisitors Int  @default(0) @map("unique_visitors")
+  avgTimeOnPage Float? @map("avg_time_on_page")
+  bounceRate Float?   @map("bounce_rate")
+  ctr        Float?
+  indexed    Boolean  @default(false)
+  status     String   @default("active")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("page_metrics")
+}
+
+model SitemapEntry {
+  id          String   @id @default(cuid())
+  url         String   @unique
+  priority    Float    @default(0.5)
+  changeFreq  String   @default("weekly") @map("change_freq")
+  lastModified DateTime? @map("last_modified")
+  status      String   @default("active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("sitemap_entries")
+}
+
+model ContentTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  templateType String  @map("template_type")
+  content     String   @db.Text
+  variables   String?  @db.Text
+  status      String   @default("active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("content_templates")
+}
+
+model SystemSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  category  String?
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("system_settings")
+}
