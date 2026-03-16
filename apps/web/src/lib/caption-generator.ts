@@ -69,6 +69,8 @@ const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: st
   minimalist: { prefix: "", suffix: ".", style: "clean and understated" },
   friendly: { prefix: "Hey friend!", suffix: "", style: "warm and welcoming" },
   persuasive: { prefix: "Stop scrolling.", suffix: "", style: "urgent and compelling" },
+  'inspirational': { prefix: "", suffix: "", style: "uplifting and motivating" },
+  'sarcastic': { prefix: "", suffix: "", style: "dry wit and irony" },
 };
 
 function hashCode(str: string): number {

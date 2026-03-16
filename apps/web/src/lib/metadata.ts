@@ -2,7 +2,7 @@ import { Platform, Topic, Tone, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from './s
 import type { Metadata } from 'next';
 
 const SITE_NAME = 'GrowthFactory';
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://growthfactory.ai';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools';
 
 export function buildMetadata(opts: {
   title: string;

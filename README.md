@@ -115,6 +115,51 @@ growth-factory/
 | `make seed` | Generate page candidates |
 | `make test` | Run all tests |
 
+## 部署（Vercel）
+
+1. 在 GitHub 建立 repo 並 push
+2. Vercel 匯入 GitHub repo，**Root Directory 設為 `apps/web`**
+3. 環境變數設定 `NEXT_PUBLIC_SITE_URL=https://creatoraitools.tools`
+4. 每次 push 自動部署
+
+詳細步驟見 `docs/deployment/vercel_setup.md`
+
+## 每日自動擴頁
+
+### 手動執行
+```bash
+# 完整流水線（expand → build → sitemap → commit → push）
+bash scripts/daily-seo-job.sh
+
+# 只擴展（不 build/commit）
+npx tsx scripts/expand-seo-pages.ts --topics 3 --tones 1
+
+# 預覽模式
+npx tsx scripts/expand-seo-pages.ts --topics 5 --dry-run
+```
+
+### 自動排程（GitHub Actions）
+- `.github/workflows/daily-seo-generation.yml`
+- 每日 UTC 04:00 自動執行
+- 支援手動 dispatch
+
+詳細操作見 `docs/seo/daily_generation_runbook.md`
+
+## 驗證 sitemap / robots / 首頁
+
+```bash
+# 本地 build 並驗證
+cd apps/web && npm run build
+cat public/sitemap.xml
+cat public/robots.txt
+grep -c '<url>' public/sitemap-0.xml
+
+# 線上驗證
+curl -s https://creatoraitools.tools/ | head -20
+curl -s https://creatoraitools.tools/sitemap.xml | head -10
+curl -s https://creatoraitools.tools/robots.txt
+```
+
 ## Local Verification Checklist
 
 ```bash

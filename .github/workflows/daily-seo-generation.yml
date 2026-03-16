@@ -1,0 +1,76 @@
+name: Daily SEO Page Generation
+
+on:
+  schedule:
+    # Run daily at 04:00 UTC (12:00 Taiwan time)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      topics_count:
+        description: 'Number of topics to add'
+        required: false
+        default: '3'
+      tones_count:
+        description: 'Number of tones to add'
+        required: false
+        default: '1'
+
+permissions:
+  contents: write
+
+jobs:
+  generate-seo-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: apps/web
+
+      - name: Expand SEO pages
+        run: |
+          TOPICS=${{ github.event.inputs.topics_count || '3' }}
+          TONES=${{ github.event.inputs.tones_count || '1' }}
+          npx tsx scripts/expand-seo-pages.ts --topics $TOPICS --tones $TONES
+
+      - name: Build
+        run: npm run build
+        working-directory: apps/web
+        env:
+          NEXT_PUBLIC_SITE_URL: https://creatoraitools.tools
+
+      - name: Validate outputs
+        run: |
+          test -f apps/web/public/sitemap.xml || (echo "Missing sitemap.xml" && exit 1)
+          test -f apps/web/public/robots.txt || (echo "Missing robots.txt" && exit 1)
+          URLS=$(grep -c '<url>' apps/web/public/sitemap-0.xml 2>/dev/null || echo "0")
+          echo "Sitemap contains $URLS URLs"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            TODAY=$(date +%Y-%m-%d)
+            URLS=$(grep -c '<url>' apps/web/public/sitemap-0.xml 2>/dev/null || echo "0")
+            git commit -m "feat(seo): daily SEO page expansion $TODAY
+
+          Added new pages via automated expansion pipeline.
+          Sitemap URLs: $URLS"
+            git push
+          fi
