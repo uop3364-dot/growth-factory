@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /api/internal/
 
 # Host
 Host: https://creatoraitools.tools

@@ -1,6 +1,6 @@
 import { Platform, Topic, Tone, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from './seo-data';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://growthfactory.ai';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools';
 
 export function buildFaqSchema(faqs: { question: string; answer: string }[]) {
   return {

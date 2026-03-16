@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'GrowthFactory - Free AI Caption Generator for Social Media',
   description: 'Generate engaging social media captions, titles, and bios instantly with AI. Free tools for Instagram, TikTok, YouTube, X, and Facebook creators.',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://creatoraitools.tools'),
   robots: {
     index: true,
     follow: true,

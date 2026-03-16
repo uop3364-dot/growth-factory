@@ -1,6 +1,6 @@
 export const PLATFORMS = ['instagram', 'tiktok', 'youtube', 'x', 'facebook'] as const;
-export const TOPICS = ['travel', 'food', 'fitness', 'beauty', 'business', 'marketing', 'gaming', 'pets', 'fashion', 'motivation'] as const;
-export const TONES = ['funny', 'cute', 'professional', 'luxury', 'minimalist', 'friendly', 'persuasive'] as const;
+export const TOPICS = ['travel', 'food', 'fitness', 'beauty', 'business', 'marketing', 'gaming', 'pets', 'fashion', 'motivation', 'technology', 'education', 'photography', 'music', 'lifestyle'] as const;
+export const TONES = ['funny', 'cute', 'professional', 'luxury', 'minimalist', 'friendly', 'persuasive', 'inspirational', 'sarcastic'] as const;
 
 export type Platform = typeof PLATFORMS[number];
 export type Topic = typeof TOPICS[number];
@@ -41,6 +41,11 @@ export const TOPIC_INFO: Record<Topic, { name: string; emoji: string }> = {
   pets: { name: 'Pets', emoji: '\u{1F43E}' },
   fashion: { name: 'Fashion', emoji: '\u{1F457}' },
   motivation: { name: 'Motivation', emoji: '\u{1F525}' },
+  'technology': { name: 'Technology', emoji: '💻' },
+  'education': { name: 'Education', emoji: '🎓' },
+  'photography': { name: 'Photography', emoji: '📷' },
+  'music': { name: 'Music', emoji: '🎵' },
+  'lifestyle': { name: 'Lifestyle', emoji: '✨' },
 };
 
 export const TONE_INFO: Record<Tone, { name: string; description: string }> = {
@@ -51,4 +56,6 @@ export const TONE_INFO: Record<Tone, { name: string; description: string }> = {
   minimalist: { name: 'Minimalist', description: 'Clean and simple' },
   friendly: { name: 'Friendly', description: 'Warm and approachable' },
   persuasive: { name: 'Persuasive', description: 'Compelling and action-driven' },
+  'inspirational': { name: 'Inspirational', description: 'Uplifting and motivating' },
+  'sarcastic': { name: 'Sarcastic', description: 'Dry wit and irony' },
 };

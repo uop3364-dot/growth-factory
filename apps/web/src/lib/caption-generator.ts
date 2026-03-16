@@ -59,6 +59,11 @@ const TOPIC_PHRASES: Record<string, string[]> = {
   pets: ["fur baby", "paws and love", "pet parent life", "unconditional love", "cute overload"],
   fashion: ["outfit check", "style inspo", "OOTD", "fashion forward", "drip check"],
   motivation: ["keep going", "you got this", "dream big", "never give up", "rise and grind"],
+  'technology': ["technology vibes", "technology life", "technology goals", "technology inspiration", "technology journey"],
+  'education': ["education vibes", "education life", "education goals", "education inspiration", "education journey"],
+  'photography': ["photography vibes", "photography life", "photography goals", "photography inspiration", "photography journey"],
+  'music': ["music vibes", "music life", "music goals", "music inspiration", "music journey"],
+  'lifestyle': ["lifestyle vibes", "lifestyle life", "lifestyle goals", "lifestyle inspiration", "lifestyle journey"],
 };
 
 const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: string }> = {
