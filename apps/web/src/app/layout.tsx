@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  other: {
+    'impact-site-verification': '85db19f0-d4a7-4932-a592-5d6e7b58685d',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
