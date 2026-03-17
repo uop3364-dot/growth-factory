@@ -34,14 +34,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  other: {
-    'impact-site-verification': '85db19f0-d4a7-4932-a592-5d6e7b58685d',
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="impact-site-verification" content="85db19f0-d4a7-4932-a592-5d6e7b58685d" />
+      </head>
       <body className={`${inter.className} bg-gray-50 min-h-screen`}>
         <GoogleAnalytics />
         <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
