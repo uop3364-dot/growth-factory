@@ -9,7 +9,7 @@ import { PLATFORMS, TOPICS, PLATFORM_INFO, TOPIC_INFO, type Platform, type Topic
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
-import { TOPIC_CONTENT, getTopicFaqs } from '@/lib/content-config';
+import { TOPIC_CONTENT, getTopicFaqs, getDefaultTopicContent } from '@/lib/content-config';
 
 export function generateStaticParams() {
   const params: { platform: string; topic: string }[] = [];
@@ -35,7 +35,7 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
 
   const pInfo = PLATFORM_INFO[platform];
   const tInfo = TOPIC_INFO[topic];
-  const topicContent = TOPIC_CONTENT[topic];
+  const topicContent = TOPIC_CONTENT[topic] ?? getDefaultTopicContent(topic);
   const faqs = getTopicFaqs(topic, pInfo.name);
   const sampleCaptions = generateCaptions({ platform, topic, tone: 'friendly' });
 

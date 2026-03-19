@@ -10,7 +10,7 @@ import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO, type Pl
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
-import { TONE_CONTENT, getToneFaqs, getTopicFaqs } from '@/lib/content-config';
+import { TONE_CONTENT, getToneFaqs, getTopicFaqs, getDefaultToneContent } from '@/lib/content-config';
 
 export function generateStaticParams() {
   const params: { platform: string; topic: string; tone: string }[] = [];
@@ -40,7 +40,7 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
   const pInfo = PLATFORM_INFO[platform];
   const tInfo = TOPIC_INFO[topic];
   const tnInfo = TONE_INFO[tone];
-  const toneContent = TONE_CONTENT[tone];
+  const toneContent = TONE_CONTENT[tone] ?? getDefaultToneContent(tone);
   const toneFaqs = getToneFaqs(tone);
   const topicFaqs = getTopicFaqs(topic, pInfo.name);
   const allFaqs = [...toneFaqs.slice(0, 3), ...topicFaqs.slice(0, 2)];

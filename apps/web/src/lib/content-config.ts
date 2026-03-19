@@ -68,7 +68,7 @@ export interface TopicContent {
   contentTips: string;
 }
 
-export const TOPIC_CONTENT: Record<Topic, TopicContent> = {
+export const TOPIC_CONTENT: Partial<Record<Topic, TopicContent>> = {
   travel: {
     captionAngle: 'Travel captions work best when they transport the reader. Use sensory language — what you saw, smelled, tasted. Pair wanderlust with practical tips for saves.',
     exampleHooks: ['The moment I stepped off the plane…', 'This hidden gem changed my entire trip', 'Budget travel hack that saved me $500'],
@@ -171,7 +171,7 @@ export interface ToneContent {
   writingTips: string[];
 }
 
-export const TONE_CONTENT: Record<Tone, ToneContent> = {
+export const TONE_CONTENT: Partial<Record<Tone, ToneContent>> = {
   funny: {
     definition: 'Funny captions use humor, self-deprecation, and cultural references to entertain. They make your audience laugh, save, and share — humor is the most viral emotion on social media.',
     bestFor: ['Relatable everyday moments', 'Behind-the-scenes bloopers', 'Trending meme formats', 'Self-aware brand content'],
@@ -278,8 +278,29 @@ export function getPlatformFaqs(platform: Platform): { question: string; answer:
   ];
 }
 
+export function getDefaultTopicContent(topic: Topic): TopicContent {
+  const name = topic.charAt(0).toUpperCase() + topic.slice(1);
+  return {
+    captionAngle: `${name} captions perform best when they combine authenticity with value. Share your unique perspective and give your audience a reason to save and share.`,
+    exampleHooks: [`The ${topic} tip nobody talks about`, `Why I changed my approach to ${topic}`, `${name} mistakes to avoid`],
+    ctaTypes: [`Save: "Save this for later"`, `Question: "What's your take?"`, `Share: "Tag someone who needs this"`],
+    contentTips: `Focus on specific, actionable insights related to ${topic}. Combine personal experience with practical tips for maximum engagement.`,
+  };
+}
+
+export function getDefaultToneContent(tone: Tone): ToneContent {
+  const name = tone.charAt(0).toUpperCase() + tone.slice(1);
+  return {
+    definition: `${name} captions set a distinctive mood that resonates with your audience. Use this tone to stand out and create a memorable brand voice.`,
+    bestFor: ['Content matching this mood', 'Building brand voice', 'Engaging your target audience'],
+    notBestFor: ['Content that requires a different emotional register', 'Sensitive or formal topics'],
+    beforeAfter: { before: 'Generic caption text.', after: `A ${tone} take that captures attention and drives engagement.` },
+    writingTips: [`Lean into the ${tone} style naturally`, 'Stay authentic to your brand', 'Match tone to your audience expectations', 'Test different approaches and see what resonates'],
+  };
+}
+
 export function getTopicFaqs(topic: Topic, platformName: string): { question: string; answer: string }[] {
-  const info = TOPIC_CONTENT[topic];
+  const info = TOPIC_CONTENT[topic] ?? getDefaultTopicContent(topic);
   const topicName = topic.charAt(0).toUpperCase() + topic.slice(1);
   return [
     { question: `How do I write engaging ${topicName.toLowerCase()} captions for ${platformName}?`, answer: info.captionAngle },
@@ -290,7 +311,7 @@ export function getTopicFaqs(topic: Topic, platformName: string): { question: st
 }
 
 export function getToneFaqs(tone: Tone): { question: string; answer: string }[] {
-  const info = TONE_CONTENT[tone];
+  const info = TONE_CONTENT[tone] ?? getDefaultToneContent(tone);
   const toneName = tone.charAt(0).toUpperCase() + tone.slice(1);
   return [
     { question: `What is a ${toneName.toLowerCase()} caption style?`, answer: info.definition },
