@@ -3,28 +3,20 @@ import HashtagGenerator from '@/components/HashtagGenerator';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import HowToUse from '@/components/HowToUse';
+import ToolCrossSell from '@/components/ToolCrossSell';
+import { CrossToolLinks } from '@/components/InternalLinks';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Free AI Hashtag Generator for Instagram, TikTok, YouTube & More | CreatorAITools',
-  description: 'Generate trending hashtags for Instagram, TikTok, YouTube, X, and LinkedIn. Get 30+ hashtags with niche-specific, trending, and ready-to-copy hashtag sets. Free, instant, no sign-up.',
-  robots: { index: true, follow: true },
-  alternates: {
-    canonical: 'https://creatoraitools.tools/hashtag-generator',
-  },
-  openGraph: {
-    title: 'Free AI Hashtag Generator | CreatorAITools',
-    description: 'Generate 30+ trending hashtags for any social media platform. Niche-specific, copy-ready hashtag sets for maximum reach.',
-    url: 'https://creatoraitools.tools/hashtag-generator',
-    siteName: 'CreatorAITools',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Free AI Hashtag Generator | CreatorAITools',
-    description: 'Generate 30+ trending hashtags for any social media platform. Free and instant.',
-  },
-};
+export function generateMetadata(): Metadata {
+  return buildMetadata({
+    title: 'Free AI Hashtag Generator for Instagram & TikTok (30+ Tags, Instant)',
+    description: 'Generate trending hashtags for Instagram, TikTok, YouTube, and X with AI. Get 30+ niche-specific hashtags in seconds. Free, no signup. Try now.',
+    path: '/hashtag-generator',
+  });
+}
 
 const faqs = [
   {
@@ -64,22 +56,26 @@ const faqs = [
 export default function HashtagGeneratorPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'AI Hashtag Generator', description: 'Generate trending hashtags for Instagram, TikTok, YouTube, X and LinkedIn', path: '/hashtag-generator' })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Hashtag Generator', description: 'Generate trending hashtags for Instagram, TikTok, YouTube, X and LinkedIn. Free, instant.', path: '/hashtag-generator' })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Hashtag Generator', path: '/hashtag-generator' }])) }} />
 
       <section className="bg-gradient-to-br from-pink-500 to-rose-500 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">AI Hashtag Generator</h1>
-          <p className="text-lg text-pink-100">Generate trending, niche-specific hashtags for any social media platform. Free, instant, no sign-up required.</p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Hashtag Generator (30+ Hashtags, Instant)</h1>
+          <p className="text-lg text-pink-100">Generate trending, niche-specific hashtags for Instagram, TikTok, YouTube &amp; X. Free, no signup.</p>
+          <HeroCTA toolName="hashtag-generator" color="pink" />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <HashtagGenerator />
-        <AdPlaceholder slot="after-generator" />
         <AffiliateCTA pageType="tool" />
+        <HowToUse tool="hashtag-generator" />
+        <AdPlaceholder slot="after-generator" />
+        <CrossToolLinks currentTool="/hashtag-generator" />
         <FAQ items={faqs} />
+        <ToolCrossSell currentTool="/hashtag-generator" />
       </section>
     </>
   );

@@ -2,10 +2,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import CaptionGenerator from '@/components/CaptionGenerator';
-import { RelatedPlatforms, RelatedTopics, RelatedTones } from '@/components/InternalLinks';
+import { RelatedPlatforms, RelatedTopics, RelatedTones, CrossToolLinks } from '@/components/InternalLinks';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import ToolCrossSell from '@/components/ToolCrossSell';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO, type Platform, type Topic, type Tone } from '@/lib/seo-data';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
@@ -48,7 +50,7 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${tnInfo.name} ${tInfo.name} ${pInfo.name} Caption Generator`, description: `Generate ${tone} ${topic} captions for ${pInfo.name}`, path: `/caption-generator/${platform}/${topic}/${tone}` })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${tnInfo.name} ${tInfo.name} ${pInfo.name} Caption Generator — Free AI`, description: `Generate ${tone} ${topic} captions for ${pInfo.name}. Free, instant, no login.`, path: `/caption-generator/${platform}/${topic}/${tone}` })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(allFaqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
         { name: 'Home', path: '/' },
@@ -60,17 +62,20 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
 
       <section className="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">{tnInfo.name} {tInfo.name} Captions for {pInfo.name}</h1>
-          <p className="text-lg text-blue-100">Generate {tone}, {topic}-focused captions optimized for {pInfo.name}. {tnInfo.description} tone with hashtags.</p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">{tnInfo.name} {tInfo.name} Captions for {pInfo.name} — Free AI Generator</h1>
+          <p className="text-lg text-blue-100">Generate {tone}, {topic}-focused captions for {pInfo.name}. {tnInfo.description} tone with hashtags and CTAs.</p>
+          <HeroCTA toolName={`caption-${platform}-${topic}-${tone}`} color="blue" />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} defaultTone={tone} />
 
+        <AffiliateCTA pageType="tone" platform={platform} />
+
         {/* Tone guide section */}
         <div className="mt-8 bg-white rounded-xl shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Writing in a {tnInfo.name} Tone</h2>
+          <h2 className="text-xl font-semibold mb-4">How to Write {tnInfo.name} {tInfo.name} Captions</h2>
           <p className="text-gray-700 mb-4">{toneContent.definition}</p>
 
           {/* Before/After */}
@@ -107,7 +112,7 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
 
           {/* Writing tips */}
           <div className="bg-blue-50 rounded-lg p-4">
-            <h3 className="font-medium text-gray-800 mb-2">Writing Tips</h3>
+            <h3 className="font-medium text-gray-800 mb-2">Writing Tips for {tnInfo.name} Tone</h3>
             <ul className="space-y-1 text-sm text-gray-700">
               {toneContent.writingTips.map((tip, i) => (
                 <li key={i} className="pl-3 border-l-2 border-blue-300">{tip}</li>
@@ -132,15 +137,14 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
         </div>
 
         <AdPlaceholder slot="after-samples" />
-        <AffiliateCTA />
 
-        {/* Breadcrumb navigation back to parent pages */}
+        {/* Breadcrumb navigation */}
         <div className="my-6 flex flex-wrap items-center gap-2 text-sm text-gray-500">
-          <Link href="/caption-generator" className="hover:text-blue-600">Caption Generator</Link>
+          <Link href="/caption-generator" className="hover:text-blue-600">AI Caption Generator</Link>
           <span>/</span>
-          <Link href={`/caption-generator/${platform}`} className="hover:text-blue-600">{pInfo.name}</Link>
+          <Link href={`/caption-generator/${platform}`} className="hover:text-blue-600">{pInfo.name} Caption Generator</Link>
           <span>/</span>
-          <Link href={`/caption-generator/${platform}/${topic}`} className="hover:text-blue-600">{tInfo.name}</Link>
+          <Link href={`/caption-generator/${platform}/${topic}`} className="hover:text-blue-600">{pInfo.name} {tInfo.name} Captions</Link>
           <span>/</span>
           <span className="text-gray-800 font-medium">{tnInfo.name}</span>
         </div>
@@ -148,7 +152,9 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
         <RelatedTones platform={platform} topic={topic} currentTone={tone} />
         <RelatedTopics platform={platform} currentTopic={topic} />
         <RelatedPlatforms currentPlatform={platform} />
+        <CrossToolLinks currentTool="/caption-generator" />
         <FAQ items={allFaqs} />
+        <ToolCrossSell currentTool="/caption-generator" />
       </section>
     </>
   );

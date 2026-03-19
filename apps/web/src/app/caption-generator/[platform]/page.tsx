@@ -1,10 +1,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import CaptionGenerator from '@/components/CaptionGenerator';
-import { RelatedPlatforms, RelatedTopics } from '@/components/InternalLinks';
+import { RelatedPlatforms, RelatedTopics, CrossToolLinks } from '@/components/InternalLinks';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import HowToUse from '@/components/HowToUse';
+import ToolCrossSell from '@/components/ToolCrossSell';
 import { PLATFORMS, PLATFORM_INFO, type Platform } from '@/lib/seo-data';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema, getCaptionPageFaqs } from '@/lib/jsonld';
@@ -32,7 +35,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${info.name} Caption Generator`, description: info.description, path: `/caption-generator/${platform}` })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `Free ${info.name} Caption Generator`, description: `Generate ${info.name} captions with AI. Free, instant, no login.`, path: `/caption-generator/${platform}` })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(allFaqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
         { name: 'Home', path: '/' },
@@ -42,13 +45,16 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
 
       <section className="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">{info.emoji} {info.name} Caption Generator</h1>
-          <p className="text-lg text-blue-100">{info.description}</p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">Free {info.name} Caption Generator (AI-Powered, Instant)</h1>
+          <p className="text-lg text-blue-100">{info.description} Free, no login required.</p>
+          <HeroCTA toolName={`caption-${platform}`} color="blue" />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator defaultPlatform={platform} />
+
+        <AffiliateCTA pageType="platform" platform={platform} />
 
         {/* Platform-specific guide */}
         <div className="mt-8 bg-white rounded-xl shadow p-6">
@@ -83,10 +89,11 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
         </div>
 
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA pageType="platform" />
         <RelatedTopics platform={platform} />
         <RelatedPlatforms currentPlatform={platform} />
+        <CrossToolLinks currentTool="/caption-generator" />
         <FAQ items={allFaqs} />
+        <ToolCrossSell currentTool="/caption-generator" />
       </section>
     </>
   );

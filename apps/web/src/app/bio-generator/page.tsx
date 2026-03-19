@@ -3,26 +3,20 @@ import BioGenerator from '@/components/BioGenerator';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import HowToUse from '@/components/HowToUse';
+import ToolCrossSell from '@/components/ToolCrossSell';
+import { CrossToolLinks } from '@/components/InternalLinks';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Free AI Bio Generator for Instagram, TikTok, LinkedIn & More | CreatorAITools',
-  description: 'Generate the perfect social media bio in seconds. Free AI bio generator for Instagram, TikTok, LinkedIn, YouTube, and X. No sign-up required.',
-  robots: { index: true, follow: true },
-  alternates: { canonical: 'https://creatoraitools.tools/bio-generator' },
-  openGraph: {
-    title: 'Free AI Bio Generator | CreatorAITools',
-    description: 'Generate the perfect social media bio in seconds. Optimized for Instagram, TikTok, LinkedIn, YouTube, and X.',
-    url: 'https://creatoraitools.tools/bio-generator',
-    siteName: 'CreatorAITools',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Free AI Bio Generator | CreatorAITools',
-    description: 'Generate the perfect social media bio in seconds. Optimized for every platform.',
-  },
-};
+export function generateMetadata(): Metadata {
+  return buildMetadata({
+    title: 'Free AI Bio Generator for Instagram, TikTok & LinkedIn (Instant)',
+    description: 'Generate the perfect social media bio with AI. Free bio generator for Instagram, TikTok, LinkedIn, YouTube, and X. No signup, instant results. Try now.',
+    path: '/bio-generator',
+  });
+}
 
 const faqs = [
   {
@@ -54,22 +48,26 @@ const faqs = [
 export default function BioGeneratorPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'AI Bio Generator', description: 'Generate the perfect social media bio in seconds with AI', path: '/bio-generator' })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Bio Generator', description: 'Generate the perfect social media bio in seconds with AI. Free, no login.', path: '/bio-generator' })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Bio Generator', path: '/bio-generator' }])) }} />
 
       <section className="bg-gradient-to-br from-green-600 to-teal-600 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">AI Bio Generator</h1>
-          <p className="text-lg text-green-100">Generate the perfect social media bio for any platform. Free, instant, no sign-up required.</p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Bio Generator (Instant, No Login)</h1>
+          <p className="text-lg text-green-100">Generate the perfect social media bio for Instagram, TikTok, LinkedIn, YouTube &amp; X. Free and instant.</p>
+          <HeroCTA toolName="bio-generator" color="green" />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <BioGenerator />
-        <AdPlaceholder slot="after-generator" />
         <AffiliateCTA pageType="tool" />
+        <HowToUse tool="bio-generator" />
+        <AdPlaceholder slot="after-generator" />
+        <CrossToolLinks currentTool="/bio-generator" />
         <FAQ items={faqs} />
+        <ToolCrossSell currentTool="/bio-generator" />
       </section>
     </>
   );

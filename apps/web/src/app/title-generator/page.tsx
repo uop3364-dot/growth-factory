@@ -3,26 +3,20 @@ import TitleGenerator from '@/components/TitleGenerator';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import HowToUse from '@/components/HowToUse';
+import ToolCrossSell from '@/components/ToolCrossSell';
+import { CrossToolLinks } from '@/components/InternalLinks';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'AI Title Generator - Create Click-Worthy Headlines Instantly | CreatorAITools',
-  description: 'Free AI Title Generator for YouTube videos, blog posts, newsletters, and more. Generate 10+ title ideas with SEO optimization, power words, and character counts. No sign-up required.',
-  robots: { index: true, follow: true },
-  alternates: { canonical: 'https://creatoraitools.tools/title-generator' },
-  openGraph: {
-    title: 'AI Title Generator - Create Click-Worthy Headlines Instantly',
-    description: 'Generate engaging titles for YouTube, blogs, newsletters, and social media. Free, instant, no sign-up.',
-    url: 'https://creatoraitools.tools/title-generator',
-    siteName: 'CreatorAITools',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'AI Title Generator - Click-Worthy Headlines in Seconds',
-    description: 'Generate 10+ title ideas for any content type. Free AI-powered tool with SEO optimization.',
-  },
-};
+export function generateMetadata(): Metadata {
+  return buildMetadata({
+    title: 'Free AI Title Generator for YouTube & Blogs (Click-Worthy)',
+    description: 'Generate click-worthy titles for YouTube videos, blog posts, and newsletters with AI. SEO-optimized with power words. Free, instant, no login. Try now.',
+    path: '/title-generator',
+  });
+}
 
 const faqs = [
   {
@@ -54,22 +48,26 @@ const faqs = [
 export default function TitleGeneratorPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'AI Title Generator', description: 'Generate click-worthy titles and headlines for YouTube, blogs, newsletters, and more', path: '/title-generator' })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Title Generator', description: 'Generate click-worthy titles and headlines for YouTube, blogs, newsletters, and more. Free, instant.', path: '/title-generator' })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Title Generator', path: '/title-generator' }])) }} />
 
       <section className="bg-gradient-to-br from-orange-500 to-red-500 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">AI Title Generator</h1>
-          <p className="text-lg text-orange-100">Generate click-worthy titles for YouTube, blogs, newsletters, and more. Free, instant, no sign-up required.</p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Title Generator (Click-Worthy, Instant)</h1>
+          <p className="text-lg text-orange-100">Generate SEO-optimized titles for YouTube, blogs, newsletters &amp; more. With power words and CTR boost.</p>
+          <HeroCTA toolName="title-generator" color="orange" />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <TitleGenerator />
+        <AffiliateCTA pageType="tool" platform="youtube" />
+        <HowToUse tool="title-generator" />
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA pageType="tool" />
+        <CrossToolLinks currentTool="/title-generator" />
         <FAQ items={faqs} />
+        <ToolCrossSell currentTool="/title-generator" />
       </section>
     </>
   );

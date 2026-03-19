@@ -13,7 +13,7 @@ export function buildMetadata(opts: {
 }): Metadata {
   const url = `${SITE_URL}${opts.path}`;
   return {
-    title: `${opts.title} | ${SITE_NAME}`,
+    title: opts.title,
     description: opts.description,
     alternates: { canonical: url },
     openGraph: {
@@ -34,31 +34,42 @@ export function buildMetadata(opts: {
 }
 
 export function buildCaptionPageMeta(platform?: Platform, topic?: Topic, tone?: Tone) {
-  const parts: string[] = [];
-  let desc = 'Generate engaging social media captions instantly with AI.';
+  let title: string;
+  let desc: string;
   let path = '/caption-generator';
 
-  if (platform) {
-    const p = PLATFORM_INFO[platform];
-    parts.push(p.name);
-    path += `/${platform}`;
-    desc = `Free AI caption generator for ${p.name}. ${p.description}`;
-  }
-  if (topic) {
-    const t = TOPIC_INFO[topic];
-    parts.push(t.name);
-    path += `/${topic}`;
-    desc = `Generate ${topic} captions for ${parts[0] || 'social media'}. Free AI-powered caption generator with hashtags and CTA suggestions.`;
-  }
-  if (tone) {
-    const t = TONE_INFO[tone];
-    parts.push(t.name);
-    path += `/${tone}`;
-    desc = `${tone.charAt(0).toUpperCase() + tone.slice(1)} ${topic || ''} captions for ${parts[0] || 'social media'}. AI-generated captions with the perfect ${t.description.toLowerCase()} tone.`;
+  if (!platform) {
+    // Main caption generator page
+    title = 'Free AI Caption Generator (Instant, No Login)';
+    desc = 'Generate high-performing social media captions with AI. Free, fast, and optimized for engagement. Get captions, hashtags, and CTAs in seconds. Try now.';
+    return buildMetadata({ title, description: desc, path });
   }
 
-  const titleParts = parts.length > 0 ? parts.join(' ') + ' Caption Generator' : 'AI Caption Generator';
-  const title = `Free ${titleParts} - Generate Captions Instantly`;
+  const p = PLATFORM_INFO[platform];
+  path += `/${platform}`;
 
+  if (!topic) {
+    // Platform-level page
+    title = `Free ${p.name} Caption Generator (AI-Powered, Instant Results)`;
+    desc = `Generate high-performing ${p.name} captions with AI. Free, fast, and optimized for ${p.name} engagement. Get captions, hashtags, and CTAs instantly. Try now.`;
+    return buildMetadata({ title, description: desc, path });
+  }
+
+  const t = TOPIC_INFO[topic];
+  path += `/${topic}`;
+
+  if (!tone) {
+    // Platform + Topic page
+    title = `Free ${p.name} ${t.name} Caption Generator (AI-Powered)`;
+    desc = `Generate ${topic} captions for ${p.name} with AI. Free ${t.name.toLowerCase()} caption ideas with hashtags and CTAs. Instant results, no signup. Try now.`;
+    return buildMetadata({ title, description: desc, path });
+  }
+
+  const tn = TONE_INFO[tone];
+  path += `/${tone}`;
+
+  // Platform + Topic + Tone page (most specific)
+  title = `${tn.name} ${t.name} Captions for ${p.name} — Free AI Generator`;
+  desc = `Generate ${tone} ${topic} captions for ${p.name}. AI-powered ${tn.description.toLowerCase()} captions with hashtags. Free, instant, no login. Try now.`;
   return buildMetadata({ title, description: desc, path });
 }
