@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-03-19T18:40:06.366Z",
+  "pagesAudited": 5,
+  "averageScore": 100,
+  "pass": 5,
+  "warn": 0,
+  "fail": 0,
+  "results": [
+    {
+      "page": "/bio-generator",
+      "score": 100,
+      "issues": [],
+      "priority": 20
+    },
+    {
+      "page": "/caption-generator",
+      "score": 100,
+      "issues": [],
+      "priority": 20
+    },
+    {
+      "page": "/hashtag-generator",
+      "score": 100,
+      "issues": [],
+      "priority": 20
+    },
+    {
+      "page": "/",
+      "score": 100,
+      "issues": [],
+      "priority": 0
+    },
+    {
+      "page": "/title-generator",
+      "score": 100,
+      "issues": [],
+      "priority": 20
+    }
+  ]
+}

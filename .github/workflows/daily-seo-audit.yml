@@ -1,0 +1,58 @@
+name: Daily SEO Audit & Optimization
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC (14:00 Taiwan time) — after page generation at 04:00
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      top_pages:
+        description: 'Number of top pages to audit'
+        required: false
+        default: '20'
+
+permissions:
+  contents: write
+
+jobs:
+  seo-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: apps/web
+
+      - name: Run SEO audit
+        run: |
+          TOP=${{ github.event.inputs.top_pages || '20' }}
+          npx tsx scripts/seo-audit.ts --top $TOP || true
+
+      - name: Ping search engines
+        run: |
+          bash scripts/ping-search-engines.sh || true
+
+      - name: Commit audit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/seo-audit-report.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            TODAY=$(date +%Y-%m-%d)
+            git commit -m "chore(seo): daily audit report $TODAY"
+            git push
+          fi
