@@ -1,4 +1,5 @@
 import { Platform, Topic, Tone, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from './seo-data';
+import { getOverrideTitle, getOverrideDesc } from './seo-overrides';
 import type { Metadata } from 'next';
 
 const SITE_NAME = 'CreatorAITools';
@@ -11,14 +12,20 @@ export function buildMetadata(opts: {
   path: string;
   type?: string;
 }): Metadata {
+  // v2: Check for page-specific overrides first
+  const overrideTitle = getOverrideTitle(opts.path);
+  const overrideDesc = getOverrideDesc(opts.path);
+  const title = overrideTitle ?? opts.title;
+  const description = overrideDesc ?? opts.description;
+
   const url = `${SITE_URL}${opts.path}`;
   return {
-    title: opts.title,
-    description: opts.description,
+    title,
+    description,
     alternates: { canonical: url },
     openGraph: {
-      title: opts.title,
-      description: opts.description,
+      title,
+      description,
       url,
       siteName: SITE_NAME,
       type: (opts.type as "website" | "article") || 'website',
@@ -26,8 +33,8 @@ export function buildMetadata(opts: {
     },
     twitter: {
       card: 'summary_large_image',
-      title: opts.title,
-      description: opts.description,
+      title,
+      description,
       images: [OG_IMAGE],
     },
   };
@@ -39,7 +46,6 @@ export function buildCaptionPageMeta(platform?: Platform, topic?: Topic, tone?: 
   let path = '/caption-generator';
 
   if (!platform) {
-    // Main caption generator page
     title = 'Free AI Caption Generator (Instant, No Login)';
     desc = 'Generate high-performing social media captions with AI. Free, fast, and optimized for engagement. Get captions, hashtags, and CTAs in seconds. Try now.';
     return buildMetadata({ title, description: desc, path });
@@ -49,7 +55,6 @@ export function buildCaptionPageMeta(platform?: Platform, topic?: Topic, tone?: 
   path += `/${platform}`;
 
   if (!topic) {
-    // Platform-level page
     title = `Free ${p.name} Caption Generator (AI-Powered, Instant Results)`;
     desc = `Generate high-performing ${p.name} captions with AI. Free, fast, and optimized for ${p.name} engagement. Get captions, hashtags, and CTAs instantly. Try now.`;
     return buildMetadata({ title, description: desc, path });
@@ -59,7 +64,6 @@ export function buildCaptionPageMeta(platform?: Platform, topic?: Topic, tone?: 
   path += `/${topic}`;
 
   if (!tone) {
-    // Platform + Topic page
     title = `Free ${p.name} ${t.name} Caption Generator (AI-Powered)`;
     desc = `Generate ${topic} captions for ${p.name} with AI. Free ${t.name.toLowerCase()} caption ideas with hashtags and CTAs. Instant results, no signup. Try now.`;
     return buildMetadata({ title, description: desc, path });
@@ -68,7 +72,6 @@ export function buildCaptionPageMeta(platform?: Platform, topic?: Topic, tone?: 
   const tn = TONE_INFO[tone];
   path += `/${tone}`;
 
-  // Platform + Topic + Tone page (most specific)
   title = `${tn.name} ${t.name} Captions for ${p.name} — Free AI Generator`;
   desc = `Generate ${tone} ${topic} captions for ${p.name}. AI-powered ${tn.description.toLowerCase()} captions with hashtags. Free, instant, no login. Try now.`;
   return buildMetadata({ title, description: desc, path });

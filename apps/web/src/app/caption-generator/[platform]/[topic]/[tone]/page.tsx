@@ -13,6 +13,7 @@ import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import { TONE_CONTENT, getToneFaqs, getTopicFaqs, getDefaultToneContent } from '@/lib/content-config';
+import { getOverride } from '@/lib/seo-overrides';
 
 export function generateStaticParams() {
   const params: { platform: string; topic: string; tone: string }[] = [];
@@ -47,6 +48,7 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
   const topicFaqs = getTopicFaqs(topic, pInfo.name);
   const allFaqs = [...toneFaqs.slice(0, 3), ...topicFaqs.slice(0, 2)];
   const sampleCaptions = generateCaptions({ platform, topic, tone });
+  const ov = getOverride(`/caption-generator/${platform}/${topic}/${tone}`);
 
   return (
     <>
@@ -64,14 +66,14 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{tnInfo.name} {tInfo.name} Captions for {pInfo.name} — Free AI Generator</h1>
           <p className="text-lg text-blue-100">Generate {tone}, {topic}-focused captions for {pInfo.name}. {tnInfo.description} tone with hashtags and CTAs.</p>
-          <HeroCTA toolName={`caption-${platform}-${topic}-${tone}`} color="blue" />
+          <HeroCTA toolName={`caption-${platform}-${topic}-${tone}`} color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} defaultTone={tone} />
 
-        <AffiliateCTA pageType="tone" platform={platform} />
+        <AffiliateCTA pageType="tone" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
 
         {/* Tone guide section */}
         <div className="mt-8 bg-white rounded-xl shadow p-6">

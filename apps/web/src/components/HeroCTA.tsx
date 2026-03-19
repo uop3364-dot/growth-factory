@@ -5,6 +5,10 @@ import { trackEvent } from '@/lib/analytics';
 interface HeroCTAProps {
   toolName: string;
   color?: 'blue' | 'green' | 'pink' | 'orange';
+  /** v2: custom button text (from seo-overrides) */
+  headline?: string;
+  /** v2: custom subtext */
+  subtext?: string;
 }
 
 const colorMap = {
@@ -14,21 +18,21 @@ const colorMap = {
   orange: 'bg-white text-orange-600 hover:bg-orange-50',
 };
 
-export default function HeroCTA({ toolName, color = 'blue' }: HeroCTAProps) {
+export default function HeroCTA({ toolName, color = 'blue', headline, subtext }: HeroCTAProps) {
   return (
     <div className="mt-6 flex flex-col items-center gap-2">
       <button
         onClick={() => {
-          trackEvent('hero_cta_click', { tool: toolName });
+          trackEvent('hero_cta_click', { tool: toolName, variant: headline ? 'custom' : 'default' });
           const generator = document.querySelector('[data-generator]') || document.querySelector('form');
           if (generator) generator.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }}
         className={`${colorMap[color]} font-bold px-10 py-4 rounded-xl shadow-lg text-lg transition-colors`}
         data-track="hero_generate_now"
       >
-        Generate Now
+        {headline || 'Generate Now'}
       </button>
-      <p className="text-sm opacity-80">Free &bull; No login &bull; Instant results</p>
+      <p className="text-sm opacity-80">{subtext || 'Free \u2022 No login \u2022 Instant results'}</p>
     </div>
   );
 }

@@ -1,0 +1,251 @@
+{
+  "version": "v2",
+  "date": "2026-03-19",
+  "dataSource": "heuristic (no GSC API access)",
+  "activeVariant": "A",
+  "totalPagesOptimized": 20,
+  "pages": [
+    {
+      "path": "/",
+      "tier": 1,
+      "type": "homepage",
+      "currentMetrics": "N/A (no GSC API)",
+      "diagnosis": "Homepage competes for broad 'ai tools for creators' queries. Current title is good but could test product-led variant. Missing social proof in description.",
+      "titleA": "Free AI Tools for Creators — Captions, Bios, Titles & Hashtags",
+      "titleB": "AI Caption Generator & Creator Tools — 100% Free, No Signup",
+      "descA": "Generate captions, bios, titles, and hashtags with AI. 100% free, no login, instant results. Used by 50K+ creators. Try now.",
+      "descB": "Free AI-powered caption generator for Instagram, TikTok, YouTube & more. Plus bio, title, and hashtag tools. No signup needed — try in 5 seconds.",
+      "changes": ["Custom CTA: 'Generate Captions Now' + social proof subtext", "Title variant testing ready"],
+      "hypothesis": "Adding '50K+ creators' social proof should lift CTR 10-15%. Product-led title B captures transactional queries."
+    },
+    {
+      "path": "/caption-generator",
+      "tier": 1,
+      "type": "tool_page",
+      "estimatedMonthlySearches": "~14K (caption generator)",
+      "diagnosis": "Primary money page. Current title good but platform names should come before parenthetical for keyword match.",
+      "titleA": "Free AI Caption Generator — Instagram, TikTok, YouTube (Instant)",
+      "titleB": "AI Caption Generator — Free Captions for Instagram, TikTok & YouTube",
+      "descA": "Generate scroll-stopping captions with AI in 5 seconds. Includes hashtags, CTAs, and short variants. Free, no signup.",
+      "descB": "Need better captions? Our AI generates platform-optimized captions with hashtags and CTAs. 100% free, no login.",
+      "changes": ["Metricool scheduling CTA", "Platform names front-loaded in title", "Custom hero CTA"],
+      "hypothesis": "Platform names in title front improve keyword match. Scheduling-focused affiliate CTA has natural intent match. Expected CTR +8-12%."
+    },
+    {
+      "path": "/bio-generator",
+      "tier": 1,
+      "type": "tool_page",
+      "estimatedMonthlySearches": "~8K (bio generator)",
+      "diagnosis": "Specificity about char limits and 17 options is a differentiator vs competitors.",
+      "titleA": "Free AI Bio Generator — Instagram, TikTok, LinkedIn Bio in Seconds",
+      "titleB": "AI Bio Generator for Instagram & TikTok — Free, Instant, No Signup",
+      "descA": "Generate the perfect social media bio with AI. Optimized for Instagram (150 chars), TikTok (80 chars), LinkedIn (300 chars). 17 bio options per generation.",
+      "descB": "Stop staring at a blank bio. Our AI creates 17 bio options for your platform in seconds — professional, creative, witty & more.",
+      "changes": ["Canva design CTA pairing", "Custom H2", "Platform-specific examples", "17 options callout"],
+      "hypothesis": "Specific numbers (17 options, char limits) create curiosity signal. Expected CTR +10% and lower bounce."
+    },
+    {
+      "path": "/title-generator",
+      "tier": 1,
+      "type": "tool_page",
+      "estimatedMonthlySearches": "~6K (youtube title generator)",
+      "diagnosis": "YouTube-specific variant B may capture more specific intent than generic 'AI Title Generator'.",
+      "titleA": "Free AI Title Generator — YouTube Titles, Blog Headlines (Instant)",
+      "titleB": "YouTube Title Generator — AI-Powered Click-Worthy Titles (Free)",
+      "descA": "Generate click-worthy titles for YouTube videos, blog posts & newsletters with AI. 10+ titles with SEO optimization and power words.",
+      "descB": "Struggling with YouTube titles? Our AI generates 10+ click-optimized title ideas with character counts and power words.",
+      "changes": ["vidIQ SEO CTA pairing", "YouTube-first title variant", "Custom examples", "10+ titles callout"],
+      "hypothesis": "YouTube-first title B captures high-intent queries. vidIQ pairing has natural intent match."
+    },
+    {
+      "path": "/hashtag-generator",
+      "tier": 1,
+      "type": "tool_page",
+      "estimatedMonthlySearches": "~22K (hashtag generator)",
+      "diagnosis": "Highest volume keyword. Instagram-first variant B may capture the larger 'instagram hashtag generator' ~12K query.",
+      "titleA": "Free AI Hashtag Generator — Instagram, TikTok (30+ Hashtags)",
+      "titleB": "Instagram Hashtag Generator — 30+ Free AI Hashtags (Instant)",
+      "descA": "Generate 30+ trending hashtags for Instagram, TikTok, YouTube & X with AI. Niche-specific, copy-ready sets.",
+      "descB": "Stop guessing which hashtags to use. Our AI generates 30+ platform-optimized hashtags with trending + niche mix.",
+      "changes": ["Metricool analytics CTA", "30+ hashtags callout", "Instagram-first variant", "Pain-point opening"],
+      "hypothesis": "Instagram-first title B targets highest-volume specific query. Pain-point opening should lift CTR +12%."
+    },
+    {
+      "path": "/caption-generator/youtube",
+      "tier": 2,
+      "type": "platform_hub",
+      "estimatedMonthlySearches": "~5K combined",
+      "diagnosis": "YouTube users search for 'description generator' more than 'caption generator'. Description-led framing may better match intent.",
+      "titleA": "Free YouTube Caption Generator — AI-Powered Descriptions & Titles",
+      "titleB": "YouTube Description Generator — Free AI Tool (Instant Results)",
+      "changes": ["vidIQ affiliate pairing", "Custom H2: YouTube descriptions", "Custom intro + examples"],
+      "hypothesis": "Description-led framing captures more YouTube-specific intent."
+    },
+    {
+      "path": "/caption-generator/instagram",
+      "tier": 2,
+      "type": "platform_hub",
+      "estimatedMonthlySearches": "~18K",
+      "diagnosis": "2nd highest volume. Year tag signals freshness. Reels mention captures growing intent.",
+      "titleA": "Free Instagram Caption Generator — AI Captions with Hashtags (2026)",
+      "titleB": "Instagram Caption Generator — Free AI Tool with Hashtags & CTAs",
+      "changes": ["Metricool scheduling CTA", "Year freshness signal", "Reels mention", "Custom examples"],
+      "hypothesis": "Year tag + Reels mention lift CTR +8-10%."
+    },
+    {
+      "path": "/caption-generator/tiktok",
+      "tier": 2,
+      "type": "platform_hub",
+      "estimatedMonthlySearches": "~9K",
+      "diagnosis": "'Viral' is the key power word for TikTok audience. OpusClip matches stream-to-shorts workflow.",
+      "titleA": "Free TikTok Caption Generator — AI Captions That Go Viral (2026)",
+      "titleB": "TikTok Caption Generator — Free AI Tool for Viral Captions",
+      "changes": ["OpusClip affiliate pairing", "Viral power word", "POV format examples"],
+      "hypothesis": "'Viral' power word + TikTok-specific language resonates with younger audience."
+    },
+    {
+      "path": "/caption-generator/x",
+      "tier": 2,
+      "type": "platform_hub",
+      "estimatedMonthlySearches": "~3K combined",
+      "diagnosis": "Dual naming (X/Twitter) captures both search patterns. Thread mentions capture growing intent.",
+      "titleA": "Free X (Twitter) Caption Generator — AI Tweets & Thread Starters",
+      "titleB": "Twitter/X Post Generator — Free AI Tool for Tweets & Threads",
+      "changes": ["Metricool scheduling CTA", "Dual X/Twitter naming", "Thread examples"],
+      "hypothesis": "Including both 'X' and 'Twitter' captures users searching with either name."
+    },
+    {
+      "path": "/caption-generator/facebook",
+      "tier": 2,
+      "type": "platform_hub",
+      "estimatedMonthlySearches": "~4K",
+      "diagnosis": "'Pages & Groups' captures B2B and community manager intent that competitors miss.",
+      "titleA": "Free Facebook Caption Generator — AI Posts for Pages & Groups",
+      "titleB": "Facebook Post Generator — Free AI Captions for Pages & Groups",
+      "changes": ["Canva visual CTA pairing", "Pages & Groups B2B angle", "Share-driven examples"],
+      "hypothesis": "'Pages & Groups' targets overlooked B2B segment. Canva matches Facebook's visual format."
+    },
+    {
+      "path": "/caption-generator/youtube/marketing",
+      "tier": 3,
+      "type": "topic_page",
+      "diagnosis": "Commercial intent. Marketers searching this are managing brand channels — high affiliate potential.",
+      "titleA": "YouTube Marketing Captions — Free AI Generator with CTAs",
+      "titleB": "Free YouTube Marketing Caption Generator — AI-Powered CTAs & Hooks",
+      "changes": ["vidIQ keyword CTA", "Marketing-specific language"],
+      "hypothesis": "Marketing-specific CTA language + vidIQ should drive highest affiliate CTR. Expected 3-5%."
+    },
+    {
+      "path": "/caption-generator/youtube/business",
+      "tier": 3,
+      "type": "topic_page",
+      "diagnosis": "B2B intent, likely brand managers or small business owners. High value per visitor.",
+      "titleA": "YouTube Business Captions — Free AI Generator for Brand Channels",
+      "titleB": "Free Business YouTube Caption Generator — Professional AI Descriptions",
+      "changes": ["vidIQ business CTA", "Brand Channels framing"],
+      "hypothesis": "'Brand Channels' captures underserved B2B segment."
+    },
+    {
+      "path": "/caption-generator/youtube/technology",
+      "tier": 3,
+      "type": "topic_page",
+      "diagnosis": "Tech reviewers are high-value audience with high tool adoption rate.",
+      "titleA": "YouTube Tech Captions — Free AI Generator for Tech Reviews & Tutorials",
+      "titleB": "Free AI Caption Generator for YouTube Tech Content — Reviews & Tutorials",
+      "changes": ["Descript editing CTA", "Reviews & Tutorials targeting"],
+      "hypothesis": "Descript pairing matches tech creators' editing-heavy workflow."
+    },
+    {
+      "path": "/caption-generator/youtube/gaming",
+      "tier": 3,
+      "type": "topic_page",
+      "diagnosis": "Gaming is YouTube's #1 category. Stream-to-Shorts pipeline is common workflow.",
+      "titleA": "YouTube Gaming Captions — Free AI Generator for Let's Plays & Streams",
+      "titleB": "Free Gaming YouTube Caption Generator — AI Descriptions for Gamers",
+      "changes": ["OpusClip stream-to-shorts CTA", "Let's Plays & Streams targeting"],
+      "hypothesis": "Stream-to-Shorts is natural conversion path for gaming audience."
+    },
+    {
+      "path": "/caption-generator/instagram/travel",
+      "tier": 3,
+      "type": "topic_page",
+      "estimatedMonthlySearches": "~6K",
+      "diagnosis": "Very competitive but high engagement. '200+ Ideas' claim differentiates from competitors.",
+      "titleA": "Instagram Travel Captions — Free AI Generator (200+ Ideas)",
+      "titleB": "Free Travel Caption Generator for Instagram — AI-Powered, Instant",
+      "changes": ["Canva travel grid CTA", "200+ volume claim", "Location-specific examples"],
+      "hypothesis": "'200+' volume claim differentiates. Location mentions capture long-tail."
+    },
+    {
+      "path": "/caption-generator/instagram/food",
+      "tier": 3,
+      "type": "topic_page",
+      "estimatedMonthlySearches": "~5K",
+      "diagnosis": "High engagement niche. 'Foodie Approved' branding creates trust signal.",
+      "titleA": "Instagram Food Captions — Free AI Generator (Foodie Approved)",
+      "titleB": "Free Food Caption Generator for Instagram — AI Captions & Hashtags",
+      "changes": ["Canva food blog CTA", "Foodie Approved branding", "Recipe/restaurant examples"],
+      "hypothesis": "'Foodie Approved' creates trust. Sub-intent mentions capture long-tail."
+    },
+    {
+      "path": "/caption-generator/instagram/fitness",
+      "tier": 3,
+      "type": "topic_page",
+      "estimatedMonthlySearches": "~4K",
+      "diagnosis": "Fitness audience is highly engaged and willing to try tools.",
+      "titleA": "Instagram Fitness Captions — Free AI Generator (Gym & Workout)",
+      "titleB": "Free Fitness Caption Generator for Instagram — AI Workout Captions",
+      "changes": ["Canva transformation CTA", "Gym & Workout sub-mentions", "Transformation examples"],
+      "hypothesis": "Gym/workout sub-mentions capture long-tail 'gym captions' queries."
+    },
+    {
+      "path": "/caption-generator/instagram/beauty",
+      "tier": 3,
+      "type": "topic_page",
+      "estimatedMonthlySearches": "~3K",
+      "diagnosis": "High commercial intent — beauty audience buys products.",
+      "titleA": "Instagram Beauty Captions — Free AI Generator (Skincare & Makeup)",
+      "titleB": "Free Beauty Caption Generator for Instagram — AI Skincare & Makeup Captions",
+      "changes": ["Canva beauty content CTA", "Skincare & Makeup dual targeting", "Educational examples"],
+      "hypothesis": "Skincare + Makeup dual mention captures both sub-audiences."
+    },
+    {
+      "path": "/caption-generator/tiktok/marketing",
+      "tier": 3,
+      "type": "topic_page",
+      "diagnosis": "B2B/brand manager intent. Growing fast as brands invest in TikTok.",
+      "titleA": "TikTok Marketing Captions — Free AI Generator for Brand Content",
+      "titleB": "Free TikTok Marketing Caption Generator — AI-Powered Brand Captions",
+      "changes": ["Metricool analytics CTA", "Brand/business framing"],
+      "hypothesis": "Brand framing attracts B2B audience with higher tool adoption."
+    },
+    {
+      "path": "/caption-generator/instagram/marketing",
+      "tier": 3,
+      "type": "topic_page",
+      "estimatedMonthlySearches": "~4K",
+      "diagnosis": "Brands & Agencies mention captures B2B segment. Highest affiliate conversion potential.",
+      "titleA": "Instagram Marketing Captions — Free AI Generator for Brands & Agencies",
+      "titleB": "Free Instagram Marketing Caption Generator — AI Captions for Business",
+      "changes": ["Metricool social media management CTA", "Brands & Agencies B2B targeting", "A/B variants mention"],
+      "hypothesis": "'Brands & Agencies' captures underserved B2B queries. A/B variants differentiates."
+    }
+  ],
+  "nextSteps": {
+    "immediate": [
+      "Monitor GA4 for hero_cta_click and affiliate_click events over 7 days",
+      "Apply for affiliate programs (vidIQ, Canva, Metricool, OpusClip) to activate real tracking links",
+      "Set up Google Search Console API for data-driven v3"
+    ],
+    "day7": [
+      "Compare affiliate click rates per page",
+      "If title B hypothesis looks stronger, flip ACTIVE_VARIANT to 'B' in seo-overrides.ts",
+      "Identify underperforming pages for further optimization"
+    ],
+    "day14": [
+      "Pull GSC impressions/CTR data (if API available)",
+      "Correlate title changes with CTR movement",
+      "Expand v2 overrides to next 30 pages"
+    ]
+  }
+}

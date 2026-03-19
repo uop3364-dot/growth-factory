@@ -9,6 +9,7 @@ import ToolCrossSell from '@/components/ToolCrossSell';
 import { CrossToolLinks } from '@/components/InternalLinks';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import { buildMetadata } from '@/lib/metadata';
+import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
@@ -46,6 +47,7 @@ const faqs = [
 ];
 
 export default function TitleGeneratorPage() {
+  const ov = getOverride('/title-generator');
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Title Generator', description: 'Generate click-worthy titles and headlines for YouTube, blogs, newsletters, and more. Free, instant.', path: '/title-generator' })) }} />
@@ -56,13 +58,13 @@ export default function TitleGeneratorPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Title Generator (Click-Worthy, Instant)</h1>
           <p className="text-lg text-orange-100">Generate SEO-optimized titles for YouTube, blogs, newsletters &amp; more. With power words and CTR boost.</p>
-          <HeroCTA toolName="title-generator" color="orange" />
+          <HeroCTA toolName="title-generator" color="orange" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <TitleGenerator />
-        <AffiliateCTA pageType="tool" platform="youtube" />
+        <AffiliateCTA pageType="tool" platform="youtube" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
         <HowToUse tool="title-generator" />
         <AdPlaceholder slot="after-generator" />
         <CrossToolLinks currentTool="/title-generator" />

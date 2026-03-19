@@ -9,6 +9,7 @@ import ToolCrossSell from '@/components/ToolCrossSell';
 import { CrossToolLinks } from '@/components/InternalLinks';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import { buildMetadata } from '@/lib/metadata';
+import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
@@ -54,6 +55,7 @@ const faqs = [
 ];
 
 export default function HashtagGeneratorPage() {
+  const ov = getOverride('/hashtag-generator');
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Hashtag Generator', description: 'Generate trending hashtags for Instagram, TikTok, YouTube, X and LinkedIn. Free, instant.', path: '/hashtag-generator' })) }} />
@@ -64,13 +66,13 @@ export default function HashtagGeneratorPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Hashtag Generator (30+ Hashtags, Instant)</h1>
           <p className="text-lg text-pink-100">Generate trending, niche-specific hashtags for Instagram, TikTok, YouTube &amp; X. Free, no signup.</p>
-          <HeroCTA toolName="hashtag-generator" color="pink" />
+          <HeroCTA toolName="hashtag-generator" color="pink" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <HashtagGenerator />
-        <AffiliateCTA pageType="tool" />
+        <AffiliateCTA pageType="tool" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
         <HowToUse tool="hashtag-generator" />
         <AdPlaceholder slot="after-generator" />
         <CrossToolLinks currentTool="/hashtag-generator" />

@@ -12,6 +12,7 @@ import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import { TOPIC_CONTENT, getTopicFaqs, getDefaultTopicContent } from '@/lib/content-config';
+import { getOverride } from '@/lib/seo-overrides';
 
 export function generateStaticParams() {
   const params: { platform: string; topic: string }[] = [];
@@ -40,6 +41,7 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
   const topicContent = TOPIC_CONTENT[topic] ?? getDefaultTopicContent(topic);
   const faqs = getTopicFaqs(topic, pInfo.name);
   const sampleCaptions = generateCaptions({ platform, topic, tone: 'friendly' });
+  const ov = getOverride(`/caption-generator/${platform}/${topic}`);
 
   return (
     <>
@@ -55,19 +57,19 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
       <section className="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free {pInfo.name} {tInfo.name} Caption Generator (AI-Powered)</h1>
-          <p className="text-lg text-blue-100">Generate {topic} captions optimized for {pInfo.name}. Free, instant, with hashtags and CTAs.</p>
-          <HeroCTA toolName={`caption-${platform}-${topic}`} color="blue" />
+          <p className="text-lg text-blue-100">{ov?.contentIntro || `Generate ${topic} captions optimized for ${pInfo.name}. Free, instant, with hashtags and CTAs.`}</p>
+          <HeroCTA toolName={`caption-${platform}-${topic}`} color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} />
 
-        <AffiliateCTA pageType="topic" platform={platform} />
+        <AffiliateCTA pageType="topic" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
 
         {/* Topic-specific writing guide */}
         <div className="mt-8 bg-white rounded-xl shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">How to Write {tInfo.name} Captions for {pInfo.name}</h2>
+          <h2 className="text-xl font-semibold mb-4">{ov?.contentH2 || `How to Write ${tInfo.name} Captions for ${pInfo.name}`}</h2>
           <p className="text-gray-700 mb-4">{topicContent.captionAngle}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -89,10 +91,22 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-4">
-            <h3 className="font-medium text-gray-800 mb-2">Best Practices for {tInfo.name} Content</h3>
-            <p className="text-sm text-gray-700">{topicContent.contentTips}</p>
-          </div>
+          {/* v2: Override examples if available */}
+          {ov?.examples ? (
+            <div className="bg-purple-50 rounded-lg p-4">
+              <h3 className="font-medium text-gray-800 mb-2">Caption Examples</h3>
+              <ul className="space-y-1 text-sm text-gray-700">
+                {ov.examples.map((ex, i) => (
+                  <li key={i} className="pl-3 border-l-2 border-purple-300">{ex}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div className="bg-blue-50 rounded-lg p-4">
+              <h3 className="font-medium text-gray-800 mb-2">Best Practices for {tInfo.name} Content</h3>
+              <p className="text-sm text-gray-700">{topicContent.contentTips}</p>
+            </div>
+          )}
         </div>
 
         {/* Sample captions for SEO */}

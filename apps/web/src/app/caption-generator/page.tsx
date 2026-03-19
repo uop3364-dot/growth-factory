@@ -9,6 +9,7 @@ import HowToUse from '@/components/HowToUse';
 import ToolCrossSell from '@/components/ToolCrossSell';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema, getCaptionPageFaqs } from '@/lib/jsonld';
+import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildCaptionPageMeta();
@@ -16,6 +17,7 @@ export function generateMetadata(): Metadata {
 
 export default function CaptionGeneratorPage() {
   const faqs = getCaptionPageFaqs();
+  const ov = getOverride('/caption-generator');
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Caption Generator', description: 'Generate engaging social media captions instantly with AI. Free, no login.', path: '/caption-generator' })) }} />
@@ -26,13 +28,13 @@ export default function CaptionGeneratorPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Caption Generator (Instant, No Login)</h1>
           <p className="text-lg text-blue-100">Generate high-performing captions for Instagram, TikTok, YouTube, X &amp; Facebook. With hashtags and CTAs.</p>
-          <HeroCTA toolName="caption-generator" color="blue" />
+          <HeroCTA toolName="caption-generator" color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <CaptionGenerator />
-        <AffiliateCTA pageType="tool" />
+        <AffiliateCTA pageType="tool" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
         <HowToUse tool="caption-generator" />
         <AdPlaceholder slot="after-generator" />
         <RelatedPlatforms />

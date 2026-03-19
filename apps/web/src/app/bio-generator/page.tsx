@@ -9,6 +9,7 @@ import ToolCrossSell from '@/components/ToolCrossSell';
 import { CrossToolLinks } from '@/components/InternalLinks';
 import { buildFaqSchema, buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import { buildMetadata } from '@/lib/metadata';
+import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
@@ -46,6 +47,7 @@ const faqs = [
 ];
 
 export default function BioGeneratorPage() {
+  const ov = getOverride('/bio-generator');
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'Free AI Bio Generator', description: 'Generate the perfect social media bio in seconds with AI. Free, no login.', path: '/bio-generator' })) }} />
@@ -56,13 +58,13 @@ export default function BioGeneratorPage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Bio Generator (Instant, No Login)</h1>
           <p className="text-lg text-green-100">Generate the perfect social media bio for Instagram, TikTok, LinkedIn, YouTube &amp; X. Free and instant.</p>
-          <HeroCTA toolName="bio-generator" color="green" />
+          <HeroCTA toolName="bio-generator" color="green" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-8">
         <BioGenerator />
-        <AffiliateCTA pageType="tool" />
+        <AffiliateCTA pageType="tool" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
         <HowToUse tool="bio-generator" />
         <AdPlaceholder slot="after-generator" />
         <CrossToolLinks currentTool="/bio-generator" />
