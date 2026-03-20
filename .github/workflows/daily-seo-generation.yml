@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Verify critical imports
+        run: bash scripts/verify-seo-workflow.sh
+
       - name: Expand SEO pages
         run: |
           TOPICS=${{ github.event.inputs.topics_count || '3' }}

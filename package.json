@@ -8,6 +8,7 @@
     "worker": "cd apps/worker && python -m worker.main",
     "seed": "cd apps/worker && python -m worker.seed_keywords",
     "test": "pnpm --filter web test && cd apps/worker && python -m pytest tests/ -v",
-    "lint": "pnpm --filter web lint"
+    "lint": "pnpm --filter web lint",
+    "verify:seo-workflow": "bash scripts/verify-seo-workflow.sh"
   }
 }
