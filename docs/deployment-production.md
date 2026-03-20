@@ -42,12 +42,14 @@ Verify within 2–3 minutes:
 
 ## Force Redeploy
 
-If auto-deploy fails or is stale:
+If auto-deploy fails or is stale, **deploy from the repo root** (not `apps/web/`):
 
 ```bash
-cd /home/uop3364/workspace/growth-factory/apps/web
+cd /home/uop3364/workspace/growth-factory
 npx vercel --prod --yes
 ```
+
+**WARNING:** Do NOT run `npx vercel` from `apps/web/` — it may create a separate `.vercel/project.json` pointing to a wrong project. The correct project config lives at the repo root `.vercel/project.json` only.
 
 ## Rollback
 
