@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Brand surface card */
+  .brand-surface {
+    @apply bg-white rounded-brand-lg shadow-brand border border-brand-green/10;
+  }
+
+  /* Brand-accented section background */
+  .brand-section-bg {
+    @apply bg-brand-surface;
+  }
+
+  /* Generate button brand enhancement */
+  .brand-btn-generate {
+    @apply relative overflow-hidden transition-all duration-200;
+  }
+  .brand-btn-generate:hover:not(:disabled) {
+    @apply shadow-brand-hover;
+    transform: translateY(-1px);
+  }
+  .brand-btn-generate:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  /* Brand hint bubble */
+  .brand-hint-bubble {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-cream rounded-full
+           text-xs text-brand-outline/80 border border-brand-green/20;
+  }
+}

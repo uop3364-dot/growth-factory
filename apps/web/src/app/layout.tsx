@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
 import GoogleAnalytics from './components/GoogleAnalytics';
+import { MascotImage } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -47,7 +49,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <Link href="/" className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <Link href="/" className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <MascotImage size="xs" priority />
                 CreatorAITools
               </Link>
               <div className="flex gap-6 text-sm">
@@ -100,6 +103,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
             <div className="mt-8 pt-8 border-t border-gray-100 text-center text-sm text-gray-400">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <MascotImage size="xs" priority />
+                <span className="text-xs text-gray-300">{brandCopy.footer[0]}</span>
+              </div>
               &copy; 2026 CreatorAITools. All rights reserved.
             </div>
           </div>

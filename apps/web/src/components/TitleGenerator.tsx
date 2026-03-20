@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
+import { ResultGuidance, SocialHandoff } from '@/components/brand';
 import {
   CONTENT_TYPES,
   NICHES,
@@ -139,6 +140,7 @@ export default function TitleGenerator() {
 
       {/* Results */}
       {result && (
+        <>
         <div className="space-y-6">
           {/* Titles */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -227,6 +229,10 @@ export default function TitleGenerator() {
             <p className="text-sm">Ad Space - Premium Title Tools Coming Soon</p>
           </div>
         </div>
+
+        <ResultGuidance currentTool="/title-generator" onGenerateAgain={handleGenerate} />
+        <SocialHandoff toolPath="/title-generator" toolLabel="titles" />
+        </>
       )}
     </div>
   );

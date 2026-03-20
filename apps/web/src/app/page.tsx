@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import FAQ from '@/components/FAQ';
 import HomeAffiliate from '@/components/HomeAffiliate';
 import ToolCrossSell from '@/components/ToolCrossSell';
+import { BrandHero, MascotHint, MascotImage } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { buildFaqSchema, buildToolSchema, buildWebSiteSchema, buildOrganizationSchema } from '@/lib/jsonld';
 import { buildMetadata } from '@/lib/metadata';
 
@@ -29,7 +31,7 @@ const homeFaqs = [
   },
   {
     question: 'What creator tools do you recommend?',
-    answer: 'For growing faster on YouTube, we recommend pairing our free generators with TubeBuddy (keyword research & SEO), vidIQ (topic ideas & growth insights), and Canva (thumbnails & channel art). All three have free plans to get started.',
+    answer: 'For growing faster, we recommend pairing our free generators with vidIQ (YouTube SEO, keyword data & growth insights) and Metricool (scheduling, analytics & social tracking). Both have free plans to get started.',
   },
 ];
 
@@ -42,7 +44,10 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(homeFaqs)) }} />
 
       {/* 1. Hero */}
-      <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-20 md:py-28">
+      <BrandHero
+        className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-20 md:py-28"
+        hintText={brandCopy.hero[0]}
+      >
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Free AI Tools for Creators — Captions, Bios, Titles &amp; Hashtags
@@ -53,7 +58,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/caption-generator"
-              className="inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
+              className="brand-btn-generate inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
               data-track="homepage_primary_cta_click"
             >
               Generate Captions Now &rarr;
@@ -68,7 +73,7 @@ export default function Home() {
           </div>
           <p className="mt-4 text-sm opacity-80">Free &bull; No login &bull; Instant results</p>
         </div>
-      </section>
+      </BrandHero>
 
       {/* 2. Featured Tools */}
       <section id="tools" className="max-w-5xl mx-auto px-4 py-16">
@@ -77,7 +82,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Link
             href="/caption-generator"
-            className="group bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-blue-500"
+            className="group bg-white rounded-brand-lg shadow-brand p-6 hover:shadow-brand-hover transition-all border-2 border-transparent hover:border-blue-500"
             data-track="homepage_tool_card_click"
             data-tool="caption-generator"
           >
@@ -88,7 +93,7 @@ export default function Home() {
           </Link>
           <Link
             href="/bio-generator"
-            className="group bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-green-500"
+            className="group bg-white rounded-brand-lg shadow-brand p-6 hover:shadow-brand-hover transition-all border-2 border-transparent hover:border-green-500"
             data-track="homepage_tool_card_click"
             data-tool="bio-generator"
           >
@@ -99,7 +104,7 @@ export default function Home() {
           </Link>
           <Link
             href="/title-generator"
-            className="group bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-orange-500"
+            className="group bg-white rounded-brand-lg shadow-brand p-6 hover:shadow-brand-hover transition-all border-2 border-transparent hover:border-orange-500"
             data-track="homepage_tool_card_click"
             data-tool="title-generator"
           >
@@ -110,7 +115,7 @@ export default function Home() {
           </Link>
           <Link
             href="/hashtag-generator"
-            className="group bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all border-2 border-transparent hover:border-pink-500"
+            className="group bg-white rounded-brand-lg shadow-brand p-6 hover:shadow-brand-hover transition-all border-2 border-transparent hover:border-pink-500"
             data-track="homepage_tool_card_click"
             data-tool="hashtag-generator"
           >
@@ -129,21 +134,21 @@ export default function Home() {
       <section className="max-w-3xl mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-8">What You Can Create in 30 Seconds</h2>
         <div className="space-y-4">
-          <div className="flex items-start gap-4 bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+          <div className="flex items-start gap-4 bg-white rounded-brand p-5 shadow-brand border border-brand-green/10">
             <span className="text-2xl">&#9889;</span>
             <div>
               <p className="font-medium text-gray-800">Scroll-stopping captions for any platform</p>
               <p className="text-gray-500 text-sm">Optimized for Instagram, TikTok, YouTube, X, and Facebook</p>
             </div>
           </div>
-          <div className="flex items-start gap-4 bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+          <div className="flex items-start gap-4 bg-white rounded-brand p-5 shadow-brand border border-brand-green/10">
             <span className="text-2xl">&#128640;</span>
             <div>
               <p className="font-medium text-gray-800">Professional bios that convert visitors to followers</p>
               <p className="text-gray-500 text-sm">Within platform character limits, with CTAs built in</p>
             </div>
           </div>
-          <div className="flex items-start gap-4 bg-white rounded-lg p-5 shadow-sm border border-gray-100">
+          <div className="flex items-start gap-4 bg-white rounded-brand p-5 shadow-brand border border-brand-green/10">
             <span className="text-2xl">&#127919;</span>
             <div>
               <p className="font-medium text-gray-800">Click-worthy titles that boost CTR and views</p>
@@ -154,22 +159,22 @@ export default function Home() {
       </section>
 
       {/* 5. How It Works */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-brand-surface py-16">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-lg mx-auto mb-3">1</div>
+              <div className="w-12 h-12 rounded-full bg-brand-green/30 text-brand-outline font-bold flex items-center justify-center text-lg mx-auto mb-3">1</div>
               <h3 className="font-semibold mb-1">Pick a Tool</h3>
               <p className="text-sm text-gray-600">Choose captions, bios, titles, or hashtags.</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-lg mx-auto mb-3">2</div>
+              <div className="w-12 h-12 rounded-full bg-brand-green/30 text-brand-outline font-bold flex items-center justify-center text-lg mx-auto mb-3">2</div>
               <h3 className="font-semibold mb-1">Enter Your Topic</h3>
               <p className="text-sm text-gray-600">Select platform, niche, and style preferences.</p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-lg mx-auto mb-3">3</div>
+              <div className="w-12 h-12 rounded-full bg-brand-green/30 text-brand-outline font-bold flex items-center justify-center text-lg mx-auto mb-3">3</div>
               <h3 className="font-semibold mb-1">Copy &amp; Post</h3>
               <p className="text-sm text-gray-600">Get instant results. Copy with one click.</p>
             </div>
@@ -177,12 +182,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. FAQ */}
+      {/* 6. Brand + Action section */}
+      <section className="max-w-3xl mx-auto px-4 py-16">
+        <div className="bg-gradient-to-br from-brand-green/10 to-brand-cream rounded-brand-xl p-8 text-center border border-brand-green/15">
+          <MascotImage size="lg" />
+          <h2 className="text-2xl font-bold text-gray-800 mt-4 mb-2">{brandCopy.homepageBrand[0]}</h2>
+          <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">{brandCopy.homepageBrand[2]}</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <Link
+              href="/caption-generator"
+              className="brand-btn-generate inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm hover:from-blue-700 hover:to-purple-700 transition-colors shadow-brand"
+              data-track="homepage_brand_section_cta"
+            >
+              Generate Captions &rarr;
+            </Link>
+            <Link
+              href="/bio-generator"
+              className="inline-block bg-white text-gray-700 font-semibold px-6 py-3 rounded-xl text-sm border border-gray-200 hover:border-blue-300 hover:text-blue-600 transition-colors"
+              data-track="homepage_brand_section_bio"
+            >
+              Try Bio Generator
+            </Link>
+          </div>
+          <p className="text-xs text-gray-400 mt-4">{brandCopy.cta[0]}</p>
+        </div>
+      </section>
+
+      {/* 7. FAQ */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <FAQ items={homeFaqs} />
       </section>
 
-      {/* 7. Final CTA */}
+      {/* 8. Final CTA */}
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Start Creating Better Content — Free</h2>
@@ -190,7 +221,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/caption-generator"
-              className="inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
+              className="brand-btn-generate inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
               data-track="homepage_final_cta_click"
             >
               Generate Captions Now &rarr;
@@ -202,6 +233,9 @@ export default function Home() {
             >
               Generate Bios &rarr;
             </Link>
+          </div>
+          <div className="mt-4">
+            <MascotHint text={brandCopy.general[0]} className="bg-white/10 border-white/20 text-white/80" />
           </div>
         </div>
       </section>

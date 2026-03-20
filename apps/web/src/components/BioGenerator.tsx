@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
+import { ResultGuidance, SocialHandoff } from '@/components/brand';
 import {
   BIO_PLATFORMS,
   BIO_NICHES,
@@ -158,6 +159,7 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
 
       {/* Results */}
       {result && (
+        <>
         <div className="space-y-6">
           {/* Main Bios */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -231,6 +233,10 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
             <p className="text-sm">Ad Space - Premium Bio Tools Coming Soon</p>
           </div>
         </div>
+
+        <ResultGuidance currentTool="/bio-generator" onGenerateAgain={handleGenerate} />
+        <SocialHandoff toolPath="/bio-generator" toolLabel="bios" />
+        </>
       )}
     </div>
   );

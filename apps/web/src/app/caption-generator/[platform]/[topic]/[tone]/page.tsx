@@ -8,6 +8,8 @@ import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
 import HeroCTA from '@/components/HeroCTA';
 import ToolCrossSell from '@/components/ToolCrossSell';
+import { ToolPageLayout } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO, type Platform, type Topic, type Tone } from '@/lib/seo-data';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
@@ -51,113 +53,116 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
   const ov = getOverride(`/caption-generator/${platform}/${topic}/${tone}`);
 
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${tnInfo.name} ${tInfo.name} ${pInfo.name} Caption Generator — Free AI`, description: `Generate ${tone} ${topic} captions for ${pInfo.name}. Free, instant, no login.`, path: `/caption-generator/${platform}/${topic}/${tone}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(allFaqs)) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Caption Generator', path: '/caption-generator' },
-        { name: pInfo.name, path: `/caption-generator/${platform}` },
-        { name: tInfo.name, path: `/caption-generator/${platform}/${topic}` },
-        { name: tnInfo.name, path: `/caption-generator/${platform}/${topic}/${tone}` },
-      ])) }} />
-
-      <section className="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12">
+    <ToolPageLayout
+      scripts={
+        <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${tnInfo.name} ${tInfo.name} ${pInfo.name} Caption Generator — Free AI`, description: `Generate ${tone} ${topic} captions for ${pInfo.name}. Free, instant, no login.`, path: `/caption-generator/${platform}/${topic}/${tone}` })) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(allFaqs)) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Caption Generator', path: '/caption-generator' },
+            { name: pInfo.name, path: `/caption-generator/${platform}` },
+            { name: tInfo.name, path: `/caption-generator/${platform}/${topic}` },
+            { name: tnInfo.name, path: `/caption-generator/${platform}/${topic}/${tone}` },
+          ])) }} />
+        </>
+      }
+      heroClassName="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12"
+      heroHint={brandCopy.general[3]}
+      heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{tnInfo.name} {tInfo.name} Captions for {pInfo.name} — Free AI Generator</h1>
           <p className="text-lg text-blue-100">Generate {tone}, {topic}-focused captions for {pInfo.name}. {tnInfo.description} tone with hashtags and CTAs.</p>
           <HeroCTA toolName={`caption-${platform}-${topic}-${tone}`} color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
-      </section>
+      }
+    >
+      <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} defaultTone={tone} />
 
-      <section className="max-w-4xl mx-auto px-4 py-8">
-        <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} defaultTone={tone} />
+      <AffiliateCTA pageType="tone" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
 
-        <AffiliateCTA pageType="tone" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
+      {/* Tone guide section */}
+      <div className="mt-8 bg-white rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4">How to Write {tnInfo.name} {tInfo.name} Captions</h2>
+        <p className="text-gray-700 mb-4">{toneContent.definition}</p>
 
-        {/* Tone guide section */}
-        <div className="mt-8 bg-white rounded-xl shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">How to Write {tnInfo.name} {tInfo.name} Captions</h2>
-          <p className="text-gray-700 mb-4">{toneContent.definition}</p>
-
-          {/* Before/After */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-red-50 rounded-lg p-4">
-              <h3 className="font-medium text-red-800 mb-2 text-sm uppercase tracking-wide">Before</h3>
-              <p className="text-gray-700 italic">&ldquo;{toneContent.beforeAfter.before}&rdquo;</p>
-            </div>
-            <div className="bg-green-50 rounded-lg p-4">
-              <h3 className="font-medium text-green-800 mb-2 text-sm uppercase tracking-wide">After ({tnInfo.name})</h3>
-              <p className="text-gray-700 italic">&ldquo;{toneContent.beforeAfter.after}&rdquo;</p>
-            </div>
+        {/* Before/After */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-red-50 rounded-lg p-4">
+            <h3 className="font-medium text-red-800 mb-2 text-sm uppercase tracking-wide">Before</h3>
+            <p className="text-gray-700 italic">&ldquo;{toneContent.beforeAfter.before}&rdquo;</p>
           </div>
-
-          {/* Best for / Not for */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="font-medium text-gray-800 mb-2">Best For</h3>
-              <ul className="space-y-1 text-sm text-gray-600">
-                {toneContent.bestFor.map((item, i) => (
-                  <li key={i} className="flex gap-2"><span className="text-green-600">&#10003;</span> {item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="font-medium text-gray-800 mb-2">Consider Other Tones For</h3>
-              <ul className="space-y-1 text-sm text-gray-600">
-                {toneContent.notBestFor.map((item, i) => (
-                  <li key={i} className="flex gap-2"><span className="text-amber-500">&#9888;</span> {item}</li>
-                ))}
-              </ul>
-            </div>
+          <div className="bg-green-50 rounded-lg p-4">
+            <h3 className="font-medium text-green-800 mb-2 text-sm uppercase tracking-wide">After ({tnInfo.name})</h3>
+            <p className="text-gray-700 italic">&ldquo;{toneContent.beforeAfter.after}&rdquo;</p>
           </div>
+        </div>
 
-          {/* Writing tips */}
-          <div className="bg-blue-50 rounded-lg p-4">
-            <h3 className="font-medium text-gray-800 mb-2">Writing Tips for {tnInfo.name} Tone</h3>
-            <ul className="space-y-1 text-sm text-gray-700">
-              {toneContent.writingTips.map((tip, i) => (
-                <li key={i} className="pl-3 border-l-2 border-blue-300">{tip}</li>
+        {/* Best for / Not for */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Best For</h3>
+            <ul className="space-y-1 text-sm text-gray-600">
+              {toneContent.bestFor.map((item, i) => (
+                <li key={i} className="flex gap-2"><span className="text-green-600">&#10003;</span> {item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Consider Other Tones For</h3>
+            <ul className="space-y-1 text-sm text-gray-600">
+              {toneContent.notBestFor.map((item, i) => (
+                <li key={i} className="flex gap-2"><span className="text-amber-500">&#9888;</span> {item}</li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Pre-generated sample captions for SEO */}
-        <div className="mt-8 bg-white rounded-xl shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">{tnInfo.name} {tInfo.name} Caption Examples for {pInfo.name}</h2>
-          <div className="space-y-3">
-            {sampleCaptions.captions.map((c, i) => (
-              <div key={i} className="text-gray-700 pl-4 border-l-2 border-purple-200 py-1">{c}</div>
+        {/* Writing tips */}
+        <div className="bg-blue-50 rounded-lg p-4">
+          <h3 className="font-medium text-gray-800 mb-2">Writing Tips for {tnInfo.name} Tone</h3>
+          <ul className="space-y-1 text-sm text-gray-700">
+            {toneContent.writingTips.map((tip, i) => (
+              <li key={i} className="pl-3 border-l-2 border-blue-300">{tip}</li>
             ))}
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {sampleCaptions.hashtags.map((h, i) => (
-              <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">{h}</span>
-            ))}
-          </div>
+          </ul>
         </div>
+      </div>
 
-        <AdPlaceholder slot="after-samples" />
-
-        {/* Breadcrumb navigation */}
-        <div className="my-6 flex flex-wrap items-center gap-2 text-sm text-gray-500">
-          <Link href="/caption-generator" className="hover:text-blue-600">AI Caption Generator</Link>
-          <span>/</span>
-          <Link href={`/caption-generator/${platform}`} className="hover:text-blue-600">{pInfo.name} Caption Generator</Link>
-          <span>/</span>
-          <Link href={`/caption-generator/${platform}/${topic}`} className="hover:text-blue-600">{pInfo.name} {tInfo.name} Captions</Link>
-          <span>/</span>
-          <span className="text-gray-800 font-medium">{tnInfo.name}</span>
+      {/* Pre-generated sample captions for SEO */}
+      <div className="mt-8 bg-white rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4">{tnInfo.name} {tInfo.name} Caption Examples for {pInfo.name}</h2>
+        <div className="space-y-3">
+          {sampleCaptions.captions.map((c, i) => (
+            <div key={i} className="text-gray-700 pl-4 border-l-2 border-purple-200 py-1">{c}</div>
+          ))}
         </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {sampleCaptions.hashtags.map((h, i) => (
+            <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">{h}</span>
+          ))}
+        </div>
+      </div>
 
-        <RelatedTones platform={platform} topic={topic} currentTone={tone} />
-        <RelatedTopics platform={platform} currentTopic={topic} />
-        <RelatedPlatforms currentPlatform={platform} />
-        <CrossToolLinks currentTool="/caption-generator" />
-        <FAQ items={allFaqs} />
-        <ToolCrossSell currentTool="/caption-generator" />
-      </section>
-    </>
+      <AdPlaceholder slot="after-samples" />
+
+      {/* Breadcrumb navigation */}
+      <div className="my-6 flex flex-wrap items-center gap-2 text-sm text-gray-500">
+        <Link href="/caption-generator" className="hover:text-blue-600">AI Caption Generator</Link>
+        <span>/</span>
+        <Link href={`/caption-generator/${platform}`} className="hover:text-blue-600">{pInfo.name} Caption Generator</Link>
+        <span>/</span>
+        <Link href={`/caption-generator/${platform}/${topic}`} className="hover:text-blue-600">{pInfo.name} {tInfo.name} Captions</Link>
+        <span>/</span>
+        <span className="text-gray-800 font-medium">{tnInfo.name}</span>
+      </div>
+
+      <RelatedTones platform={platform} topic={topic} currentTone={tone} />
+      <RelatedTopics platform={platform} currentTopic={topic} />
+      <RelatedPlatforms currentPlatform={platform} />
+      <CrossToolLinks currentTool="/caption-generator" />
+      <FAQ items={allFaqs} />
+      <ToolCrossSell currentTool="/caption-generator" />
+    </ToolPageLayout>
   );
 }

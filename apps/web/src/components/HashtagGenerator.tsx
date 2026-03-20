@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
+import { ResultGuidance, SocialHandoff } from '@/components/brand';
 
 const PLATFORMS = [
   { value: 'instagram', label: 'Instagram', emoji: '📸' },
@@ -179,6 +180,7 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
 
       {/* Results */}
       {result && (
+        <>
         <div className="space-y-6">
           {/* All Hashtags */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -288,6 +290,10 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
             <p className="text-gray-700">{result.tip}</p>
           </div>
         </div>
+
+        <ResultGuidance currentTool="/hashtag-generator" onGenerateAgain={handleGenerate} />
+        <SocialHandoff toolPath="/hashtag-generator" toolLabel="hashtags" />
+        </>
       )}
     </div>
   );

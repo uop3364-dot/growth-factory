@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from '@/lib/seo-data';
 import type { Platform, Topic, Tone } from '@/lib/seo-data';
+import { EmptyStateMascot, ResultFrame, ResultGuidance, SocialHandoff } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 
 interface CaptionResult {
   captions: string[];
@@ -144,75 +146,94 @@ export default function CaptionGenerator({
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="brand-btn-generate w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? 'Generating...' : 'Generate Captions'}
+          {loading ? brandCopy.loading[0] : 'Generate Captions'}
         </button>
       </div>
 
+      {/* Empty state */}
+      {!result && !loading && (
+        <EmptyStateMascot text={brandCopy.empty[1]} />
+      )}
+
       {/* Results */}
       {result && (
-        <div className="space-y-6">
-          {/* Captions */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Generated Captions</h3>
-            <div className="space-y-3">
-              {result.captions.map((caption, i) => (
-                <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                  <p className="text-gray-800 flex-1">{caption}</p>
+        <>
+        <ResultFrame>
+          <div className="space-y-6">
+            {/* Captions */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold mb-4">Generated Captions</h3>
+              <div className="space-y-3">
+                {result.captions.map((caption, i) => (
+                  <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <p className="text-gray-800 flex-1">{caption}</p>
+                    <button
+                      onClick={() => copyToClipboard(caption, i)}
+                      className="text-sm text-blue-600 hover:text-blue-800 whitespace-nowrap font-medium"
+                    >
+                      {copied === i ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Short Variants */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold mb-4">Short Variants</h3>
+              <div className="flex flex-wrap gap-2">
+                {result.shortVariants.map((v, i) => (
                   <button
-                    onClick={() => copyToClipboard(caption, i)}
-                    className="text-sm text-blue-600 hover:text-blue-800 whitespace-nowrap font-medium"
+                    key={i}
+                    onClick={() => copyToClipboard(v, 100 + i)}
+                    className="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition-colors"
                   >
-                    {copied === i ? 'Copied!' : 'Copy'}
+                    {copied === 100 + i ? 'Copied' : v}
                   </button>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Hashtags */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-semibold mb-4">Suggested Hashtags</h3>
+              <div className="flex flex-wrap gap-2">
+                {result.hashtags.map((h, i) => (
+                  <button
+                    key={i}
+                    onClick={() => copyToClipboard(h, 200 + i)}
+                    className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+                  >
+                    {copied === 200 + i ? 'Copied' : h}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
+              <p className="text-gray-700 font-medium">{result.ctaSuggestion}</p>
+            </div>
+
+            {/* Ad Placeholder */}
+            <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-400">
+              <p className="text-sm">Ad Space - Premium Caption Tools Coming Soon</p>
             </div>
           </div>
+        </ResultFrame>
 
-          {/* Short Variants */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Short Variants</h3>
-            <div className="flex flex-wrap gap-2">
-              {result.shortVariants.map((v, i) => (
-                <button
-                  key={i}
-                  onClick={() => copyToClipboard(v, 100 + i)}
-                  className="px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition-colors"
-                >
-                  {copied === 100 + i ? 'Copied' : v}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Hashtags */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Suggested Hashtags</h3>
-            <div className="flex flex-wrap gap-2">
-              {result.hashtags.map((h, i) => (
-                <button
-                  key={i}
-                  onClick={() => copyToClipboard(h, 200 + i)}
-                  className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
-                >
-                  {copied === 200 + i ? 'Copied' : h}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
-            <p className="text-gray-700 font-medium">{result.ctaSuggestion}</p>
-          </div>
-
-          {/* Ad Placeholder */}
-          <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-400">
-            <p className="text-sm">Ad Space - Premium Caption Tools Coming Soon</p>
-          </div>
-        </div>
+        {/* Post-generation guidance + social handoff */}
+        <ResultGuidance
+          currentTool="/caption-generator"
+          onGenerateAgain={handleGenerate}
+        />
+        <SocialHandoff
+          toolPath="/caption-generator"
+          toolLabel="captions"
+        />
+        </>
       )}
     </div>
   );

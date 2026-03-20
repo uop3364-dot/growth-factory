@@ -7,6 +7,8 @@ import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
 import HeroCTA from '@/components/HeroCTA';
 import ToolCrossSell from '@/components/ToolCrossSell';
+import { ToolPageLayout } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { PLATFORMS, TOPICS, PLATFORM_INFO, TOPIC_INFO, type Platform, type Topic } from '@/lib/seo-data';
 import { buildCaptionPageMeta } from '@/lib/metadata';
 import { generateCaptions } from '@/lib/caption-generator';
@@ -44,89 +46,92 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
   const ov = getOverride(`/caption-generator/${platform}/${topic}`);
 
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `Free ${pInfo.name} ${tInfo.name} Caption Generator`, description: `Generate ${topic} captions for ${pInfo.name} with AI. Free, instant.`, path: `/caption-generator/${platform}/${topic}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Caption Generator', path: '/caption-generator' },
-        { name: pInfo.name, path: `/caption-generator/${platform}` },
-        { name: tInfo.name, path: `/caption-generator/${platform}/${topic}` },
-      ])) }} />
-
-      <section className="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12">
+    <ToolPageLayout
+      scripts={
+        <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `Free ${pInfo.name} ${tInfo.name} Caption Generator`, description: `Generate ${topic} captions for ${pInfo.name} with AI. Free, instant.`, path: `/caption-generator/${platform}/${topic}` })) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Caption Generator', path: '/caption-generator' },
+            { name: pInfo.name, path: `/caption-generator/${platform}` },
+            { name: tInfo.name, path: `/caption-generator/${platform}/${topic}` },
+          ])) }} />
+        </>
+      }
+      heroClassName="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12"
+      heroHint={brandCopy.empty[1]}
+      heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free {pInfo.name} {tInfo.name} Caption Generator (AI-Powered)</h1>
           <p className="text-lg text-blue-100">{ov?.contentIntro || `Generate ${topic} captions optimized for ${pInfo.name}. Free, instant, with hashtags and CTAs.`}</p>
           <HeroCTA toolName={`caption-${platform}-${topic}`} color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
-      </section>
+      }
+    >
+      <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} />
 
-      <section className="max-w-4xl mx-auto px-4 py-8">
-        <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} />
+      <AffiliateCTA pageType="topic" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
 
-        <AffiliateCTA pageType="topic" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} customPartnerSlug={ov?.affiliateSlug} />
+      {/* Topic-specific writing guide */}
+      <div className="mt-8 bg-white rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4">{ov?.contentH2 || `How to Write ${tInfo.name} Captions for ${pInfo.name}`}</h2>
+        <p className="text-gray-700 mb-4">{topicContent.captionAngle}</p>
 
-        {/* Topic-specific writing guide */}
-        <div className="mt-8 bg-white rounded-xl shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">{ov?.contentH2 || `How to Write ${tInfo.name} Captions for ${pInfo.name}`}</h2>
-          <p className="text-gray-700 mb-4">{topicContent.captionAngle}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="font-medium text-gray-800 mb-2">Caption Hooks That Work</h3>
-              <ul className="space-y-1 text-sm text-gray-600">
-                {topicContent.exampleHooks.map((hook, i) => (
-                  <li key={i} className="pl-3 border-l-2 border-blue-200">&ldquo;{hook}&rdquo;</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h3 className="font-medium text-gray-800 mb-2">Effective CTAs</h3>
-              <ul className="space-y-1 text-sm text-gray-600">
-                {topicContent.ctaTypes.map((cta, i) => (
-                  <li key={i} className="pl-3 border-l-2 border-purple-200">{cta}</li>
-                ))}
-              </ul>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Caption Hooks That Work</h3>
+            <ul className="space-y-1 text-sm text-gray-600">
+              {topicContent.exampleHooks.map((hook, i) => (
+                <li key={i} className="pl-3 border-l-2 border-blue-200">&ldquo;{hook}&rdquo;</li>
+              ))}
+            </ul>
           </div>
-
-          {/* v2: Override examples if available */}
-          {ov?.examples ? (
-            <div className="bg-purple-50 rounded-lg p-4">
-              <h3 className="font-medium text-gray-800 mb-2">Caption Examples</h3>
-              <ul className="space-y-1 text-sm text-gray-700">
-                {ov.examples.map((ex, i) => (
-                  <li key={i} className="pl-3 border-l-2 border-purple-300">{ex}</li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <div className="bg-blue-50 rounded-lg p-4">
-              <h3 className="font-medium text-gray-800 mb-2">Best Practices for {tInfo.name} Content</h3>
-              <p className="text-sm text-gray-700">{topicContent.contentTips}</p>
-            </div>
-          )}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Effective CTAs</h3>
+            <ul className="space-y-1 text-sm text-gray-600">
+              {topicContent.ctaTypes.map((cta, i) => (
+                <li key={i} className="pl-3 border-l-2 border-purple-200">{cta}</li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Sample captions for SEO */}
-        <div className="mt-8 bg-white rounded-xl shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">{tInfo.name} Caption Examples for {pInfo.name}</h2>
-          <ul className="space-y-2">
-            {sampleCaptions.captions.slice(0, 5).map((c, i) => (
-              <li key={i} className="text-gray-700 pl-4 border-l-2 border-blue-200">{c}</li>
-            ))}
-          </ul>
-        </div>
+        {/* v2: Override examples if available */}
+        {ov?.examples ? (
+          <div className="bg-purple-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Caption Examples</h3>
+            <ul className="space-y-1 text-sm text-gray-700">
+              {ov.examples.map((ex, i) => (
+                <li key={i} className="pl-3 border-l-2 border-purple-300">{ex}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="bg-blue-50 rounded-lg p-4">
+            <h3 className="font-medium text-gray-800 mb-2">Best Practices for {tInfo.name} Content</h3>
+            <p className="text-sm text-gray-700">{topicContent.contentTips}</p>
+          </div>
+        )}
+      </div>
 
-        <AdPlaceholder slot="after-samples" />
-        <RelatedTones platform={platform} topic={topic} />
-        <RelatedTopics platform={platform} currentTopic={topic} />
-        <RelatedPlatforms currentPlatform={platform} />
-        <CrossToolLinks currentTool="/caption-generator" />
-        <FAQ items={faqs} />
-        <ToolCrossSell currentTool="/caption-generator" />
-      </section>
-    </>
+      {/* Sample captions for SEO */}
+      <div className="mt-8 bg-white rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4">{tInfo.name} Caption Examples for {pInfo.name}</h2>
+        <ul className="space-y-2">
+          {sampleCaptions.captions.slice(0, 5).map((c, i) => (
+            <li key={i} className="text-gray-700 pl-4 border-l-2 border-blue-200">{c}</li>
+          ))}
+        </ul>
+      </div>
+
+      <AdPlaceholder slot="after-samples" />
+      <RelatedTones platform={platform} topic={topic} />
+      <RelatedTopics platform={platform} currentTopic={topic} />
+      <RelatedPlatforms currentPlatform={platform} />
+      <CrossToolLinks currentTool="/caption-generator" />
+      <FAQ items={faqs} />
+      <ToolCrossSell currentTool="/caption-generator" />
+    </ToolPageLayout>
   );
 }
