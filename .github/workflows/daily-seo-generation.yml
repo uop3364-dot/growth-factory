@@ -39,7 +39,6 @@ jobs:
         run: pnpm install
 
       - name: Expand SEO pages
-        working-directory: apps/web
         run: |
           TOPICS=${{ github.event.inputs.topics_count || '3' }}
           TONES=${{ github.event.inputs.tones_count || '1' }}
