@@ -3,21 +3,6 @@
   "topics": {
     "pending": [
       {
-        "id": "parenting",
-        "name": "Parenting",
-        "emoji": "👶"
-      },
-      {
-        "id": "health",
-        "name": "Health",
-        "emoji": "🌿"
-      },
-      {
-        "id": "sports",
-        "name": "Sports",
-        "emoji": "⚽"
-      },
-      {
         "id": "art",
         "name": "Art",
         "emoji": "🎨"
@@ -158,16 +143,29 @@
         "name": "Lifestyle",
         "emoji": "✨",
         "addedAt": "2026-03-16T12:35:56.316Z"
+      },
+      {
+        "id": "parenting",
+        "name": "Parenting",
+        "emoji": "👶",
+        "addedAt": "2026-03-20T10:56:55.165Z"
+      },
+      {
+        "id": "health",
+        "name": "Health",
+        "emoji": "🌿",
+        "addedAt": "2026-03-20T10:56:55.165Z"
+      },
+      {
+        "id": "sports",
+        "name": "Sports",
+        "emoji": "⚽",
+        "addedAt": "2026-03-20T10:56:55.165Z"
       }
     ]
   },
   "tones": {
     "pending": [
-      {
-        "id": "bold",
-        "name": "Bold",
-        "description": "Confident and daring"
-      },
       {
         "id": "casual",
         "name": "Casual",
@@ -216,6 +214,12 @@
         "name": "Sarcastic",
         "description": "Dry wit and irony",
         "addedAt": "2026-03-16T12:35:56.316Z"
+      },
+      {
+        "id": "bold",
+        "name": "Bold",
+        "description": "Confident and daring",
+        "addedAt": "2026-03-20T10:56:55.165Z"
       }
     ]
   }

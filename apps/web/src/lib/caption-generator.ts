@@ -64,6 +64,9 @@ const TOPIC_PHRASES: Record<string, string[]> = {
   'photography': ["photography vibes", "photography life", "photography goals", "photography inspiration", "photography journey"],
   'music': ["music vibes", "music life", "music goals", "music inspiration", "music journey"],
   'lifestyle': ["lifestyle vibes", "lifestyle life", "lifestyle goals", "lifestyle inspiration", "lifestyle journey"],
+  'parenting': ["parenting vibes", "parenting life", "parenting goals", "parenting inspiration", "parenting journey"],
+  'health': ["health vibes", "health life", "health goals", "health inspiration", "health journey"],
+  'sports': ["sports vibes", "sports life", "sports goals", "sports inspiration", "sports journey"],
 };
 
 const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: string }> = {
@@ -76,6 +79,7 @@ const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: st
   persuasive: { prefix: "Stop scrolling.", suffix: "", style: "urgent and compelling" },
   'inspirational': { prefix: "", suffix: "", style: "uplifting and motivating" },
   'sarcastic': { prefix: "", suffix: "", style: "dry wit and irony" },
+  'bold': { prefix: "", suffix: "", style: "confident and daring" },
 };
 
 function hashCode(str: string): number {
