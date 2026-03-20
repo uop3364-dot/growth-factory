@@ -108,6 +108,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="text-xs text-gray-300">{brandCopy.footer[0]}</span>
               </div>
               &copy; 2026 CreatorAITools. All rights reserved.
+              {process.env.NEXT_PUBLIC_BUILD_SHA && (
+                <span className="block text-[10px] text-gray-200 mt-1" data-build={process.env.NEXT_PUBLIC_BUILD_SHA}>
+                  v{process.env.NEXT_PUBLIC_BUILD_SHA}
+                </span>
+              )}
             </div>
           </div>
         </footer>

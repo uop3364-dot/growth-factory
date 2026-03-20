@@ -32,7 +32,7 @@ export default function HomeAffiliate() {
     <section className="bg-gray-50 py-16">
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-center gap-2 mb-4">
-          <MascotImage size="sm" />
+          <MascotImage size="md" />
           <h2 className="text-3xl font-bold text-center">Take Your Results Further</h2>
         </div>
         <p className="text-gray-500 text-center mb-3 max-w-2xl mx-auto">

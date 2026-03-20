@@ -43,35 +43,47 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: 'CreatorAITools - Free AI Caption Generator', description: 'Free AI-powered caption generator for Instagram, TikTok, YouTube, X and Facebook. Generate captions, hashtags and CTAs instantly.', path: '/' })) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(homeFaqs)) }} />
 
-      {/* 1. Hero */}
+      {/* 1. Hero — mascot as main character */}
       <BrandHero
         className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-20 md:py-28"
         hintText={brandCopy.hero[0]}
       >
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Free AI Tools for Creators — Captions, Bios, Titles &amp; Hashtags
-          </h1>
-          <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Generate scroll-stopping content in seconds. No signup, no limits, just results.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="/caption-generator"
-              className="brand-btn-generate inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
-              data-track="homepage_primary_cta_click"
-            >
-              Generate Captions Now &rarr;
-            </Link>
-            <Link
-              href="#tools"
-              className="inline-block bg-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/30 transition-colors text-lg"
-              data-track="homepage_secondary_cta_click"
-            >
-              See All Free Tools
-            </Link>
+        <div className="max-w-5xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
+          {/* Text left */}
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              Free AI Tools for Creators — Captions, Bios, Titles &amp; Hashtags
+            </h1>
+            <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl">
+              Generate scroll-stopping content in seconds. No signup, no limits, just results.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+              <Link
+                href="/caption-generator"
+                className="brand-btn-generate inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
+                data-track="homepage_primary_cta_click"
+              >
+                Generate Captions Now &rarr;
+              </Link>
+              <Link
+                href="#tools"
+                className="inline-block bg-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/30 transition-colors text-lg"
+                data-track="homepage_secondary_cta_click"
+              >
+                See All Free Tools
+              </Link>
+            </div>
+            <p className="mt-4 text-sm opacity-80">Free &bull; No login &bull; Instant results</p>
           </div>
-          <p className="mt-4 text-sm opacity-80">Free &bull; No login &bull; Instant results</p>
+          {/* Mascot right — main character, above fold */}
+          <div className="flex-shrink-0">
+            <MascotImage
+              size="hero"
+              priority
+              className="drop-shadow-2xl animate-brand-breathe"
+              alt="Lazy Dino — your AI content sidekick"
+            />
+          </div>
         </div>
       </BrandHero>
 
@@ -185,7 +197,7 @@ export default function Home() {
       {/* 6. Brand + Action section */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <div className="bg-gradient-to-br from-brand-green/10 to-brand-cream rounded-brand-xl p-8 text-center border border-brand-green/15">
-          <MascotImage size="lg" />
+          <MascotImage size="lg" className="drop-shadow-lg" />
           <h2 className="text-2xl font-bold text-gray-800 mt-4 mb-2">{brandCopy.homepageBrand[0]}</h2>
           <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">{brandCopy.homepageBrand[2]}</p>
           <div className="flex flex-col sm:flex-row justify-center gap-3">

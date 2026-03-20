@@ -1,21 +1,23 @@
 import Image from 'next/image';
 import type { MascotSize } from './MascotSvg';
 import MascotSvg from './MascotSvg';
+import { getMascot, mascotSizes } from '@/lib/brandAssets';
 
-/** Canonical path for the production mascot asset. */
-export const MASCOT_MASTER_PATH = '/brand/mascot-master.png';
+/** Canonical path — re-exported for backward compat. */
+export const MASCOT_MASTER_PATH = getMascot();
 
 const SIZE_MAP: Record<MascotSize, number> = {
-  xs: 24,
-  sm: 36,
-  md: 56,
-  lg: 80,
+  xs: mascotSizes.sm,   // 48
+  sm: mascotSizes.sm,   // 48
+  md: mascotSizes.md,   // 80
+  lg: mascotSizes.lg,   // 140
+  hero: mascotSizes.hero, // 280
 };
 
 interface MascotImageProps {
   size?: MascotSize;
   className?: string;
-  /** Set true for above-the-fold usage (e.g. nav logo). */
+  /** Set true for above-the-fold usage (e.g. hero, nav logo). */
   priority?: boolean;
   alt?: string;
   /** Force SVG fallback even when image exists. */
@@ -25,15 +27,10 @@ interface MascotImageProps {
 }
 
 /**
- * Production mascot component.
+ * Production mascot component — single source for Lazy Dino rendering.
  *
- * Primary: renders optimised next/image from /brand/mascot-master.png.
- * Fallback: renders inline MascotSvg if `forceSvg` is set or the master
- * asset is not yet deployed.
- *
- * When the final mascot PNG is ready, drop it at:
- *   public/brand/mascot-master.png
- * No code changes needed — MascotImage will serve it automatically.
+ * Uses /brand/lazy-dino.png via brandAssets helper.
+ * Fallback: inline MascotSvg if `forceSvg` is set.
  */
 export default function MascotImage({
   size = 'sm',
@@ -45,21 +42,17 @@ export default function MascotImage({
 }: MascotImageProps) {
   const px = SIZE_MAP[size];
 
-  // Until the real mascot PNG is deployed, use SVG fallback.
-  // When mascot-master.png exists in public/brand/, set this to true.
-  const MASTER_ASSET_READY = true;
-
-  if (forceSvg || !MASTER_ASSET_READY) {
+  if (forceSvg) {
     return <MascotSvg size={size} className={className} withLaptop={withLaptop} />;
   }
 
   return (
     <Image
-      src={MASCOT_MASTER_PATH}
+      src={getMascot()}
       width={px}
       height={px}
       alt={alt}
-      className={className}
+      className={`rounded-2xl ${className}`}
       priority={priority}
       loading={priority ? undefined : 'lazy'}
       quality={85}

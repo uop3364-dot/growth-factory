@@ -8,13 +8,14 @@
  * When real mascot assets are ready, replace the SVG below with an
  * optimised <Image> tag pointing to /images/mascot/*.webp.
  */
-export type MascotSize = 'xs' | 'sm' | 'md' | 'lg';
+export type MascotSize = 'xs' | 'sm' | 'md' | 'lg' | 'hero';
 
 const SIZE_MAP: Record<MascotSize, number> = {
-  xs: 24,
-  sm: 36,
-  md: 56,
-  lg: 80,
+  xs: 48,
+  sm: 48,
+  md: 80,
+  lg: 140,
+  hero: 280,
 };
 
 interface MascotSvgProps {

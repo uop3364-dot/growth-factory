@@ -1,6 +1,8 @@
 export { default as MascotSvg } from './MascotSvg';
 export { default as MascotImage } from './MascotImage';
 export { MASCOT_MASTER_PATH } from './MascotImage';
+export { getMascot, mascotSizes } from '@/lib/brandAssets';
+export type { MascotSizeKey } from '@/lib/brandAssets';
 export { default as MascotBadge } from './MascotBadge';
 export { default as MascotHint } from './MascotHint';
 export { default as MascotCTA } from './MascotCTA';
