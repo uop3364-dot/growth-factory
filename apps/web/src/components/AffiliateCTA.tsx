@@ -1,7 +1,7 @@
 'use client';
 
 import { trackEvent } from '@/lib/analytics';
-import { getAffiliateLink, ALLOWED_PROVIDERS } from '@/lib/affiliate-links';
+import { getAffiliateLink } from '@/lib/affiliate-links';
 import { MascotImage } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 
@@ -23,9 +23,7 @@ interface AffiliateCTAProps {
  *
  * RULES:
  * - Always shows vidIQ (primary) + Metricool (secondary)
- * - Providers are controlled by ALLOWED_PROVIDERS in affiliate-links.ts
  * - Pages must NOT hardcode affiliate URLs; use this component instead
- * - To add a new provider, update ALLOWED_PROVIDERS first
  */
 export default function AffiliateCTA({
   pageType = 'tone',
@@ -35,18 +33,6 @@ export default function AffiliateCTA({
   placement = 'middle',
   toolSlug,
 }: AffiliateCTAProps) {
-  // Dev-time sanity check: primary/secondary must be in whitelist
-  if (process.env.NODE_ENV === 'development') {
-    const primary = 'vidiq';
-    const secondary = 'metricool';
-    if (!(ALLOWED_PROVIDERS as readonly string[]).includes(primary)) {
-      console.error(`[AffiliateCTA] Primary provider "${primary}" is not in ALLOWED_PROVIDERS!`);
-    }
-    if (!(ALLOWED_PROVIDERS as readonly string[]).includes(secondary)) {
-      console.error(`[AffiliateCTA] Secondary provider "${secondary}" is not in ALLOWED_PROVIDERS!`);
-    }
-  }
-
   const headline = customHeadline ?? 'Want better YouTube growth?';
   const subtext = customSubtext ?? (
     'Your result is ready. Take the next step — optimize titles and SEO with vidIQ, or track content performance with Metricool.'
