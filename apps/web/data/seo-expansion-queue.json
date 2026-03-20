@@ -3,21 +3,6 @@
   "topics": {
     "pending": [
       {
-        "id": "art",
-        "name": "Art",
-        "emoji": "🎨"
-      },
-      {
-        "id": "diy",
-        "name": "DIY",
-        "emoji": "🔨"
-      },
-      {
-        "id": "nature",
-        "name": "Nature",
-        "emoji": "🌻"
-      },
-      {
         "id": "comedy",
         "name": "Comedy",
         "emoji": "😂"
@@ -161,16 +146,29 @@
         "name": "Sports",
         "emoji": "⚽",
         "addedAt": "2026-03-20T10:56:55.165Z"
+      },
+      {
+        "id": "art",
+        "name": "Art",
+        "emoji": "🎨",
+        "addedAt": "2026-03-20T11:10:30.671Z"
+      },
+      {
+        "id": "diy",
+        "name": "DIY",
+        "emoji": "🔨",
+        "addedAt": "2026-03-20T11:10:30.671Z"
+      },
+      {
+        "id": "nature",
+        "name": "Nature",
+        "emoji": "🌻",
+        "addedAt": "2026-03-20T11:10:30.671Z"
       }
     ]
   },
   "tones": {
     "pending": [
-      {
-        "id": "casual",
-        "name": "Casual",
-        "description": "Relaxed and laid-back"
-      },
       {
         "id": "emotional",
         "name": "Emotional",
@@ -220,6 +218,12 @@
         "name": "Bold",
         "description": "Confident and daring",
         "addedAt": "2026-03-20T10:56:55.165Z"
+      },
+      {
+        "id": "casual",
+        "name": "Casual",
+        "description": "Relaxed and laid-back",
+        "addedAt": "2026-03-20T11:10:30.671Z"
       }
     ]
   }
