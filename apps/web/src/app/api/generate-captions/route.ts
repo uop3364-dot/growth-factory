@@ -11,6 +11,10 @@ import {
 } from '@/lib/llm-shared';
 import type { CaptionResult } from '@/lib/caption-generator';
 
+// Vercel Hobby: default 10s timeout is too short for LLM calls.
+// Extend to 60s (max on Hobby plan).
+export const maxDuration = 60;
+
 function getClientIP(req: NextRequest): string {
   return (
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||

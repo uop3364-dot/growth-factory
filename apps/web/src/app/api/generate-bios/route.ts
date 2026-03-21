@@ -11,6 +11,8 @@ import {
 } from '@/lib/llm-shared';
 import type { BioResult } from '@/lib/bio-generator';
 
+export const maxDuration = 60;
+
 function getClientIP(req: NextRequest): string {
   return req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || 'unknown';
 }

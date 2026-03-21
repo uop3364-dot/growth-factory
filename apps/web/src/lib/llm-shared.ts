@@ -203,14 +203,22 @@ export async function callOpenAI<T>(opts: OpenAICallOptions): Promise<T | null> 
       }),
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      const errorBody = await response.text().catch(() => '');
+      console.error(`[llm] OpenAI API error ${response.status}: ${errorBody.slice(0, 200)}`);
+      return null;
+    }
 
     const data = await response.json();
     const text = data?.choices?.[0]?.message?.content;
-    if (!text) return null;
+    if (!text) {
+      console.error('[llm] No content in OpenAI response');
+      return null;
+    }
 
     return JSON.parse(text) as T;
-  } catch {
+  } catch (e) {
+    console.error('[llm] OpenAI call exception:', e);
     return null;
   }
 }
