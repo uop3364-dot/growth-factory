@@ -1,17 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from '@/lib/seo-data';
 import type { Platform, Topic, Tone } from '@/lib/seo-data';
+import { SUPPORTED_LANGUAGES } from '@/lib/caption-generator';
 import { EmptyStateMascot, ResultFrame, ResultGuidance, SocialHandoff } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
+import FeedbackButton from './FeedbackButton';
+import FeedbackModal from './FeedbackModal';
 
 interface CaptionResult {
   captions: string[];
   shortVariants: string[];
   hashtags: string[];
   ctaSuggestion: string;
+  source?: 'llm' | 'cache' | 'fallback';
 }
 
 export default function CaptionGenerator({
@@ -32,9 +36,24 @@ export default function CaptionGenerator({
   const [result, setResult] = useState<CaptionResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [thumbsGiven, setThumbsGiven] = useState<'up' | 'down' | null>(null);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackDefaultType, setFeedbackDefaultType] = useState<string>('general');
 
-  const handleGenerate = async () => {
+  const feedbackMetadata = {
+    toolName: 'caption-generator',
+    selectedLanguage: language,
+    selectedPlatform: platform,
+    selectedTopic: topic,
+    selectedTone: tone,
+  };
+
+  const handleGenerate = useCallback(async () => {
     setLoading(true);
+    setError(null);
+    setResult(null);
+    setThumbsGiven(null);
     try {
       const res = await fetch('/api/generate-captions', {
         method: 'POST',
@@ -45,18 +64,25 @@ export default function CaptionGenerator({
           tone,
           language,
           audience,
-          keywords: keywords ? keywords.split(',').map(k => k.trim()) : [],
+          keywords: keywords ? keywords.split(',').map(k => k.trim()).filter(Boolean) : [],
         }),
       });
+
       const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
       setResult(data);
-      trackEvent('tool_generate', { platform, topic, tone });
-    } catch (e) {
-      console.error(e);
+      trackEvent('tool_generate', { platform, topic, tone, language, source: data.source || 'unknown' });
+    } catch {
+      setError('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [platform, topic, tone, language, audience, keywords]);
 
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
@@ -65,10 +91,24 @@ export default function CaptionGenerator({
     setTimeout(() => setCopied(null), 2000);
   };
 
+  const handleThumb = (vote: 'up' | 'down') => {
+    setThumbsGiven(vote);
+    trackEvent('tool_thumb', { platform, topic, tone, vote });
+    if (vote === 'down') {
+      setFeedbackDefaultType('complaint');
+      setFeedbackOpen(true);
+    }
+  };
+
+  const openWrongResultFeedback = () => {
+    setFeedbackDefaultType('bug');
+    setFeedbackOpen(true);
+  };
+
   return (
     <div className="max-w-4xl mx-auto">
       {/* Generator Form */}
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Platform</label>
@@ -115,15 +155,13 @@ export default function CaptionGenerator({
               onChange={(e) => setLanguage(e.target.value)}
               className="w-full rounded-lg border-gray-300 border p-2.5 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="english">English</option>
-              <option value="traditional-chinese">Traditional Chinese</option>
-              <option value="simplified-chinese">Simplified Chinese</option>
-              <option value="spanish">Spanish</option>
-              <option value="japanese">Japanese</option>
+              {SUPPORTED_LANGUAGES.map(l => (
+                <option key={l.value} value={l.value}>{l.label}</option>
+              ))}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Target Audience (optional)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Target Audience <span className="text-gray-400 font-normal">(optional)</span></label>
             <input
               type="text"
               value={audience}
@@ -133,7 +171,7 @@ export default function CaptionGenerator({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Keywords (optional, comma-separated)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Keywords <span className="text-gray-400 font-normal">(optional, comma-separated)</span></label>
             <input
               type="text"
               value={keywords}
@@ -152,8 +190,21 @@ export default function CaptionGenerator({
         </button>
       </div>
 
+      {/* Error state */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8 text-center">
+          <p className="text-red-700 font-medium mb-2">{error}</p>
+          <button
+            onClick={handleGenerate}
+            className="text-sm text-red-600 underline hover:text-red-800"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+
       {/* Empty state */}
-      {!result && !loading && (
+      {!result && !loading && !error && (
         <EmptyStateMascot text={brandCopy.empty[1]} />
       )}
 
@@ -163,15 +214,15 @@ export default function CaptionGenerator({
         <ResultFrame>
           <div className="space-y-6">
             {/* Captions */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
               <h3 className="text-lg font-semibold mb-4">Generated Captions</h3>
               <div className="space-y-3">
                 {result.captions.map((caption, i) => (
                   <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <p className="text-gray-800 flex-1">{caption}</p>
+                    <p className="text-gray-800 flex-1 break-words">{caption}</p>
                     <button
                       onClick={() => copyToClipboard(caption, i)}
-                      className="text-sm text-blue-600 hover:text-blue-800 whitespace-nowrap font-medium"
+                      className="text-sm text-blue-600 hover:text-blue-800 whitespace-nowrap font-medium shrink-0"
                     >
                       {copied === i ? 'Copied!' : 'Copy'}
                     </button>
@@ -181,7 +232,7 @@ export default function CaptionGenerator({
             </div>
 
             {/* Short Variants */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
               <h3 className="text-lg font-semibold mb-4">Short Variants</h3>
               <div className="flex flex-wrap gap-2">
                 {result.shortVariants.map((v, i) => (
@@ -197,7 +248,7 @@ export default function CaptionGenerator({
             </div>
 
             {/* Hashtags */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
               <h3 className="text-lg font-semibold mb-4">Suggested Hashtags</h3>
               <div className="flex flex-wrap gap-2">
                 {result.hashtags.map((h, i) => (
@@ -213,8 +264,35 @@ export default function CaptionGenerator({
             </div>
 
             {/* CTA */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 sm:p-6">
               <p className="text-gray-700 font-medium">{result.ctaSuggestion}</p>
+            </div>
+
+            {/* Thumbs + feedback link */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 py-3">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-500">Was this useful?</span>
+                <button
+                  onClick={() => handleThumb('up')}
+                  className={`text-xl transition-transform hover:scale-125 ${thumbsGiven === 'up' ? 'scale-125' : 'opacity-60 hover:opacity-100'}`}
+                  aria-label="Thumbs up"
+                >
+                  &#128077;
+                </button>
+                <button
+                  onClick={() => handleThumb('down')}
+                  className={`text-xl transition-transform hover:scale-125 ${thumbsGiven === 'down' ? 'scale-125' : 'opacity-60 hover:opacity-100'}`}
+                  aria-label="Thumbs down"
+                >
+                  &#128078;
+                </button>
+              </div>
+              <button
+                onClick={openWrongResultFeedback}
+                className="text-sm text-gray-500 underline hover:text-brand-green-deep transition-colors"
+              >
+                Wrong result? Tell me what happened
+              </button>
             </div>
 
             {/* Ad Placeholder */}
@@ -235,6 +313,17 @@ export default function CaptionGenerator({
         />
         </>
       )}
+
+      {/* Floating feedback button with tool context */}
+      <FeedbackButton metadata={feedbackMetadata} />
+
+      {/* Feedback modal triggered by thumbs-down or "Wrong result?" */}
+      <FeedbackModal
+        open={feedbackOpen}
+        onClose={() => setFeedbackOpen(false)}
+        defaultType={feedbackDefaultType}
+        metadata={feedbackMetadata}
+      />
     </div>
   );
 }

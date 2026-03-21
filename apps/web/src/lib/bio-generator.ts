@@ -338,8 +338,14 @@ async function generateWithOpenAI(req: BioRequest): Promise<BioResult | null> {
   }
 }
 
-export async function generateBiosWithProvider(req: BioRequest): Promise<BioResult> {
+export async function generateBiosWithProvider(req: BioRequest): Promise<BioResult | null> {
   const llmResult = await generateWithOpenAI(req);
   if (llmResult) return llmResult;
-  return generateBios(req);
+
+  const { isFakeFallbackAllowed } = await import('./llm-shared');
+  if (isFakeFallbackAllowed()) {
+    return generateBios(req);
+  }
+
+  return null;
 }

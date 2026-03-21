@@ -366,8 +366,15 @@ async function generateWithOpenAI(req: TitleRequest): Promise<TitleResult | null
   }
 }
 
-export async function generateTitlesWithProvider(req: TitleRequest): Promise<TitleResult> {
+export async function generateTitlesWithProvider(req: TitleRequest): Promise<TitleResult | null> {
   const llmResult = await generateWithOpenAI(req);
   if (llmResult) return llmResult;
-  return generateTitles(req);
+
+  // Only allow fake fallback in dev mode
+  const { isFakeFallbackAllowed } = await import('./llm-shared');
+  if (isFakeFallbackAllowed()) {
+    return generateTitles(req);
+  }
+
+  return null;
 }

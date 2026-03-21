@@ -181,3 +181,37 @@ model SystemSetting {
 
   @@map("system_settings")
 }
+
+model Feedback {
+  id               String   @id @default(cuid())
+  feedbackType     String   @map("feedback_type")    // suggestion | bug | complaint | general
+  message          String   @db.Text
+  email            String?
+  pageUrl          String?  @map("page_url")
+  toolName         String?  @map("tool_name")
+  selectedLanguage String?  @map("selected_language")
+  selectedPlatform String?  @map("selected_platform")
+  selectedTopic    String?  @map("selected_topic")
+  selectedTone     String?  @map("selected_tone")
+  userAgent        String?  @map("user_agent") @db.Text
+  viewport         String?
+  status           String   @default("new")          // new | reviewed | resolved | dismissed
+  priority         String   @default("normal")       // low | normal | high | urgent
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("feedback")
+}
+
+model LlmUsageLog {
+  id         String   @id @default(cuid())
+  tool       String                         // captions | titles | bios | hashtags
+  monthKey   String   @map("month_key")     // e.g. "2026-03"
+  requests   Int      @default(0)
+  costUsd    Float    @default(0) @map("cost_usd")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([tool, monthKey])
+  @@map("llm_usage_logs")
+}

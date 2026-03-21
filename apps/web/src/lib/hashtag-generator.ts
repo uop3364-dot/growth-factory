@@ -340,8 +340,14 @@ async function generateWithOpenAI(req: HashtagRequest): Promise<HashtagResult | 
   }
 }
 
-export async function generateHashtagsWithProvider(req: HashtagRequest): Promise<HashtagResult> {
+export async function generateHashtagsWithProvider(req: HashtagRequest): Promise<HashtagResult | null> {
   const llmResult = await generateWithOpenAI(req);
   if (llmResult) return llmResult;
-  return generateHashtags(req);
+
+  const { isFakeFallbackAllowed } = await import('./llm-shared');
+  if (isFakeFallbackAllowed()) {
+    return generateHashtags(req);
+  }
+
+  return null;
 }

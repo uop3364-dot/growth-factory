@@ -1,4 +1,9 @@
 import { Platform, Topic, Tone, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from './seo-data';
+import { callOpenAI, isFakeFallbackAllowed } from './llm-shared';
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
 export interface CaptionRequest {
   platform: Platform;
@@ -14,6 +19,7 @@ export interface CaptionResult {
   shortVariants: string[];
   hashtags: string[];
   ctaSuggestion: string;
+  source: 'llm' | 'cache' | 'fallback';
 }
 
 interface OpenAIMessageResponse {
@@ -23,71 +29,184 @@ interface OpenAIMessageResponse {
   ctaSuggestion: string;
 }
 
-// Template-based caption generation (no API key needed)
-const CAPTION_TEMPLATES: Record<string, string[]> = {
-  'instagram-travel-funny': [
-    "My passport has more stamps than my loyalty card #{topic}",
-    "Plot twist: I didn't plan this trip, my credit card did",
-    "Currently accepting applications for a travel buddy who won't hog the window seat",
-    "My boss asked where I see myself in 5 years. Definitely not at my desk",
-    "Jet lag is just my body's way of saying 'worth it'",
-    "I followed my heart and it led me to the airport",
-    "Traveling because therapy is expensive and flights are cheap... wait",
-    "Sorry for what I said when I hadn't had my vacation yet",
-    "Out of office. If urgent, still out of office",
-    "I need 6 months of vacation, twice a year"
-  ],
+// ---------------------------------------------------------------------------
+// Language Config
+// ---------------------------------------------------------------------------
+
+export const SUPPORTED_LANGUAGES = [
+  { value: 'english', label: 'English' },
+  { value: 'spanish', label: 'Español (Spanish)' },
+  { value: 'french', label: 'Français (French)' },
+  { value: 'german', label: 'Deutsch (German)' },
+  { value: 'portuguese', label: 'Português (Portuguese)' },
+  { value: 'traditional-chinese', label: '繁體中文 (Traditional Chinese)' },
+  { value: 'simplified-chinese', label: '简体中文 (Simplified Chinese)' },
+  { value: 'japanese', label: '日本語 (Japanese)' },
+] as const;
+
+export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number]['value'];
+
+// Human-readable language name for prompts
+const LANGUAGE_PROMPT_MAP: Record<string, string> = {
+  'english': 'English',
+  'spanish': 'Spanish (Español)',
+  'french': 'French (Français)',
+  'german': 'German (Deutsch)',
+  'portuguese': 'Portuguese (Português)',
+  'traditional-chinese': 'Traditional Chinese (繁體中文)',
+  'simplified-chinese': 'Simplified Chinese (简体中文)',
+  'japanese': 'Japanese (日本語)',
 };
 
-// Fallback template generators by component
+function getLanguageLabel(lang?: string): string {
+  return LANGUAGE_PROMPT_MAP[lang || 'english'] || 'English';
+}
+
+// ---------------------------------------------------------------------------
+// OpenAI-powered generation (primary path)
+// ---------------------------------------------------------------------------
+
+async function generateWithOpenAI(req: CaptionRequest): Promise<CaptionResult | null> {
+  const platformName = PLATFORM_INFO[req.platform].name;
+  const topicName = TOPIC_INFO[req.topic].name;
+  const toneName = TONE_INFO[req.tone].name;
+  const toneDesc = TONE_INFO[req.tone].description;
+  const langLabel = getLanguageLabel(req.language);
+  const isNonEnglish = req.language && req.language !== 'english';
+
+  const prompt = [
+    `You are a world-class social media copywriter who writes natively in ${langLabel}.`,
+    '',
+    `=== TASK ===`,
+    `Generate 10 social media captions for the platform "${platformName}" on the topic "${topicName}" in a "${toneName}" tone (${toneDesc}).`,
+    '',
+    `=== HARD REQUIREMENTS ===`,
+    `1. OUTPUT LANGUAGE: ALL caption text MUST be written in ${langLabel}. This is non-negotiable.`,
+    ...(isNonEnglish ? [
+      `   - The ENTIRE caption body must be in ${langLabel}. Do NOT write in English.`,
+      `   - Hashtags may include English terms if they are commonly used on ${platformName}.`,
+      `   - Brand names and universal terms (e.g., "AI", "CEO") may stay in English.`,
+      `   - The ctaSuggestion must also be in ${langLabel}.`,
+    ] : []),
+    `2. PLATFORM: Tailor style, length, and formatting to ${platformName} best practices.`,
+    `3. TOPIC: Every caption must clearly relate to "${topicName}".`,
+    `4. TONE: The tone must be unmistakably "${toneName}" — ${toneDesc}.`,
+    ...(req.audience ? [`5. TARGET AUDIENCE: Write for "${req.audience}".`] : []),
+    ...(req.keywords?.length ? [`6. KEYWORDS: Naturally incorporate these keywords: ${req.keywords.join(', ')}.`] : []),
+    '',
+    `=== OUTPUT FORMAT ===`,
+    `Return strict JSON with these keys:`,
+    `- "captions": array of 10 strings (full captions)`,
+    `- "shortVariants": array of 5 strings (condensed versions, max 100 chars each)`,
+    `- "hashtags": array of 5 strings (with # prefix)`,
+    `- "ctaSuggestion": one string (call-to-action suggestion${isNonEnglish ? ` in ${langLabel}` : ''})`,
+    ``,
+    `No markdown. No code fences. No extra text outside the JSON.`,
+  ].join('\n');
+
+  const parsed = await callOpenAI<OpenAIMessageResponse>({ userPrompt: prompt });
+  if (!parsed) return null;
+
+  if (
+    !Array.isArray(parsed.captions) ||
+    !Array.isArray(parsed.shortVariants) ||
+    !Array.isArray(parsed.hashtags) ||
+    typeof parsed.ctaSuggestion !== 'string'
+  ) {
+    return null;
+  }
+
+  return {
+    captions: parsed.captions.slice(0, 10),
+    shortVariants: parsed.shortVariants.slice(0, 5),
+    hashtags: parsed.hashtags.slice(0, 5),
+    ctaSuggestion: parsed.ctaSuggestion,
+    source: 'llm',
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Deterministic fallback (dev only, gated by ALLOW_FAKE_FALLBACK)
+// ---------------------------------------------------------------------------
+
+// Fallback templates per language for common phrases
+const FALLBACK_LANGUAGE_TEMPLATES: Record<string, {
+  hookPrefix: string[];
+  topicVerb: string;
+  ctaPrefix: string;
+  hashtagSuffix: string;
+}> = {
+  english: {
+    hookPrefix: ['Check out', 'Discover', 'Explore', 'Dive into', 'Level up with'],
+    topicVerb: 'content',
+    ctaPrefix: 'Try our free Caption Generator',
+    hashtagSuffix: 'tips',
+  },
+  spanish: {
+    hookPrefix: ['Descubre', 'Explora', 'No te pierdas', 'Sumérgete en', 'Mejora con'],
+    topicVerb: 'contenido',
+    ctaPrefix: 'Prueba nuestro generador gratuito de subtítulos',
+    hashtagSuffix: 'consejos',
+  },
+  french: {
+    hookPrefix: ['Découvrez', 'Explorez', 'Plongez dans', 'Ne manquez pas', 'Améliorez avec'],
+    topicVerb: 'contenu',
+    ctaPrefix: 'Essayez notre générateur de légendes gratuit',
+    hashtagSuffix: 'astuces',
+  },
+  german: {
+    hookPrefix: ['Entdecke', 'Erkunde', 'Tauche ein in', 'Verpasse nicht', 'Verbessere mit'],
+    topicVerb: 'Inhalte',
+    ctaPrefix: 'Probiere unseren kostenlosen Caption-Generator',
+    hashtagSuffix: 'Tipps',
+  },
+  portuguese: {
+    hookPrefix: ['Descubra', 'Explore', 'Mergulhe em', 'Não perca', 'Melhore com'],
+    topicVerb: 'conteúdo',
+    ctaPrefix: 'Experimente nosso gerador gratuito de legendas',
+    hashtagSuffix: 'dicas',
+  },
+  'traditional-chinese': {
+    hookPrefix: ['發現', '探索', '深入了解', '不要錯過', '提升你的'],
+    topicVerb: '內容',
+    ctaPrefix: '試試我們的免費文案生成器',
+    hashtagSuffix: '技巧',
+  },
+  'simplified-chinese': {
+    hookPrefix: ['发现', '探索', '深入了解', '不要错过', '提升你的'],
+    topicVerb: '内容',
+    ctaPrefix: '试试我们的免费文案生成器',
+    hashtagSuffix: '技巧',
+  },
+  japanese: {
+    hookPrefix: ['発見しよう', '探検しよう', '深堀りする', '見逃さないで', 'レベルアップ'],
+    topicVerb: 'コンテンツ',
+    ctaPrefix: '無料キャプション生成ツールを試してみてください',
+    hashtagSuffix: 'ヒント',
+  },
+};
+
 const PLATFORM_HOOKS: Record<string, string[]> = {
-  instagram: ["Double tap if you agree", "Save this for later", "Tag someone who needs this", "Link in bio for more", "Comment your favorite below"],
-  tiktok: ["Wait for it...", "POV:", "This is your sign to", "Tell me without telling me", "The way I just--"],
-  youtube: ["Watch till the end!", "Don't forget to subscribe", "This changed everything", "You won't believe what happened", "The truth about"],
-  x: ["Thread:", "Hot take:", "Unpopular opinion:", "This.", "Let that sink in."],
-  facebook: ["Share if you agree!", "Who else relates?", "Tag a friend who needs to see this", "Thoughts?", "Like if this made your day"],
+  instagram: ['Double tap if you agree', 'Save this for later', 'Tag someone who needs this', 'Link in bio for more', 'Comment your favorite below'],
+  tiktok: ['Wait for it...', 'POV:', 'This is your sign to', 'Tell me without telling me', 'The way I just--'],
+  youtube: ['Watch till the end!', 'Don\'t forget to subscribe', 'This changed everything', 'You won\'t believe what happened', 'The truth about'],
+  x: ['Thread:', 'Hot take:', 'Unpopular opinion:', 'This.', 'Let that sink in.'],
+  facebook: ['Share if you agree!', 'Who else relates?', 'Tag a friend who needs to see this', 'Thoughts?', 'Like if this made your day'],
 };
 
-const TOPIC_PHRASES: Record<string, string[]> = {
-  travel: ["wanderlust hits different", "passport ready", "adventure awaits", "exploring new horizons", "travel diary"],
-  food: ["foodie paradise", "taste test", "chef's kiss", "flavor explosion", "recipe reveal"],
-  fitness: ["no pain no gain", "fitness journey", "workout complete", "gains loading", "stronger every day"],
-  beauty: ["glow up", "beauty routine", "skin goals", "makeup magic", "self-care Sunday"],
-  business: ["boss moves only", "hustle mode", "entrepreneur life", "growth mindset", "level up"],
-  marketing: ["marketing hack", "growth strategy", "brand building", "viral potential", "engagement boost"],
-  gaming: ["game on", "level up", "epic win", "clutch moment", "GG"],
-  pets: ["fur baby", "paws and love", "pet parent life", "unconditional love", "cute overload"],
-  fashion: ["outfit check", "style inspo", "OOTD", "fashion forward", "drip check"],
-  motivation: ["keep going", "you got this", "dream big", "never give up", "rise and grind"],
-  'technology': ["technology vibes", "technology life", "technology goals", "technology inspiration", "technology journey"],
-  'education': ["education vibes", "education life", "education goals", "education inspiration", "education journey"],
-  'photography': ["photography vibes", "photography life", "photography goals", "photography inspiration", "photography journey"],
-  'music': ["music vibes", "music life", "music goals", "music inspiration", "music journey"],
-  'lifestyle': ["lifestyle vibes", "lifestyle life", "lifestyle goals", "lifestyle inspiration", "lifestyle journey"],
-  'parenting': ["parenting vibes", "parenting life", "parenting goals", "parenting inspiration", "parenting journey"],
-  'health': ["health vibes", "health life", "health goals", "health inspiration", "health journey"],
-  'sports': ["sports vibes", "sports life", "sports goals", "sports inspiration", "sports journey"],
-  'art': ["art vibes", "art life", "art goals", "art inspiration", "art journey"],
-  'diy': ["diy vibes", "diy life", "diy goals", "diy inspiration", "diy journey"],
-  'nature': ["nature vibes", "nature life", "nature goals", "nature inspiration", "nature journey"],
-  'comedy': ["comedy vibes", "comedy life", "comedy goals", "comedy inspiration", "comedy journey"],
-  'real-estate': ["real estate vibes", "real estate life", "real estate goals", "real estate inspiration", "real estate journey"],
-  'sustainability': ["sustainability vibes", "sustainability life", "sustainability goals", "sustainability inspiration", "sustainability journey"],
-};
-
-const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: string }> = {
-  funny: { prefix: "Not me", suffix: "", style: "humorous and self-deprecating" },
-  cute: { prefix: "The cutest thing about", suffix: "", style: "sweet and heartwarming" },
-  professional: { prefix: "Here's why", suffix: "", style: "polished and insightful" },
-  luxury: { prefix: "Elevate your", suffix: "", style: "elegant and aspirational" },
-  minimalist: { prefix: "", suffix: ".", style: "clean and understated" },
-  friendly: { prefix: "Hey friend!", suffix: "", style: "warm and welcoming" },
-  persuasive: { prefix: "Stop scrolling.", suffix: "", style: "urgent and compelling" },
-  'inspirational': { prefix: "", suffix: "", style: "uplifting and motivating" },
-  'sarcastic': { prefix: "", suffix: "", style: "dry wit and irony" },
-  'bold': { prefix: "", suffix: "", style: "confident and daring" },
-  'casual': { prefix: "", suffix: "", style: "relaxed and laid-back" },
-  'emotional': { prefix: "", suffix: "", style: "heartfelt and touching" },
+const TONE_MODIFIERS: Record<string, { style: string }> = {
+  funny: { style: 'humorous and self-deprecating' },
+  cute: { style: 'sweet and heartwarming' },
+  professional: { style: 'polished and insightful' },
+  luxury: { style: 'elegant and aspirational' },
+  minimalist: { style: 'clean and understated' },
+  friendly: { style: 'warm and welcoming' },
+  persuasive: { style: 'urgent and compelling' },
+  inspirational: { style: 'uplifting and motivating' },
+  sarcastic: { style: 'dry wit and irony' },
+  bold: { style: 'confident and daring' },
+  casual: { style: 'relaxed and laid-back' },
+  emotional: { style: 'heartfelt and touching' },
 };
 
 function hashCode(str: string): number {
@@ -112,38 +231,57 @@ function pickItems<T>(arr: T[], seed: number, count: number): T[] {
   return result;
 }
 
+/**
+ * Deterministic fallback — now includes ALL input fields in the seed
+ * and generates language-appropriate content.
+ * Only used when ALLOW_FAKE_FALLBACK=true (dev mode).
+ */
 export function generateCaptions(req: CaptionRequest): CaptionResult {
-  const seed = hashCode(`${req.platform}-${req.topic}-${req.tone}`);
+  // Include ALL fields in seed so different inputs = different output
+  const seed = hashCode(
+    `${req.platform}-${req.topic}-${req.tone}-${req.language || 'english'}-${req.audience || ''}-${(req.keywords || []).sort().join(',')}`
+  );
   const platformName = PLATFORM_INFO[req.platform].name;
   const topicName = TOPIC_INFO[req.topic].name;
   const toneName = TONE_INFO[req.tone].name;
-  const toneInfo = TONE_MODIFIERS[req.tone];
-  const hooks = PLATFORM_HOOKS[req.platform];
-  const phrases = TOPIC_PHRASES[req.topic];
+  const toneInfo = TONE_MODIFIERS[req.tone] || { style: 'engaging' };
+  const hooks = PLATFORM_HOOKS[req.platform] || PLATFORM_HOOKS.instagram;
+  const lang = req.language || 'english';
+  const langTemplates = FALLBACK_LANGUAGE_TEMPLATES[lang] || FALLBACK_LANGUAGE_TEMPLATES.english;
 
-  // Check for specific templates first
-  const key = `${req.platform}-${req.topic}-${req.tone}`;
-  const specificTemplates = CAPTION_TEMPLATES[key];
+  const keywordStr = req.keywords?.length ? req.keywords.join(', ') : '';
+  const audienceStr = req.audience || '';
 
-  let captions: string[];
+  // Generate captions using language-aware templates
+  const captions = Array.from({ length: 10 }, (_, i) => {
+    const hook = pickItems(langTemplates.hookPrefix, seed + i, 1)[0];
+    const platformHook = pickItems(hooks, seed + i * 3, 1)[0];
+    const parts: string[] = [];
 
-  if (specificTemplates && specificTemplates.length >= 10) {
-    captions = specificTemplates.map(t => t.replace('#{topic}', topicName));
-  } else {
-    // Generate from components
-    captions = [
-      `${toneInfo.prefix} ${phrases[seed % phrases.length]} on ${platformName} ${toneInfo.suffix}`.trim(),
-      `${pickItems(hooks, seed, 1)[0]} ${phrases[(seed + 1) % phrases.length]} content that hits different`,
-      `Your ${topicName.toLowerCase()} ${platformName} game is about to change ${toneInfo.suffix}`.trim(),
-      `${toneName} ${topicName.toLowerCase()} content for your ${platformName} feed ${toneInfo.suffix}`.trim(),
-      `Every ${platformName} creator needs this ${topicName.toLowerCase()} tip ${toneInfo.suffix}`.trim(),
-      `The ${toneInfo.style} way to talk about ${topicName.toLowerCase()} ${toneInfo.suffix}`.trim(),
-      `${topicName} + ${platformName} = the content your audience craves ${toneInfo.suffix}`.trim(),
-      `Making ${topicName.toLowerCase()} content ${toneInfo.style} since day one ${toneInfo.suffix}`.trim(),
-      `${pickItems(hooks, seed + 2, 1)[0]} why your ${topicName.toLowerCase()} posts aren't performing`,
-      `The secret to ${toneInfo.style} ${topicName.toLowerCase()} posts on ${platformName} ${toneInfo.suffix}`.trim(),
-    ];
-  }
+    if (lang === 'english') {
+      // English: richer templates
+      switch (i % 5) {
+        case 0: parts.push(`${hook} ${topicName.toLowerCase()} ${langTemplates.topicVerb} on ${platformName}`); break;
+        case 1: parts.push(`${platformHook} — ${topicName.toLowerCase()} ${langTemplates.topicVerb} that's ${toneInfo.style}`); break;
+        case 2: parts.push(`Your ${toneName.toLowerCase()} guide to ${topicName.toLowerCase()} on ${platformName}`); break;
+        case 3: parts.push(`${topicName} + ${platformName} = ${toneInfo.style} ${langTemplates.topicVerb}`); break;
+        case 4: parts.push(`The ${toneInfo.style} way to share ${topicName.toLowerCase()} on ${platformName}`); break;
+      }
+    } else {
+      // Non-English: use localized hook + topic
+      parts.push(`${hook} ${topicName.toLowerCase()} ${langTemplates.topicVerb}`);
+      if (i % 3 === 0) parts[0] += ` — ${platformName}`;
+    }
+
+    if (keywordStr && i % 2 === 0) {
+      parts.push(keywordStr);
+    }
+    if (audienceStr && i % 3 === 0) {
+      parts.push(audienceStr);
+    }
+
+    return parts.join(' | ').trim();
+  });
 
   const shortVariants = captions.slice(0, 5).map(c => {
     const words = c.split(' ').slice(0, 8);
@@ -151,89 +289,44 @@ export function generateCaptions(req: CaptionRequest): CaptionResult {
   });
 
   const hashtags = [
-    `#${topicName}`,
-    `#${platformName}${topicName}`,
-    `#${topicName.toLowerCase()}life`,
+    `#${topicName.replace(/\s+/g, '')}`,
+    `#${platformName}${topicName.replace(/\s+/g, '')}`,
+    `#${topicName.replace(/\s+/g, '').toLowerCase()}${langTemplates.hashtagSuffix}`,
     `#${req.platform}tips`,
-    `#${topicName.toLowerCase()}content`,
+    `#${topicName.replace(/\s+/g, '').toLowerCase()}life`,
   ];
 
   if (req.keywords?.length) {
     for (const keyword of req.keywords.slice(0, 2)) {
-      const normalized = keyword.replace(/[^a-zA-Z0-9]/g, '');
+      const normalized = keyword.replace(/[^a-zA-Z0-9\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]/g, '');
       if (normalized) hashtags.push(`#${normalized}`);
     }
   }
 
-  const languageLabel = req.language ? ` in ${req.language}` : '';
-  const audienceLabel = req.audience ? ` for ${req.audience}` : '';
-  const keywordLabel = req.keywords?.length ? ` using keywords: ${req.keywords.join(', ')}` : '';
+  const ctaSuggestion = `${langTemplates.ctaPrefix} — ${platformName} ${topicName} (${toneName}).`;
 
-  const ctaSuggestion = `Try our free ${platformName} ${topicName} Caption Generator${languageLabel}${audienceLabel} to create more ${toneInfo.style} captions instantly${keywordLabel}.`;
-
-  return { captions, shortVariants, hashtags: hashtags.slice(0, 5), ctaSuggestion };
+  return { captions, shortVariants, hashtags: hashtags.slice(0, 5), ctaSuggestion, source: 'fallback' };
 }
 
-async function generateWithOpenAI(req: CaptionRequest): Promise<CaptionResult | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) return null;
+// ---------------------------------------------------------------------------
+// Main entry point
+// ---------------------------------------------------------------------------
 
-  const platformName = PLATFORM_INFO[req.platform].name;
-  const topicName = TOPIC_INFO[req.topic].name;
-  const toneName = TONE_INFO[req.tone].name;
-
-  const prompt = [
-    'You are a social media copywriting assistant.',
-    `Generate captions for platform: ${platformName}.`,
-    `Topic: ${topicName}. Tone: ${toneName}.`,
-    `Language: ${req.language || 'english'}.`,
-    `Audience: ${req.audience || 'general audience'}.`,
-    `Keywords: ${req.keywords?.join(', ') || 'none'}.`,
-    'Return strict JSON with keys: captions (10 items), shortVariants (5 items), hashtags (5 items), ctaSuggestion (string).',
-    'No markdown, no extra text.',
-  ].join('\n');
-
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-        temperature: 0.7,
-        messages: [
-          { role: 'system', content: 'You output valid JSON only.' },
-          { role: 'user', content: prompt },
-        ],
-        response_format: { type: 'json_object' },
-      }),
-    });
-
-    if (!response.ok) return null;
-    const data = await response.json();
-    const text = data?.choices?.[0]?.message?.content;
-    if (!text) return null;
-
-    const parsed = JSON.parse(text) as OpenAIMessageResponse;
-    if (!Array.isArray(parsed.captions) || !Array.isArray(parsed.shortVariants) || !Array.isArray(parsed.hashtags) || typeof parsed.ctaSuggestion !== 'string') {
-      return null;
-    }
-
-    return {
-      captions: parsed.captions.slice(0, 10),
-      shortVariants: parsed.shortVariants.slice(0, 5),
-      hashtags: parsed.hashtags.slice(0, 5),
-      ctaSuggestion: parsed.ctaSuggestion,
-    };
-  } catch {
-    return null;
-  }
-}
-
-export async function generateCaptionsWithProvider(req: CaptionRequest): Promise<CaptionResult> {
+/**
+ * Generate captions. Tries OpenAI first.
+ * - If LLM succeeds → return LLM result
+ * - If LLM fails + ALLOW_FAKE_FALLBACK=true → return deterministic fallback
+ * - If LLM fails + production → return null (caller should return error)
+ */
+export async function generateCaptionsWithProvider(req: CaptionRequest): Promise<CaptionResult | null> {
   const llmResult = await generateWithOpenAI(req);
   if (llmResult) return llmResult;
-  return generateCaptions(req);
+
+  // LLM unavailable — check if fake fallback is allowed
+  if (isFakeFallbackAllowed()) {
+    return generateCaptions(req);
+  }
+
+  // Production: no silent fake content
+  return null;
 }

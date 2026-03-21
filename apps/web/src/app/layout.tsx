@@ -5,6 +5,7 @@ import Link from 'next/link';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import { MascotImage } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
+import MobileNav from '@/components/MobileNav';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -42,6 +43,13 @@ export const metadata: Metadata = {
   },
 };
 
+const NAV_LINKS = [
+  { href: '/caption-generator', label: 'Captions' },
+  { href: '/title-generator', label: 'Titles' },
+  { href: '/bio-generator', label: 'Bios' },
+  { href: '/hashtag-generator', label: 'Hashtags' },
+];
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -53,16 +61,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="bg-white/90 backdrop-blur-md border-b border-brand-green/15 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <Link href="/" className="flex items-center gap-2 text-xl font-bold text-brand-outline">
+              {/* Logo */}
+              <Link href="/" className="flex items-center gap-2 text-xl font-bold text-brand-outline shrink-0">
                 <MascotImage size="xs" priority />
-                <span className="bg-gradient-to-r from-brand-green-deep to-brand-green-dark bg-clip-text text-transparent">CreatorAITools</span>
+                <span className="bg-gradient-to-r from-brand-green-deep to-brand-green-dark bg-clip-text text-transparent">
+                  CreatorAITools
+                </span>
               </Link>
-              <div className="flex gap-6 text-sm font-semibold">
-                <Link href="/caption-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Captions</Link>
-                <Link href="/title-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Titles</Link>
-                <Link href="/bio-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Bios</Link>
-                <Link href="/hashtag-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Hashtags</Link>
+
+              {/* Desktop nav links */}
+              <div className="hidden sm:flex gap-4 md:gap-6 text-sm font-semibold">
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-brand-outline/70 hover:text-brand-green-deep transition-colors whitespace-nowrap"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
+
+              {/* Mobile hamburger */}
+              <MobileNav links={NAV_LINKS} />
             </div>
           </div>
         </nav>
