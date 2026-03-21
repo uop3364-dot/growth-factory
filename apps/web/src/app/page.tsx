@@ -11,7 +11,7 @@ import { buildMetadata } from '@/lib/metadata';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    keyword: 'AI Tools for Creators',
+    title: 'Free AI Tools for Creators — Captions, Bios, Titles & Hashtags',
     description: 'Generate captions, bios, titles, and hashtags with AI. 100% free, no login, instant results. Trusted by 50K+ creators. Try now.',
     path: '/',
   });
