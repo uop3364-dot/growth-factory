@@ -3,6 +3,9 @@ import { notFound } from 'next/navigation';
 import HashtagGenerator from '@/components/HashtagGenerator';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import { ToolPageLayout } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import Link from 'next/link';
 
@@ -242,23 +245,27 @@ export default async function NicheHashtagPage({ params }: { params: Promise<{ p
   const nInfo = NICHE_INFO[niche];
 
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${pInfo.name} ${nInfo.name} Hashtag Generator`, description: `Generate the best ${nInfo.name.toLowerCase()} hashtags for ${pInfo.name}`, path: `/hashtag-generator/${platform}/${niche}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Hashtag Generator', path: '/hashtag-generator' },
-        { name: pInfo.name, path: `/hashtag-generator/${platform}` },
-        { name: nInfo.name, path: `/hashtag-generator/${platform}/${niche}` },
-      ])) }} />
-
-      <section className="bg-gradient-to-br from-pink-500 to-rose-500 text-white py-12">
+    <ToolPageLayout
+      scripts={
+        <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${pInfo.name} ${nInfo.name} Hashtag Generator`, description: `Generate the best ${nInfo.name.toLowerCase()} hashtags for ${pInfo.name}`, path: `/hashtag-generator/${platform}/${niche}` })) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Hashtag Generator', path: '/hashtag-generator' },
+            { name: pInfo.name, path: `/hashtag-generator/${platform}` },
+            { name: nInfo.name, path: `/hashtag-generator/${platform}/${niche}` },
+          ])) }} />
+        </>
+      }
+      heroHint={brandCopy.general[0]}
+      heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{nInfo.emoji} {pInfo.name} {nInfo.name} Hashtags</h1>
-          <p className="text-lg text-pink-100">{nInfo.description}</p>
+          <p className="text-lg text-white/85">{nInfo.description}</p>
+          <HeroCTA toolName={`hashtag-${platform}-${niche}`} />
         </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto px-4 py-8">
+      }
+    >
         <HashtagGenerator defaultPlatform={platform} defaultNiche={niche} />
 
         {/* Niche Tips */}
@@ -320,7 +327,6 @@ export default async function NicheHashtagPage({ params }: { params: Promise<{ p
             })}
           </div>
         </div>
-      </section>
-    </>
+    </ToolPageLayout>
   );
 }

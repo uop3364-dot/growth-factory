@@ -3,6 +3,9 @@ import { notFound } from 'next/navigation';
 import BioGenerator from '@/components/BioGenerator';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import { ToolPageLayout } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import Link from 'next/link';
 import {
@@ -169,23 +172,27 @@ export default async function BioNichePage({ params }: { params: Promise<{ platf
   const description = `Generate the perfect ${platformInfo.name} bio for ${nicheInfo.name.toLowerCase()}s. AI-powered, free, and optimized for ${platformInfo.name}'s ${charLimit}-character limit.`;
 
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${platformInfo.name} Bio Generator for ${nicheInfo.name}s`, description, path: `/bio-generator/${platform}/${niche}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Bio Generator', path: '/bio-generator' },
-        { name: platformInfo.name, path: `/bio-generator/${platform}` },
-        { name: nicheInfo.name, path: `/bio-generator/${platform}/${niche}` },
-      ])) }} />
-
-      <section className="bg-gradient-to-br from-green-600 to-teal-600 text-white py-12">
+    <ToolPageLayout
+      scripts={
+        <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${platformInfo.name} Bio Generator for ${nicheInfo.name}s`, description, path: `/bio-generator/${platform}/${niche}` })) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Bio Generator', path: '/bio-generator' },
+            { name: platformInfo.name, path: `/bio-generator/${platform}` },
+            { name: nicheInfo.name, path: `/bio-generator/${platform}/${niche}` },
+          ])) }} />
+        </>
+      }
+      heroHint={brandCopy.empty[3]}
+      heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{platformInfo.emoji} {platformInfo.name} Bio for {nicheInfo.name}s</h1>
-          <p className="text-lg text-green-100">Free AI-powered bio generator tailored for {nicheInfo.name.toLowerCase()}s on {platformInfo.name}. Create bios that fit within {charLimit} characters.</p>
+          <p className="text-lg text-white/85">Free AI-powered bio generator tailored for {nicheInfo.name.toLowerCase()}s on {platformInfo.name}. Create bios that fit within {charLimit} characters.</p>
+          <HeroCTA toolName={`bio-${platform}-${niche}`} />
         </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto px-4 py-8">
+      }
+    >
         <BioGenerator defaultPlatform={platform} defaultNiche={niche} />
 
         {/* Niche-specific tips */}
@@ -238,7 +245,6 @@ export default async function BioNichePage({ params }: { params: Promise<{ platf
             ))}
           </div>
         </div>
-      </section>
-    </>
+    </ToolPageLayout>
   );
 }

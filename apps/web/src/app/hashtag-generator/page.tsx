@@ -67,12 +67,12 @@ export default function HashtagGeneratorPage() {
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Hashtag Generator', path: '/hashtag-generator' }])) }} />
         </>
       }
-      heroClassName="bg-gradient-to-br from-pink-500 to-rose-500 text-white py-12"
+      heroClassName="brand-hero-gradient py-12"
       heroHint={brandCopy.general[0]}
       heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Hashtag Generator (30+ Hashtags, Instant)</h1>
-          <p className="text-lg text-pink-100">Generate trending, niche-specific hashtags for Instagram, TikTok, YouTube &amp; X. Free, no signup.</p>
+          <p className="text-lg text-white/85">Generate trending, niche-specific hashtags for Instagram, TikTok, YouTube &amp; X. Free, no signup.</p>
           <HeroCTA toolName="hashtag-generator" color="pink" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       }

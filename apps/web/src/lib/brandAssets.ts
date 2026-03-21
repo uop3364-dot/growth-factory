@@ -6,7 +6,7 @@
  */
 
 /** Canonical mascot image path. */
-const MASCOT_PATH = '/brand/lazy-dino.png' as const;
+const MASCOT_PATH = '/brand/20260319_105507321_iOS.png' as const;
 
 /** Returns the mascot image path. */
 export function getMascot(): string {

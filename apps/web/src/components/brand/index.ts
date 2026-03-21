@@ -13,4 +13,7 @@ export { default as BrandHero } from './BrandHero';
 export { default as ToolPageLayout } from './ToolPageLayout';
 export { default as ResultGuidance } from './ResultGuidance';
 export { default as SocialHandoff } from './SocialHandoff';
+export { default as DinoHero } from './DinoHero';
+export { default as DinoSection } from './DinoSection';
+export { default as PageWrapper } from './PageWrapper';
 export type { MascotSize } from './MascotSvg';

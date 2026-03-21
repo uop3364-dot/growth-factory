@@ -67,12 +67,12 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
           ])) }} />
         </>
       }
-      heroClassName="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12"
+      heroClassName="brand-hero-gradient py-12"
       heroHint={brandCopy.general[3]}
       heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{tnInfo.name} {tInfo.name} Captions for {pInfo.name} — Free AI Generator</h1>
-          <p className="text-lg text-blue-100">Generate {tone}, {topic}-focused captions for {pInfo.name}. {tnInfo.description} tone with hashtags and CTAs.</p>
+          <p className="text-lg text-white/85">Generate {tone}, {topic}-focused captions for {pInfo.name}. {tnInfo.description} tone with hashtags and CTAs.</p>
           <HeroCTA toolName={`caption-${platform}-${topic}-${tone}`} color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       }

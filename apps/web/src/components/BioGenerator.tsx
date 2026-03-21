@@ -151,7 +151,7 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-green-600 to-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-green-700 hover:to-teal-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="brand-btn-generate w-full bg-gradient-to-r from-brand-green-deep to-brand-green-dark text-white font-semibold py-3 px-6 rounded-brand-pill hover:from-brand-green-dark hover:to-brand-green transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Generating...' : 'Generate Bios'}
         </button>

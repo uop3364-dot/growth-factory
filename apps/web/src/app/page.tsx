@@ -45,7 +45,7 @@ export default function Home() {
 
       {/* 1. Hero — mascot as main character */}
       <BrandHero
-        className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-20 md:py-28"
+        className="brand-hero-gradient py-20 md:py-28"
         hintText={brandCopy.hero[0]}
       >
         <div className="max-w-5xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
@@ -54,20 +54,20 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
               Free AI Tools for Creators — Captions, Bios, Titles &amp; Hashtags
             </h1>
-            <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl">
+            <p className="text-lg md:text-xl text-white/85 mb-8 max-w-2xl">
               Generate scroll-stopping content in seconds. No signup, no limits, just results.
             </p>
             <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
               <Link
                 href="/caption-generator"
-                className="brand-btn-generate inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
+                className="brand-btn-generate inline-block bg-white text-brand-green-deep font-bold px-8 py-4 rounded-brand-pill hover:bg-brand-cream transition-colors shadow-lg text-lg"
                 data-track="homepage_primary_cta_click"
               >
                 Generate Captions Now &rarr;
               </Link>
               <Link
                 href="#tools"
-                className="inline-block bg-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/30 transition-colors text-lg"
+                className="inline-block bg-white/20 text-white font-semibold px-8 py-4 rounded-brand-pill hover:bg-white/30 transition-colors text-lg"
                 data-track="homepage_secondary_cta_click"
               >
                 See All Free Tools
@@ -203,14 +203,14 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
               href="/caption-generator"
-              className="brand-btn-generate inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-6 py-3 rounded-xl text-sm hover:from-blue-700 hover:to-purple-700 transition-colors shadow-brand"
+              className="brand-btn-generate inline-block bg-gradient-to-r from-brand-green-deep to-brand-green-dark text-white font-semibold px-6 py-3 rounded-brand-pill text-sm hover:from-brand-green-dark hover:to-brand-green transition-colors shadow-brand"
               data-track="homepage_brand_section_cta"
             >
               Generate Captions &rarr;
             </Link>
             <Link
               href="/bio-generator"
-              className="inline-block bg-white text-gray-700 font-semibold px-6 py-3 rounded-xl text-sm border border-gray-200 hover:border-blue-300 hover:text-blue-600 transition-colors"
+              className="inline-block bg-white text-brand-outline font-semibold px-6 py-3 rounded-brand-pill text-sm border border-brand-green/20 hover:border-brand-green-deep hover:text-brand-green-deep transition-colors"
               data-track="homepage_brand_section_bio"
             >
               Try Bio Generator
@@ -226,21 +226,21 @@ export default function Home() {
       </section>
 
       {/* 8. Final CTA */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+      <section className="brand-hero-gradient py-16">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Start Creating Better Content — Free</h2>
-          <p className="text-blue-100 mb-8">No signup. No limits. Just pick a tool and go.</p>
+          <p className="text-white/85 mb-8">No signup. No limits. Just pick a tool and go.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/caption-generator"
-              className="brand-btn-generate inline-block bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg text-lg"
+              className="brand-btn-generate inline-block bg-white text-brand-green-deep font-bold px-8 py-4 rounded-brand-pill hover:bg-brand-cream transition-colors shadow-lg text-lg"
               data-track="homepage_final_cta_click"
             >
               Generate Captions Now &rarr;
             </Link>
             <Link
               href="/bio-generator"
-              className="inline-block bg-white/20 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/30 transition-colors text-lg"
+              className="inline-block bg-white/20 text-white font-semibold px-8 py-4 rounded-brand-pill hover:bg-white/30 transition-colors text-lg"
               data-track="homepage_final_bio_cta"
             >
               Generate Bios &rarr;

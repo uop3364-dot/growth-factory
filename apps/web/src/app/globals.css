@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-primary: #A8E6CF;
+    --color-primary-deep: #4AA87A;
+    --color-primary-dark: #7DD3AF;
+    --color-bg: #FFF9F0;
+    --color-surface: #FAFCFA;
+    --color-accent: #FFB7B2;
+    --color-accent-blue: #B8D4E3;
+    --color-outline: #6B4226;
+    --color-cream-dark: #FFF0E0;
+    --font-main: 'Nunito', sans-serif;
+  }
+}
+
 @layer components {
   /* Brand surface card */
   .brand-surface {
@@ -29,5 +44,19 @@
   .brand-hint-bubble {
     @apply inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-cream rounded-full
            text-xs text-brand-outline/80 border border-brand-green/20;
+  }
+
+  /* Brand hero gradient — Lazy Dino theme */
+  .brand-hero-gradient {
+    @apply bg-gradient-to-br from-brand-green-deep via-brand-green-dark to-brand-green text-white;
+  }
+
+  /* Brand pill button */
+  .brand-btn-pill {
+    @apply px-8 py-3 rounded-brand-pill font-bold transition-all duration-200 shadow-brand;
+  }
+  .brand-btn-pill:hover:not(:disabled) {
+    @apply shadow-brand-hover;
+    transform: translateY(-1px);
   }
 }

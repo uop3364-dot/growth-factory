@@ -4,6 +4,9 @@ import BioGenerator from '@/components/BioGenerator';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import { ToolPageLayout } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
 import Link from 'next/link';
 import {
@@ -149,22 +152,26 @@ export default async function BioPlatformPage({ params }: { params: Promise<{ pl
   const charLimit = PLATFORM_CHAR_LIMITS[platform];
 
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${info.name} Bio Generator`, description: tips.description, path: `/bio-generator/${platform}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Bio Generator', path: '/bio-generator' },
-        { name: info.name, path: `/bio-generator/${platform}` },
-      ])) }} />
-
-      <section className="bg-gradient-to-br from-green-600 to-teal-600 text-white py-12">
+    <ToolPageLayout
+      scripts={
+        <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${info.name} Bio Generator`, description: tips.description, path: `/bio-generator/${platform}` })) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Bio Generator', path: '/bio-generator' },
+            { name: info.name, path: `/bio-generator/${platform}` },
+          ])) }} />
+        </>
+      }
+      heroHint={brandCopy.empty[3]}
+      heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{info.emoji} Free {info.name} Bio Generator</h1>
-          <p className="text-lg text-green-100">{tips.description}</p>
+          <p className="text-lg text-white/85">{tips.description}</p>
+          <HeroCTA toolName={`bio-${platform}`} />
         </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto px-4 py-8">
+      }
+    >
         <BioGenerator defaultPlatform={platform} />
 
         {/* Platform-specific tips */}
@@ -227,7 +234,6 @@ export default async function BioPlatformPage({ params }: { params: Promise<{ pl
         </div>
 
         <FAQ items={faqs} />
-      </section>
-    </>
+    </ToolPageLayout>
   );
 }

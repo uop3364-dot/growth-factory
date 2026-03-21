@@ -7,6 +7,7 @@ interface ToolPageLayoutProps {
   /** Hero section content (h1, subtitle, CTA) */
   heroContent: React.ReactNode;
   /** Hero section className (gradient etc.) */
+  /** @default 'brand-hero-gradient py-12' */
   heroClassName?: string;
   /** Mascot hint text for hero */
   heroHint?: string;
@@ -22,7 +23,7 @@ interface ToolPageLayoutProps {
 export default function ToolPageLayout({
   scripts,
   heroContent,
-  heroClassName = 'bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12',
+  heroClassName = 'brand-hero-gradient py-12',
   heroHint,
   children,
 }: ToolPageLayoutProps) {

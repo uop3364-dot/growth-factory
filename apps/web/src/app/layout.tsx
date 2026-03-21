@@ -1,12 +1,16 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import { MascotImage } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 
-const inter = Inter({ subsets: ['latin'] });
+const nunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -44,72 +48,72 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="impact-site-verification" content="85db19f0-d4a7-4932-a592-5d6e7b58685d" />
       </head>
-      <body className={`${inter.className} bg-gray-50 min-h-screen`}>
+      <body className={`${nunito.variable} font-brand bg-brand-cream min-h-screen`}>
         <GoogleAnalytics />
-        <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <nav className="bg-white/90 backdrop-blur-md border-b border-brand-green/15 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <Link href="/" className="flex items-center gap-2 text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <Link href="/" className="flex items-center gap-2 text-xl font-bold text-brand-outline">
                 <MascotImage size="xs" priority />
-                CreatorAITools
+                <span className="bg-gradient-to-r from-brand-green-deep to-brand-green-dark bg-clip-text text-transparent">CreatorAITools</span>
               </Link>
-              <div className="flex gap-6 text-sm">
-                <Link href="/caption-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Captions</Link>
-                <Link href="/title-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Titles</Link>
-                <Link href="/bio-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Bios</Link>
-                <Link href="/hashtag-generator" className="text-gray-600 hover:text-blue-600 transition-colors">Hashtags</Link>
+              <div className="flex gap-6 text-sm font-semibold">
+                <Link href="/caption-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Captions</Link>
+                <Link href="/title-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Titles</Link>
+                <Link href="/bio-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Bios</Link>
+                <Link href="/hashtag-generator" className="text-brand-outline/70 hover:text-brand-green-deep transition-colors">Hashtags</Link>
               </div>
             </div>
           </div>
         </nav>
         <main>{children}</main>
-        <footer className="bg-white border-t border-gray-200 mt-16">
+        <footer className="bg-white border-t border-brand-green/10 mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
-                <h4 className="font-semibold text-gray-800 mb-3">Tools</h4>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <Link href="/caption-generator" className="block hover:text-blue-600">Caption Generator</Link>
-                  <Link href="/title-generator" className="block hover:text-blue-600">Title Generator</Link>
-                  <Link href="/bio-generator" className="block hover:text-blue-600">Bio Generator</Link>
-                  <Link href="/hashtag-generator" className="block hover:text-blue-600">Hashtag Generator</Link>
+                <h4 className="font-bold text-brand-outline mb-3">Tools</h4>
+                <div className="space-y-2 text-sm text-brand-outline/60">
+                  <Link href="/caption-generator" className="block hover:text-brand-green-deep transition-colors">Caption Generator</Link>
+                  <Link href="/title-generator" className="block hover:text-brand-green-deep transition-colors">Title Generator</Link>
+                  <Link href="/bio-generator" className="block hover:text-brand-green-deep transition-colors">Bio Generator</Link>
+                  <Link href="/hashtag-generator" className="block hover:text-brand-green-deep transition-colors">Hashtag Generator</Link>
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-3">Platforms</h4>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <Link href="/caption-generator/instagram" className="block hover:text-blue-600">Instagram</Link>
-                  <Link href="/caption-generator/tiktok" className="block hover:text-blue-600">TikTok</Link>
-                  <Link href="/caption-generator/youtube" className="block hover:text-blue-600">YouTube</Link>
-                  <Link href="/caption-generator/x" className="block hover:text-blue-600">X (Twitter)</Link>
-                  <Link href="/caption-generator/facebook" className="block hover:text-blue-600">Facebook</Link>
+                <h4 className="font-bold text-brand-outline mb-3">Platforms</h4>
+                <div className="space-y-2 text-sm text-brand-outline/60">
+                  <Link href="/caption-generator/instagram" className="block hover:text-brand-green-deep transition-colors">Instagram</Link>
+                  <Link href="/caption-generator/tiktok" className="block hover:text-brand-green-deep transition-colors">TikTok</Link>
+                  <Link href="/caption-generator/youtube" className="block hover:text-brand-green-deep transition-colors">YouTube</Link>
+                  <Link href="/caption-generator/x" className="block hover:text-brand-green-deep transition-colors">X (Twitter)</Link>
+                  <Link href="/caption-generator/facebook" className="block hover:text-brand-green-deep transition-colors">Facebook</Link>
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-3">Topics</h4>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <Link href="/caption-generator/instagram/travel" className="block hover:text-blue-600">Travel</Link>
-                  <Link href="/caption-generator/instagram/food" className="block hover:text-blue-600">Food</Link>
-                  <Link href="/caption-generator/instagram/fitness" className="block hover:text-blue-600">Fitness</Link>
-                  <Link href="/caption-generator/instagram/beauty" className="block hover:text-blue-600">Beauty</Link>
-                  <Link href="/caption-generator/instagram/business" className="block hover:text-blue-600">Business</Link>
+                <h4 className="font-bold text-brand-outline mb-3">Topics</h4>
+                <div className="space-y-2 text-sm text-brand-outline/60">
+                  <Link href="/caption-generator/instagram/travel" className="block hover:text-brand-green-deep transition-colors">Travel</Link>
+                  <Link href="/caption-generator/instagram/food" className="block hover:text-brand-green-deep transition-colors">Food</Link>
+                  <Link href="/caption-generator/instagram/fitness" className="block hover:text-brand-green-deep transition-colors">Fitness</Link>
+                  <Link href="/caption-generator/instagram/beauty" className="block hover:text-brand-green-deep transition-colors">Beauty</Link>
+                  <Link href="/caption-generator/instagram/business" className="block hover:text-brand-green-deep transition-colors">Business</Link>
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-3">CreatorAITools</h4>
-                <div className="space-y-2 text-sm text-gray-600">
+                <h4 className="font-bold text-brand-outline mb-3">CreatorAITools</h4>
+                <div className="space-y-2 text-sm text-brand-outline/60">
                   <span className="block">Free AI-powered tools for social media creators.</span>
                 </div>
               </div>
             </div>
-            <div className="mt-8 pt-8 border-t border-gray-100 text-center text-sm text-gray-400">
+            <div className="mt-8 pt-8 border-t border-brand-green/10 text-center text-sm text-brand-outline/40">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <MascotImage size="xs" priority />
-                <span className="text-xs text-gray-300">{brandCopy.footer[0]}</span>
+                <span className="text-xs text-brand-outline/30">{brandCopy.footer[0]}</span>
               </div>
               &copy; 2026 CreatorAITools. All rights reserved.
               {process.env.NEXT_PUBLIC_BUILD_SHA && (
-                <span className="block text-[10px] text-gray-200 mt-1" data-build={process.env.NEXT_PUBLIC_BUILD_SHA}>
+                <span className="block text-[10px] text-brand-outline/20 mt-1" data-build={process.env.NEXT_PUBLIC_BUILD_SHA}>
                   v{process.env.NEXT_PUBLIC_BUILD_SHA}
                 </span>
               )}

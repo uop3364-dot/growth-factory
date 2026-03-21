@@ -59,12 +59,12 @@ export default function TitleGeneratorPage() {
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Title Generator', path: '/title-generator' }])) }} />
         </>
       }
-      heroClassName="bg-gradient-to-br from-orange-500 to-red-500 text-white py-12"
+      heroClassName="brand-hero-gradient py-12"
       heroHint={brandCopy.hero[2]}
       heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Title Generator (Click-Worthy, Instant)</h1>
-          <p className="text-lg text-orange-100">Generate SEO-optimized titles for YouTube, blogs, newsletters &amp; more. With power words and CTR boost.</p>
+          <p className="text-lg text-white/85">Generate SEO-optimized titles for YouTube, blogs, newsletters &amp; more. With power words and CTR boost.</p>
           <HeroCTA toolName="title-generator" color="orange" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       }

@@ -29,12 +29,12 @@ export default function CaptionGeneratorPage() {
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Caption Generator', path: '/caption-generator' }])) }} />
         </>
       }
-      heroClassName="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12"
+      heroClassName="brand-hero-gradient py-12"
       heroHint={brandCopy.hero[1]}
       heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Caption Generator (Instant, No Login)</h1>
-          <p className="text-lg text-blue-100">Generate high-performing captions for Instagram, TikTok, YouTube, X &amp; Facebook. With hashtags and CTAs.</p>
+          <p className="text-lg text-white/85">Generate high-performing captions for Instagram, TikTok, YouTube, X &amp; Facebook. With hashtags and CTAs.</p>
           <HeroCTA toolName="caption-generator" color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       }

@@ -172,7 +172,7 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold py-3 px-6 rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="brand-btn-generate w-full bg-gradient-to-r from-brand-green-deep to-brand-green-dark text-white font-semibold py-3 px-6 rounded-brand-pill hover:from-brand-green-dark hover:to-brand-green transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Generating...' : 'Generate Hashtags'}
         </button>

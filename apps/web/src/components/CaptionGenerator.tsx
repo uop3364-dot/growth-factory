@@ -146,7 +146,7 @@ export default function CaptionGenerator({
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="brand-btn-generate w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="brand-btn-generate w-full bg-gradient-to-r from-brand-green-deep to-brand-green-dark text-white font-semibold py-3 px-6 rounded-brand-pill hover:from-brand-green-dark hover:to-brand-green transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? brandCopy.loading[0] : 'Generate Captions'}
         </button>

@@ -8,22 +8,28 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        brand: ['var(--font-nunito)', 'Nunito', 'sans-serif'],
+      },
       colors: {
         brand: {
           green: '#A8E6CF',
           'green-light': '#C8F0DF',
           'green-dark': '#7DD3AF',
+          'green-deep': '#4AA87A',
           blush: '#FFB7B2',
           outline: '#6B4226',
           cream: '#FFF9F0',
           'cream-dark': '#FFF0E0',
           surface: '#FAFCFA',
+          accent: '#B8D4E3',
         },
       },
       borderRadius: {
         brand: '1rem',
         'brand-lg': '1.25rem',
         'brand-xl': '1.5rem',
+        'brand-pill': '9999px',
       },
       boxShadow: {
         brand: '0 2px 12px rgba(168, 230, 207, 0.15)',

@@ -4,6 +4,9 @@ import HashtagGenerator from '@/components/HashtagGenerator';
 import FAQ from '@/components/FAQ';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import AffiliateCTA from '@/components/AffiliateCTA';
+import HeroCTA from '@/components/HeroCTA';
+import { ToolPageLayout } from '@/components/brand';
+import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/jsonld';
 import Link from 'next/link';
 
@@ -145,23 +148,27 @@ export default async function PlatformHashtagPage({ params }: { params: Promise<
   const faqs = PLATFORM_FAQS[platform];
 
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${info.name} Hashtag Generator`, description: info.description, path: `/hashtag-generator/${platform}` })) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Hashtag Generator', path: '/hashtag-generator' },
-        { name: info.name, path: `/hashtag-generator/${platform}` },
-      ])) }} />
-
-      <section className="bg-gradient-to-br from-pink-500 to-rose-500 text-white py-12">
+    <ToolPageLayout
+      scripts={
+        <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildToolSchema({ name: `${info.name} Hashtag Generator`, description: info.description, path: `/hashtag-generator/${platform}` })) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Hashtag Generator', path: '/hashtag-generator' },
+            { name: info.name, path: `/hashtag-generator/${platform}` },
+          ])) }} />
+        </>
+      }
+      heroHint={brandCopy.general[0]}
+      heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{info.emoji} {info.name} Hashtag Generator</h1>
-          <p className="text-lg text-pink-100">{info.description}</p>
+          <p className="text-lg text-white/85">{info.description}</p>
+          <HeroCTA toolName={`hashtag-${platform}`} />
         </div>
-      </section>
-
-      <section className="max-w-4xl mx-auto px-4 py-8">
+      }
+    >
         <HashtagGenerator defaultPlatform={platform} />
 
         {/* Hashtag Limits */}
@@ -218,7 +225,6 @@ export default async function PlatformHashtagPage({ params }: { params: Promise<
         </div>
 
         <FAQ items={faqs} />
-      </section>
-    </>
+    </ToolPageLayout>
   );
 }

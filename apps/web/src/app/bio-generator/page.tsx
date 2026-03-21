@@ -59,12 +59,12 @@ export default function BioGeneratorPage() {
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Bio Generator', path: '/bio-generator' }])) }} />
         </>
       }
-      heroClassName="bg-gradient-to-br from-green-600 to-teal-600 text-white py-12"
+      heroClassName="brand-hero-gradient py-12"
       heroHint={brandCopy.empty[3]}
       heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free AI Bio Generator (Instant, No Login)</h1>
-          <p className="text-lg text-green-100">Generate the perfect social media bio for Instagram, TikTok, LinkedIn, YouTube &amp; X. Free and instant.</p>
+          <p className="text-lg text-white/85">Generate the perfect social media bio for Instagram, TikTok, LinkedIn, YouTube &amp; X. Free and instant.</p>
           <HeroCTA toolName="bio-generator" color="green" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       }

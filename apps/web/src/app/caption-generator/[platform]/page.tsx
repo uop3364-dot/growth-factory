@@ -50,12 +50,12 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
           ])) }} />
         </>
       }
-      heroClassName="bg-gradient-to-br from-blue-600 to-purple-600 text-white py-12"
+      heroClassName="brand-hero-gradient py-12"
       heroHint={brandCopy.hero[3]}
       heroContent={
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Free {info.name} Caption Generator (AI-Powered, Instant)</h1>
-          <p className="text-lg text-blue-100">{ov?.contentIntro || `${info.description} Free, no login required.`}</p>
+          <p className="text-lg text-white/85">{ov?.contentIntro || `${info.description} Free, no login required.`}</p>
           <HeroCTA toolName={`caption-${platform}`} color="blue" headline={ov?.ctaHeadline} subtext={ov?.ctaSubtext} />
         </div>
       }
