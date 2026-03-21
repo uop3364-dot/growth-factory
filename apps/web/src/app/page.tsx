@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import FAQ from '@/components/FAQ';
 import HomeAffiliate from '@/components/HomeAffiliate';
 import ToolCrossSell from '@/components/ToolCrossSell';
+import InlineFeedbackCard from '@/components/InlineFeedbackCard';
 import { BrandHero, MascotHint, MascotImage } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import { buildFaqSchema, buildToolSchema, buildWebSiteSchema, buildOrganizationSchema } from '@/lib/jsonld';
@@ -223,6 +224,11 @@ export default function Home() {
       {/* 7. FAQ */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <FAQ items={homeFaqs} />
+      </section>
+
+      {/* 7.5 Feedback — prominent inline card */}
+      <section className="max-w-3xl mx-auto px-4">
+        <InlineFeedbackCard toolName="homepage" />
       </section>
 
       {/* 8. Final CTA */}

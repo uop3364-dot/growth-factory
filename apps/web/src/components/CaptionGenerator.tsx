@@ -9,6 +9,7 @@ import { EmptyStateMascot, ResultFrame, ResultGuidance, SocialHandoff } from '@/
 import { brandCopy } from '@/lib/brandCopy';
 import FeedbackButton from './FeedbackButton';
 import FeedbackModal from './FeedbackModal';
+import InlineFeedbackCard from './InlineFeedbackCard';
 
 interface CaptionResult {
   captions: string[];
@@ -313,6 +314,9 @@ export default function CaptionGenerator({
         />
         </>
       )}
+
+      {/* Inline feedback card — always visible, primary feedback entry */}
+      <InlineFeedbackCard toolName="caption-generator" metadata={feedbackMetadata} />
 
       {/* Floating feedback button with tool context */}
       <FeedbackButton metadata={feedbackMetadata} />
