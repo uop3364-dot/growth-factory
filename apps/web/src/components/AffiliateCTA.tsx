@@ -13,7 +13,7 @@ interface AffiliateCTAProps {
   /** Override subtext from seo-overrides */
   customSubtext?: string;
   /** Placement context for tracking */
-  placement?: 'result' | 'middle' | 'footer';
+  placement?: 'result' | 'middle' | 'footer' | 'pre_faq';
   /** Tool slug for tracking */
   toolSlug?: string;
 }
