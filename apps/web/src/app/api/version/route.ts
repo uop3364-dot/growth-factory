@@ -14,3 +14,4 @@ export async function GET() {
     allowFakeFallback: process.env.ALLOW_FAKE_FALLBACK || 'not set',
   });
 }
+// Sat Mar 21 16:24:59 UTC 2026
