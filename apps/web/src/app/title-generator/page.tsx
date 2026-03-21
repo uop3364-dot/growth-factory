@@ -15,7 +15,7 @@ import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    keyword: 'Title Generator',
+    title: 'Free AI YouTube Title Generator — Click-Worthy Titles, Instant',
     description: 'Generate click-worthy titles for YouTube videos, blog posts, and newsletters with AI. SEO-optimized with power words. Free, instant, no login. Try now.',
     path: '/title-generator',
   });
