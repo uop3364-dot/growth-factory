@@ -182,7 +182,7 @@ export interface OpenAICallOptions {
  * Throws nothing — all errors are caught and returned as null.
  */
 export async function callOpenAI<T>(opts: OpenAICallOptions): Promise<T | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) return null;
 
   try {
@@ -193,7 +193,7 @@ export async function callOpenAI<T>(opts: OpenAICallOptions): Promise<T | null> 
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+        model: (process.env.OPENAI_MODEL || 'gpt-4o-mini').trim(),
         temperature: opts.temperature ?? 0.8,
         messages: [
           { role: 'system', content: opts.systemPrompt || 'You output valid JSON only.' },
