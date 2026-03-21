@@ -191,6 +191,9 @@ export default function CaptionGenerator({
         </button>
       </div>
 
+      {/* Inline feedback card — right after form, always visible */}
+      <InlineFeedbackCard toolName="caption-generator" metadata={feedbackMetadata} />
+
       {/* Error state */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8 text-center">
@@ -314,9 +317,6 @@ export default function CaptionGenerator({
         />
         </>
       )}
-
-      {/* Inline feedback card — always visible, primary feedback entry */}
-      <InlineFeedbackCard toolName="caption-generator" metadata={feedbackMetadata} />
 
       {/* Floating feedback button with tool context */}
       <FeedbackButton metadata={feedbackMetadata} />

@@ -11,7 +11,7 @@ import { buildMetadata } from '@/lib/metadata';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    title: 'Free AI Tools for Creators — Captions, Bios, Titles & Hashtags',
+    keyword: 'AI Tools for Creators',
     description: 'Generate captions, bios, titles, and hashtags with AI. 100% free, no login, instant results. Trusted by 50K+ creators. Try now.',
     path: '/',
   });
@@ -87,6 +87,11 @@ export default function Home() {
           </div>
         </div>
       </BrandHero>
+
+      {/* 1.5 Feedback — right after hero, before tools */}
+      <section className="max-w-5xl mx-auto px-4 pt-10">
+        <InlineFeedbackCard toolName="homepage" />
+      </section>
 
       {/* 2. Featured Tools */}
       <section id="tools" className="max-w-5xl mx-auto px-4 py-16">
@@ -224,11 +229,6 @@ export default function Home() {
       {/* 7. FAQ */}
       <section className="max-w-3xl mx-auto px-4 py-16">
         <FAQ items={homeFaqs} />
-      </section>
-
-      {/* 7.5 Feedback — prominent inline card */}
-      <section className="max-w-3xl mx-auto px-4">
-        <InlineFeedbackCard toolName="homepage" />
       </section>
 
       {/* 8. Final CTA */}

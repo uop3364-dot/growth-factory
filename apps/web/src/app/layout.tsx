@@ -6,6 +6,7 @@ import GoogleAnalytics from './components/GoogleAnalytics';
 import { MascotImage } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import MobileNav from '@/components/MobileNav';
+import FeedbackButton from '@/components/FeedbackButton';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </nav>
         <main>{children}</main>
+        <FeedbackButton />
         <footer className="bg-white border-t border-brand-green/10 mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
