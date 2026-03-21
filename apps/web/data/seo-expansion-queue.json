@@ -3,21 +3,6 @@
   "topics": {
     "pending": [
       {
-        "id": "comedy",
-        "name": "Comedy",
-        "emoji": "😂"
-      },
-      {
-        "id": "real-estate",
-        "name": "Real Estate",
-        "emoji": "🏠"
-      },
-      {
-        "id": "sustainability",
-        "name": "Sustainability",
-        "emoji": "♻️"
-      },
-      {
         "id": "wellness",
         "name": "Wellness",
         "emoji": "🧘"
@@ -164,16 +149,29 @@
         "name": "Nature",
         "emoji": "🌻",
         "addedAt": "2026-03-20T11:10:30.671Z"
+      },
+      {
+        "id": "comedy",
+        "name": "Comedy",
+        "emoji": "😂",
+        "addedAt": "2026-03-21T05:06:19.801Z"
+      },
+      {
+        "id": "real-estate",
+        "name": "Real Estate",
+        "emoji": "🏠",
+        "addedAt": "2026-03-21T05:06:19.801Z"
+      },
+      {
+        "id": "sustainability",
+        "name": "Sustainability",
+        "emoji": "♻️",
+        "addedAt": "2026-03-21T05:06:19.801Z"
       }
     ]
   },
   "tones": {
     "pending": [
-      {
-        "id": "emotional",
-        "name": "Emotional",
-        "description": "Heartfelt and touching"
-      },
       {
         "id": "storytelling",
         "name": "Storytelling",
@@ -224,6 +222,12 @@
         "name": "Casual",
         "description": "Relaxed and laid-back",
         "addedAt": "2026-03-20T11:10:30.671Z"
+      },
+      {
+        "id": "emotional",
+        "name": "Emotional",
+        "description": "Heartfelt and touching",
+        "addedAt": "2026-03-21T05:06:19.801Z"
       }
     ]
   }

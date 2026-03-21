@@ -70,6 +70,9 @@ const TOPIC_PHRASES: Record<string, string[]> = {
   'art': ["art vibes", "art life", "art goals", "art inspiration", "art journey"],
   'diy': ["diy vibes", "diy life", "diy goals", "diy inspiration", "diy journey"],
   'nature': ["nature vibes", "nature life", "nature goals", "nature inspiration", "nature journey"],
+  'comedy': ["comedy vibes", "comedy life", "comedy goals", "comedy inspiration", "comedy journey"],
+  'real-estate': ["real estate vibes", "real estate life", "real estate goals", "real estate inspiration", "real estate journey"],
+  'sustainability': ["sustainability vibes", "sustainability life", "sustainability goals", "sustainability inspiration", "sustainability journey"],
 };
 
 const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: string }> = {
@@ -84,6 +87,7 @@ const TONE_MODIFIERS: Record<string, { prefix: string; suffix: string; style: st
   'sarcastic': { prefix: "", suffix: "", style: "dry wit and irony" },
   'bold': { prefix: "", suffix: "", style: "confident and daring" },
   'casual': { prefix: "", suffix: "", style: "relaxed and laid-back" },
+  'emotional': { prefix: "", suffix: "", style: "heartfelt and touching" },
 };
 
 function hashCode(str: string): number {
