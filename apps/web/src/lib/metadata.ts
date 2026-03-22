@@ -17,8 +17,12 @@ export function buildMetadata(opts: {
 }): Metadata {
   const overrideDesc = getOverrideDesc(opts.path);
   const overrideTitle = getOverrideTitle(opts.path);
-  const title = overrideTitle ?? opts.title ?? generateSeoTitle(opts.keyword);
+  const rawTitle = overrideTitle ?? opts.title ?? generateSeoTitle(opts.keyword);
   const description = overrideDesc ?? opts.description;
+
+  // Use absolute title for overrides to bypass layout template "%s | CreatorAITools"
+  // This prevents double-brand suffix on SERP (e.g. "Title | CreatorAITools | CreatorAITools")
+  const title = overrideTitle ? { absolute: rawTitle } : rawTitle;
 
   const url = `${SITE_URL}${opts.path}`;
   return {
@@ -26,7 +30,7 @@ export function buildMetadata(opts: {
     description,
     alternates: { canonical: url },
     openGraph: {
-      title,
+      title: rawTitle,
       description,
       url,
       siteName: SITE_NAME,
@@ -35,7 +39,7 @@ export function buildMetadata(opts: {
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: rawTitle,
       description,
       images: [OG_IMAGE],
     },
