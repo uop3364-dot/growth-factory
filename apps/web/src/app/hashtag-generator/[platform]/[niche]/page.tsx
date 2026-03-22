@@ -289,7 +289,7 @@ export default async function NicheHashtagPage({ params }: { params: Promise<{ p
         </div>
 
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA pageType="hashtag-niche" />
+        <AffiliateCTA pageType="hashtag-niche" pagePath={`/hashtag-generator/${platform}/${niche}`} />
 
         {/* Other Niches for this Platform */}
         <div className="my-8">

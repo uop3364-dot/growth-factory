@@ -193,7 +193,7 @@ export default async function BioPlatformPage({ params }: { params: Promise<{ pl
         </div>
 
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA pageType="bio-platform" />
+        <AffiliateCTA pageType="bio-platform" pagePath={`/bio-generator/${platform}`} />
 
         {/* Internal links to niches */}
         <div className="my-8">

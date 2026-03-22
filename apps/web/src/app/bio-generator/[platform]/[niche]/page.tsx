@@ -205,7 +205,7 @@ export default async function BioNichePage({ params }: { params: Promise<{ platf
         </div>
 
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA pageType="bio-niche" />
+        <AffiliateCTA pageType="bio-niche" pagePath={`/bio-generator/${platform}/${niche}`} />
 
         {/* Same platform, other niches */}
         <div className="my-8">

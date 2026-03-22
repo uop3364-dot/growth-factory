@@ -40,7 +40,7 @@ export default function CaptionGeneratorPage() {
       }
     >
       <CaptionGenerator />
-      <AffiliateCTA pageType="tool" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
+      <AffiliateCTA pageType="tool" pagePath="/caption-generator" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
       <HowToUse tool="caption-generator" />
       <AdPlaceholder slot="after-generator" />
       <RelatedPlatforms />

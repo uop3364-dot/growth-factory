@@ -76,6 +76,7 @@ export default function TitleGeneratorPage() {
       <AffiliateCTA
         pageType="tool"
         platform="youtube"
+        pagePath="/title-generator"
         placement="result"
         toolSlug="title-generator"
         customHeadline="Your titles are ready. Now make them easier to rank."
@@ -97,6 +98,7 @@ export default function TitleGeneratorPage() {
         <AffiliateCTA
           pageType="tool"
           platform="youtube"
+          pagePath="/title-generator"
           placement="middle"
           toolSlug="title-generator"
           customHeadline="Want better titles every time?"
@@ -111,6 +113,7 @@ export default function TitleGeneratorPage() {
         <AffiliateCTA
           pageType="tool"
           platform="youtube"
+          pagePath="/title-generator"
           placement="pre_faq"
           toolSlug="title-generator"
           customHeadline="Free tool first. Growth stack next."

@@ -79,7 +79,7 @@ export default async function TonePage({ params }: { params: Promise<{ platform:
     >
       <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} defaultTone={tone} />
 
-      <AffiliateCTA pageType="tone" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
+      <AffiliateCTA pageType="tone" platform={platform} pagePath={`/caption-generator/${platform}/${topic}/${tone}`} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
 
       {/* Tone guide section */}
       <div className="mt-8 bg-white rounded-xl shadow p-6">

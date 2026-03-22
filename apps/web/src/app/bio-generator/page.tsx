@@ -70,7 +70,7 @@ export default function BioGeneratorPage() {
       }
     >
       <BioGenerator />
-      <AffiliateCTA pageType="tool" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="bio-generator" />
+      <AffiliateCTA pageType="tool" pagePath="/bio-generator" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="bio-generator" />
       <HowToUse tool="bio-generator" />
       <AdPlaceholder slot="after-generator" />
       <CrossToolLinks currentTool="/bio-generator" />

@@ -71,7 +71,7 @@ export default async function TopicPage({ params }: { params: Promise<{ platform
     >
       <CaptionGenerator defaultPlatform={platform} defaultTopic={topic} />
 
-      <AffiliateCTA pageType="topic" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
+      <AffiliateCTA pageType="topic" platform={platform} pagePath={`/caption-generator/${platform}/${topic}`} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
 
       {/* Topic-specific writing guide */}
       <div className="mt-8 bg-white rounded-xl shadow p-6">

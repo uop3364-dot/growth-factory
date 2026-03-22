@@ -62,7 +62,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
     >
       <CaptionGenerator defaultPlatform={platform} />
 
-      <AffiliateCTA pageType="platform" platform={platform} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
+      <AffiliateCTA pageType="platform" platform={platform} pagePath={`/caption-generator/${platform}`} customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="caption-generator" />
 
       {/* Platform-specific guide */}
       <div className="mt-8 bg-white rounded-xl shadow p-6">

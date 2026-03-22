@@ -184,7 +184,7 @@ export default async function PlatformHashtagPage({ params }: { params: Promise<
         </div>
 
         <AdPlaceholder slot="after-generator" />
-        <AffiliateCTA pageType="hashtag-platform" />
+        <AffiliateCTA pageType="hashtag-platform" pagePath={`/hashtag-generator/${platform}`} />
 
         {/* Niche Links */}
         <div className="my-8">

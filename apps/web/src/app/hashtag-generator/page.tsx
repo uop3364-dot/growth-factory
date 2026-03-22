@@ -78,7 +78,7 @@ export default function HashtagGeneratorPage() {
       }
     >
       <HashtagGenerator />
-      <AffiliateCTA pageType="tool" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="hashtag-generator" />
+      <AffiliateCTA pageType="tool" pagePath="/hashtag-generator" customHeadline={ov?.affiliateHeadline} customSubtext={ov?.affiliateSubtext} placement="result" toolSlug="hashtag-generator" />
       <HowToUse tool="hashtag-generator" />
       <AdPlaceholder slot="after-generator" />
       <CrossToolLinks currentTool="/hashtag-generator" />
