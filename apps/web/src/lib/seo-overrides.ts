@@ -46,6 +46,8 @@ export interface SeoOverride {
   hypothesis: string;
 }
 
+import { generateSeoTitle } from './seo/title';
+
 // Use variant A by default. Set to 'B' to activate test variants.
 export const ACTIVE_VARIANT: 'A' | 'B' = 'A';
 
@@ -56,8 +58,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   // ═══════════════════════════════════════════════════════════════════
 
   '/': {
-    titleA: 'Free AI Tools for Creators — Captions, Bios, Titles & Hashtags',
-    titleB: 'AI Caption Generator & Creator Tools — 100% Free, No Signup',
+    titleA: generateSeoTitle('AI Tools for Creators'),
+    titleB: generateSeoTitle('AI Caption Generator & Creator Tools'),
     descA: 'Generate captions, bios, titles, and hashtags with AI. 100% free, no login, instant results. Used by 50K+ creators. Try now.',
     descB: 'Free AI-powered caption generator for Instagram, TikTok, YouTube & more. Plus bio, title, and hashtag tools. No signup needed — try in 5 seconds.',
     ctaHeadline: 'Generate Captions Now',
@@ -67,8 +69,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator': {
-    titleA: 'Free AI Caption Generator — Instagram, TikTok, YouTube (Instant)',
-    titleB: 'AI Caption Generator — Free Captions for Instagram, TikTok & YouTube',
+    titleA: generateSeoTitle('Caption Generator'),
+    titleB: generateSeoTitle('Caption Generator for Instagram, TikTok & YouTube'),
     descA: 'Generate scroll-stopping captions with AI in 5 seconds. Includes hashtags, CTAs, and short variants. Free, no signup. Works for Instagram, TikTok, YouTube, X & Facebook.',
     descB: 'Need better captions? Our AI generates platform-optimized captions with hashtags and CTAs. 100% free, no login. Instagram, TikTok, YouTube, X, Facebook.',
     ctaHeadline: 'Generate Your Caption Now',
@@ -81,8 +83,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/bio-generator': {
-    titleA: 'Free AI Bio Generator — Instagram, TikTok, LinkedIn Bio in Seconds',
-    titleB: 'AI Bio Generator for Instagram & TikTok — Free, Instant, No Signup',
+    titleA: generateSeoTitle('Bio Generator'),
+    titleB: generateSeoTitle('Bio Generator for Instagram & TikTok'),
     descA: 'Generate the perfect social media bio with AI. Optimized for Instagram (150 chars), TikTok (80 chars), LinkedIn (300 chars). 17 bio options per generation. Free, instant.',
     descB: 'Stop staring at a blank bio. Our AI creates 17 bio options for your platform in seconds — professional, creative, witty & more. Free, no signup needed.',
     ctaHeadline: 'Generate Your Bio Now',
@@ -101,8 +103,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/title-generator': {
-    titleA: 'Free AI Title Generator — YouTube Titles, Blog Headlines (Instant)',
-    titleB: 'YouTube Title Generator — AI-Powered Click-Worthy Titles (Free)',
+    titleA: generateSeoTitle('Title Generator'),
+    titleB: generateSeoTitle('YouTube Title Generator'),
     descA: 'Generate click-worthy titles for YouTube videos, blog posts & newsletters with AI. 10+ titles with SEO optimization and power words. Free, no signup.',
     descB: 'Struggling with YouTube titles? Our AI generates 10+ click-optimized title ideas with character counts and power words. Free, instant, no login.',
     ctaHeadline: 'Generate Titles Now',
@@ -121,8 +123,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/hashtag-generator': {
-    titleA: 'Free AI Hashtag Generator — Instagram, TikTok (30+ Hashtags)',
-    titleB: 'Instagram Hashtag Generator — 30+ Free AI Hashtags (Instant)',
+    titleA: generateSeoTitle('Hashtag Generator'),
+    titleB: generateSeoTitle('Instagram Hashtag Generator'),
     descA: 'Generate 30+ trending hashtags for Instagram, TikTok, YouTube & X with AI. Niche-specific, copy-ready sets. Includes trending + low-competition mix. Free, instant.',
     descB: 'Stop guessing which hashtags to use. Our AI generates 30+ platform-optimized hashtags with trending + niche mix. Copy-ready sets. Free, no signup.',
     ctaHeadline: 'Generate Hashtags Now',
@@ -144,8 +146,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   // ═══════════════════════════════════════════════════════════════════
 
   '/caption-generator/youtube': {
-    titleA: 'Free YouTube Caption Generator — AI-Powered Descriptions & Titles',
-    titleB: 'YouTube Description Generator — Free AI Tool (Instant Results)',
+    titleA: generateSeoTitle('YouTube Caption Generator'),
+    titleB: generateSeoTitle('YouTube Description Generator'),
     descA: 'Generate optimized YouTube descriptions, titles, and captions with AI. Includes hashtags, timestamps format, and CTAs. Free, instant, built for YouTubers.',
     descB: 'Write better YouTube descriptions in seconds. AI generates SEO-optimized descriptions with keywords, CTAs, and the perfect length. Free, no signup.',
     ctaHeadline: 'Generate YouTube Captions Now',
@@ -164,8 +166,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/instagram': {
-    titleA: 'Free Instagram Caption Generator — AI Captions with Hashtags (2026)',
-    titleB: 'Instagram Caption Generator — Free AI Tool with Hashtags & CTAs',
+    titleA: generateSeoTitle('Instagram Caption Generator'),
+    titleB: generateSeoTitle('Instagram Caption Generator with Hashtags'),
     descA: 'Generate Instagram captions that get likes, comments, and saves. AI creates captions with hashtags, CTAs, and the perfect hook. Free, instant, works for Reels too.',
     descB: 'Need Instagram captions? Our AI generates scroll-stopping captions with hashtags optimized for the algorithm. Feed posts, Reels, Stories. Free, no login.',
     ctaHeadline: 'Generate Instagram Captions Now',
@@ -183,8 +185,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/tiktok': {
-    titleA: 'Free TikTok Caption Generator — AI Captions That Go Viral (2026)',
-    titleB: 'TikTok Caption Generator — Free AI Tool for Viral Captions',
+    titleA: generateSeoTitle('TikTok Caption Generator'),
+    titleB: generateSeoTitle('TikTok Viral Caption Generator'),
     descA: 'Generate TikTok captions that stop the scroll. AI-powered with trending hooks, hashtags, and CTAs optimized for TikTok\'s algorithm. Free, instant, no signup.',
     descB: 'Write TikTok captions that get views. Our AI creates short, punchy captions with trending hashtags and hooks. Optimized for mobile. Free, no login.',
     ctaHeadline: 'Generate TikTok Captions Now',
@@ -202,8 +204,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/x': {
-    titleA: 'Free X (Twitter) Caption Generator — AI Tweets & Thread Starters',
-    titleB: 'Twitter/X Post Generator — Free AI Tool for Tweets & Threads',
+    titleA: generateSeoTitle('X (Twitter) Caption Generator'),
+    titleB: generateSeoTitle('Twitter Post Generator'),
     descA: 'Generate punchy tweets, thread starters, and X posts with AI. Optimized for engagement with hooks, polls, and the 280-char sweet spot. Free, instant.',
     descB: 'Write better tweets in seconds. AI generates X/Twitter posts with proven hook formulas, thread openers, and engagement triggers. Free, no signup.',
     ctaHeadline: 'Generate X Posts Now',
@@ -220,8 +222,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/facebook': {
-    titleA: 'Free Facebook Caption Generator — AI Posts for Pages & Groups',
-    titleB: 'Facebook Post Generator — Free AI Captions for Pages & Groups',
+    titleA: generateSeoTitle('Facebook Caption Generator'),
+    titleB: generateSeoTitle('Facebook Post Generator'),
     descA: 'Generate engaging Facebook posts for pages, groups, and personal profiles with AI. Includes shareable hooks, CTAs, and the ideal post length. Free, instant.',
     descB: 'Write Facebook posts that get shares and comments. AI creates community-driving captions for pages, groups, and events. Free, no signup.',
     ctaHeadline: 'Generate Facebook Posts Now',
@@ -242,8 +244,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   // ═══════════════════════════════════════════════════════════════════
 
   '/caption-generator/youtube/marketing': {
-    titleA: 'YouTube Marketing Captions — Free AI Generator with CTAs',
-    titleB: 'Free YouTube Marketing Caption Generator — AI-Powered CTAs & Hooks',
+    titleA: generateSeoTitle('YouTube Marketing Caption Generator'),
+    titleB: generateSeoTitle('YouTube Marketing Caption Generator'),
     descA: 'Generate marketing-focused YouTube descriptions and captions with AI. Includes CTAs, keyword optimization, and conversion-driven hooks. Free, instant.',
     descB: 'Write YouTube marketing captions that convert. AI generates descriptions with CTAs, SEO keywords, and engagement hooks. Free, no signup.',
     affiliateSlug: 'vidiq',
@@ -254,8 +256,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/youtube/business': {
-    titleA: 'YouTube Business Captions — Free AI Generator for Brand Channels',
-    titleB: 'Free Business YouTube Caption Generator — Professional AI Descriptions',
+    titleA: generateSeoTitle('YouTube Business Caption Generator'),
+    titleB: generateSeoTitle('YouTube Business Caption Generator'),
     descA: 'Generate professional YouTube captions for business channels. AI creates brand-appropriate descriptions with CTAs, timestamps, and SEO keywords. Free, instant.',
     descB: 'Write YouTube descriptions for your business channel in seconds. Professional tone, CTAs, SEO optimization. AI-generated, free, no signup.',
     affiliateSlug: 'vidiq',
@@ -266,8 +268,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/youtube/technology': {
-    titleA: 'YouTube Tech Captions — Free AI Generator for Tech Reviews & Tutorials',
-    titleB: 'Free AI Caption Generator for YouTube Tech Content — Reviews & Tutorials',
+    titleA: generateSeoTitle('YouTube Technology Caption Generator'),
+    titleB: generateSeoTitle('YouTube Tech Caption Generator'),
     descA: 'Generate tech-focused YouTube captions with AI. Perfect for reviews, tutorials, unboxings, and tech news. Includes SEO hashtags and CTAs. Free, instant.',
     descB: 'Write YouTube descriptions for tech content in seconds. AI generates captions for reviews, tutorials, and unboxings with SEO optimization. Free.',
     affiliateSlug: 'descript',
@@ -278,8 +280,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/youtube/gaming': {
-    titleA: 'YouTube Gaming Captions — Free AI Generator for Let\'s Plays & Streams',
-    titleB: 'Free Gaming YouTube Caption Generator — AI Descriptions for Gamers',
+    titleA: generateSeoTitle('YouTube Gaming Caption Generator'),
+    titleB: generateSeoTitle('YouTube Gaming Caption Generator'),
     descA: 'Generate gaming-focused YouTube captions with AI. Perfect for let\'s plays, streams, reviews, and esports content. With trending gaming hashtags. Free, instant.',
     descB: 'Write YouTube gaming descriptions in seconds. AI creates captions for streams, let\'s plays, and game reviews with relevant hashtags. Free, no signup.',
     affiliateSlug: 'opusclip',
@@ -290,8 +292,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/instagram/travel': {
-    titleA: 'Instagram Travel Captions — Free AI Generator (200+ Ideas)',
-    titleB: 'Free Travel Caption Generator for Instagram — AI-Powered, Instant',
+    titleA: generateSeoTitle('Instagram Travel Caption Generator'),
+    titleB: generateSeoTitle('Instagram Travel Caption Generator'),
     descA: 'Generate wanderlust-worthy Instagram travel captions with AI. Beach, mountain, city, food — with location hashtags and travel CTAs. 200+ ideas, free, instant.',
     descB: 'Need travel captions for Instagram? AI generates location-specific captions with hashtags and hooks. Beach, city, adventure. Free, no signup.',
     affiliateSlug: 'canva',
@@ -307,8 +309,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/instagram/food': {
-    titleA: 'Instagram Food Captions — Free AI Generator (Foodie Approved)',
-    titleB: 'Free Food Caption Generator for Instagram — AI Captions & Hashtags',
+    titleA: generateSeoTitle('Instagram Food Caption Generator'),
+    titleB: generateSeoTitle('Instagram Food Caption Generator'),
     descA: 'Generate mouth-watering Instagram food captions with AI. Restaurant reviews, home cooking, recipes — with foodie hashtags and CTAs. Free, instant, no signup.',
     descB: 'Write the perfect Instagram food caption in seconds. AI generates captions for restaurants, recipes, and food blogs with trending hashtags. Free.',
     affiliateSlug: 'canva',
@@ -324,8 +326,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/instagram/fitness': {
-    titleA: 'Instagram Fitness Captions — Free AI Generator (Gym & Workout)',
-    titleB: 'Free Fitness Caption Generator for Instagram — AI Workout Captions',
+    titleA: generateSeoTitle('Instagram Fitness Caption Generator'),
+    titleB: generateSeoTitle('Instagram Fitness Caption Generator'),
     descA: 'Generate motivating Instagram fitness captions with AI. Gym selfies, workout videos, transformation posts — with fitness hashtags and CTAs. Free, instant.',
     descB: 'Write Instagram fitness captions that inspire action. AI generates gym, workout, and transformation captions with hashtags. Free, no signup.',
     affiliateSlug: 'canva',
@@ -341,8 +343,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/instagram/beauty': {
-    titleA: 'Instagram Beauty Captions — Free AI Generator (Skincare & Makeup)',
-    titleB: 'Free Beauty Caption Generator for Instagram — AI Skincare & Makeup Captions',
+    titleA: generateSeoTitle('Instagram Beauty Caption Generator'),
+    titleB: generateSeoTitle('Instagram Beauty Caption Generator'),
     descA: 'Generate stunning Instagram beauty captions with AI. Skincare routines, makeup looks, product reviews — with beauty hashtags and CTAs. Free, instant.',
     descB: 'Write Instagram beauty captions in seconds. AI generates captions for skincare, makeup, and beauty reviews with trending hashtags. Free, no signup.',
     affiliateSlug: 'canva',
@@ -358,8 +360,8 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
   },
 
   '/caption-generator/tiktok/marketing': {
-    titleA: 'TikTok Marketing Captions — Free AI Generator for Brand Content',
-    titleB: 'Free TikTok Marketing Caption Generator — AI-Powered Brand Captions',
+    titleA: generateSeoTitle('TikTok Marketing Caption Generator'),
+    titleB: generateSeoTitle('TikTok Marketing Caption Generator'),
     descA: 'Generate TikTok marketing captions for brands and businesses. AI creates scroll-stopping hooks with trending sounds strategy and conversion CTAs. Free, instant.',
     descB: 'Write TikTok marketing captions that convert. AI generates brand-appropriate captions with hooks, hashtags, and CTAs. Free, no signup.',
     affiliateSlug: 'metricool',
@@ -369,9 +371,94 @@ export const SEO_OVERRIDES: Record<string, SeoOverride> = {
     hypothesis: 'Brand/business framing attracts B2B audience with higher tool adoption. Metricool analytics pairing is natural next step for marketing teams.',
   },
 
+  // ═══════════════════════════════════════════════════════════════════
+  // TIER 4: GSC High-Impression Pages (SEO title optimization batch)
+  // ═══════════════════════════════════════════════════════════════════
+
+  '/hashtag-generator/x': {
+    titleA: 'Best X (Twitter) Hashtags for 2026 — Free AI Generator That Actually Works',
+    titleB: 'Best X (Twitter) Hashtags for 2026 — Free AI Generator That Actually Works',
+    descA: 'Generate better X hashtags for art, tech, gaming, creators, and more. Free AI hashtag generator with ready-to-use ideas for 2026.',
+    descB: 'Generate better X hashtags for art, tech, gaming, creators, and more. Free AI hashtag generator with ready-to-use ideas for 2026.',
+    diagnosis: 'GSC shows impressions on /hashtag-generator/x. Current title is generic keyword-based. Needs differentiated, human-sounding title with year signal.',
+    hypothesis: '"That Actually Works" adds authenticity signal. Year tag signals freshness. Expected CTR lift +10-15%.',
+  },
+
+  '/hashtag-generator/x/art': {
+    titleA: 'Best X (Twitter) Hashtags for AI Art in 2026 (Copy & Paste)',
+    titleB: 'Best X (Twitter) Hashtags for AI Art in 2026 (Copy & Paste)',
+    descA: 'Generate the best X hashtags for AI art, digital art, and creative posts. Free tool with copy-and-paste hashtag ideas for 2026.',
+    descB: 'Generate the best X hashtags for AI art, digital art, and creative posts. Free tool with copy-and-paste hashtag ideas for 2026.',
+    diagnosis: 'GSC impression data confirms visibility. Current auto-generated title lacks specificity and year. AI Art angle captures trending search intent.',
+    hypothesis: '"Copy & Paste" signals instant value. "AI Art" captures trending niche. Expected CTR lift +12-18%.',
+  },
+
+  '/hashtag-generator/x/technology': {
+    titleA: 'Top Tech Hashtags for X (Twitter) — Grow Faster in 2026',
+    titleB: 'Top Tech Hashtags for X (Twitter) — Grow Faster in 2026',
+    descA: 'Find high-performing tech hashtags for X posts. Get better reach for AI, startups, gadgets, and software content in 2026.',
+    descB: 'Find high-performing tech hashtags for X posts. Get better reach for AI, startups, gadgets, and software content in 2026.',
+    diagnosis: 'GSC impression data present. Generic title underperforms. "Grow Faster" adds benefit-driven CTA.',
+    hypothesis: 'Benefit-driven title with sub-niche mentions (AI, startups, gadgets) captures long-tail. Expected CTR lift +10-14%.',
+  },
+
+  '/hashtag-generator/x/gaming': {
+    titleA: 'Best Gaming Hashtags for X (Twitter) — Get More Views Instantly',
+    titleB: 'Best Gaming Hashtags for X (Twitter) — Get More Views Instantly',
+    descA: 'Get better gaming reach on X with fresh hashtags for streams, clips, esports, and gaming content. Free AI hashtag generator.',
+    descB: 'Get better gaming reach on X with fresh hashtags for streams, clips, esports, and gaming content. Free AI hashtag generator.',
+    diagnosis: 'GSC shows gaming/X page has impressions. "Get More Views Instantly" matches gamer intent directly.',
+    hypothesis: 'Gamers respond to instant-result language. Stream/clips/esports mentions capture sub-intents. Expected CTR lift +12%.',
+  },
+
+  '/hashtag-generator/instagram/art': {
+    titleA: 'Best Instagram Art Hashtags (2026) — Free AI Generator',
+    titleB: 'Best Instagram Art Hashtags (2026) — Free AI Generator',
+    descA: 'Discover the best Instagram art hashtags for artists, illustrators, and creators. Free AI hashtag generator updated for 2026.',
+    descB: 'Discover the best Instagram art hashtags for artists, illustrators, and creators. Free AI hashtag generator updated for 2026.',
+    diagnosis: 'GSC impressions confirm visibility. Current generic title loses clicks to more specific competitors.',
+    hypothesis: 'Year tag + "Free AI Generator" positions as modern tool. Artist/illustrator mentions broaden appeal. Expected CTR lift +10%.',
+  },
+
+  '/hashtag-generator/linkedin/education': {
+    titleA: 'Top LinkedIn Education Hashtags (2026) — More Reach, Less Effort',
+    titleB: 'Top LinkedIn Education Hashtags (2026) — More Reach, Less Effort',
+    descA: 'Find LinkedIn education hashtags that help teachers, educators, and learning brands reach more people in 2026.',
+    descB: 'Find LinkedIn education hashtags that help teachers, educators, and learning brands reach more people in 2026.',
+    diagnosis: 'GSC impressions on LinkedIn education niche. "More Reach, Less Effort" addresses educator pain point directly.',
+    hypothesis: 'Educators value efficiency messaging. Specific audience mentions (teachers, learning brands) improve relevance. Expected CTR lift +10%.',
+  },
+
+  '/hashtag-generator/linkedin/food': {
+    titleA: 'Best Food Hashtags for LinkedIn (Yes, It Works in 2026)',
+    titleB: 'Best Food Hashtags for LinkedIn (Yes, It Works in 2026)',
+    descA: 'Generate better LinkedIn food hashtags for chefs, restaurants, creators, and food businesses. Free and easy to use.',
+    descB: 'Generate better LinkedIn food hashtags for chefs, restaurants, creators, and food businesses. Free and easy to use.',
+    diagnosis: 'GSC impressions present. "Yes, It Works" addresses the surprise factor of food content on LinkedIn — a curiosity trigger.',
+    hypothesis: 'Parenthetical humor creates curiosity click. Acknowledges the "food on LinkedIn?" question users have. Expected CTR lift +15%.',
+  },
+
+  '/bio-generator/tiktok/artist': {
+    titleA: 'TikTok Bio Ideas for Artists (Copy & Paste + AI Generator)',
+    titleB: 'TikTok Bio Ideas for Artists (Copy & Paste + AI Generator)',
+    descA: 'Create a better TikTok bio for artists in seconds. Get copy-and-paste bio ideas that look creative, clear, and professional.',
+    descB: 'Create a better TikTok bio for artists in seconds. Get copy-and-paste bio ideas that look creative, clear, and professional.',
+    diagnosis: 'GSC impressions on bio/tiktok/artist. Current auto-generated title is generic. "Copy & Paste" signals instant actionability.',
+    hypothesis: '"Bio Ideas" matches informational search intent. "Copy & Paste" reduces perceived effort. Expected CTR lift +12%.',
+  },
+
+  '/bio-generator/x/designer': {
+    titleA: 'Best Bio Ideas for Designers (Free AI Bio Generator)',
+    titleB: 'Best Bio Ideas for Designers (Free AI Bio Generator)',
+    descA: 'Generate a strong designer bio for X with free AI help. Great for graphic designers, UX designers, and creative professionals.',
+    descB: 'Generate a strong designer bio for X with free AI help. Great for graphic designers, UX designers, and creative professionals.',
+    diagnosis: 'GSC impressions on bio/x/designer. Current title lacks designer-specific appeal. Sub-niche mentions capture different designer types.',
+    hypothesis: 'Designer-specific language + sub-niche mentions (graphic, UX, creative) broaden relevance. Expected CTR lift +10%.',
+  },
+
   '/caption-generator/instagram/marketing': {
-    titleA: 'Instagram Marketing Captions — Free AI Generator for Brands & Agencies',
-    titleB: 'Free Instagram Marketing Caption Generator — AI Captions for Business',
+    titleA: generateSeoTitle('Instagram Marketing Caption Generator'),
+    titleB: generateSeoTitle('Instagram Marketing Caption Generator'),
     descA: 'Generate Instagram marketing captions for brands, agencies, and businesses. AI creates conversion-focused captions with CTAs, hashtags, and A/B variants. Free, instant.',
     descB: 'Write Instagram marketing captions that drive sales. AI generates brand captions with proven CTAs and engagement hooks. Free, no signup.',
     affiliateSlug: 'metricool',
