@@ -1,6 +1,6 @@
 export const PLATFORMS = ['instagram', 'tiktok', 'youtube', 'x', 'facebook'] as const;
-export const TOPICS = ['travel', 'food', 'fitness', 'beauty', 'business', 'marketing', 'gaming', 'pets', 'fashion', 'motivation', 'technology', 'education', 'photography', 'music', 'lifestyle', 'parenting', 'health', 'sports', 'art', 'diy', 'nature', 'comedy', 'real-estate', 'sustainability'] as const;
-export const TONES = ['funny', 'cute', 'professional', 'luxury', 'minimalist', 'friendly', 'persuasive', 'inspirational', 'sarcastic', 'bold', 'casual', 'emotional'] as const;
+export const TOPICS = ['travel', 'food', 'fitness', 'beauty', 'business', 'marketing', 'gaming', 'pets', 'fashion', 'motivation', 'technology', 'education', 'photography', 'music', 'lifestyle', 'parenting', 'health', 'sports', 'art', 'diy', 'nature', 'comedy', 'real-estate', 'sustainability', 'wellness', 'finance', 'crypto'] as const;
+export const TONES = ['funny', 'cute', 'professional', 'luxury', 'minimalist', 'friendly', 'persuasive', 'inspirational', 'sarcastic', 'bold', 'casual', 'emotional', 'storytelling'] as const;
 
 export type Platform = typeof PLATFORMS[number];
 export type Topic = typeof TOPICS[number];
@@ -55,6 +55,9 @@ export const TOPIC_INFO: Record<Topic, { name: string; emoji: string }> = {
   'comedy': { name: 'Comedy', emoji: '😂' },
   'real-estate': { name: 'Real Estate', emoji: '🏠' },
   'sustainability': { name: 'Sustainability', emoji: '♻️' },
+  'wellness': { name: 'Wellness', emoji: '🧘' },
+  'finance': { name: 'Finance', emoji: '💰' },
+  'crypto': { name: 'Crypto', emoji: '🪙' },
 };
 
 export const TONE_INFO: Record<Tone, { name: string; description: string }> = {
@@ -70,4 +73,5 @@ export const TONE_INFO: Record<Tone, { name: string; description: string }> = {
   'bold': { name: 'Bold', description: 'Confident and daring' },
   'casual': { name: 'Casual', description: 'Relaxed and laid-back' },
   'emotional': { name: 'Emotional', description: 'Heartfelt and touching' },
+  'storytelling': { name: 'Storytelling', description: 'Narrative and engaging' },
 };
