@@ -8,6 +8,7 @@ import HeroCTA from '@/components/HeroCTA';
 import { ToolPageLayout } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 
 const PLATFORMS = ['instagram', 'tiktok', 'youtube', 'x', 'linkedin'] as const;
@@ -129,15 +130,11 @@ export async function generateMetadata({ params }: { params: Promise<{ platform:
   const { platform } = await params;
   if (!PLATFORMS.includes(platform as Platform)) return {};
   const info = PLATFORM_INFO[platform as Platform];
-  const title = `${info.name} Hashtag Generator - Free AI Tool | CreatorAITools`;
-  const description = info.description;
-  return {
-    title,
-    description,
-    openGraph: { title, description, url: `/hashtag-generator/${platform}` },
-    twitter: { card: 'summary_large_image', title, description },
-    alternates: { canonical: `/hashtag-generator/${platform}` },
-  };
+  return buildMetadata({
+    keyword: `${info.name} Hashtag Generator`,
+    description: info.description,
+    path: `/hashtag-generator/${platform}`,
+  });
 }
 
 export default async function PlatformHashtagPage({ params }: { params: Promise<{ platform: string }> }) {

@@ -7,6 +7,7 @@ import HeroCTA from '@/components/HeroCTA';
 import { ToolPageLayout } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import {
   BIO_PLATFORMS,
@@ -143,20 +144,12 @@ export async function generateMetadata({ params }: { params: Promise<{ platform:
   if (!PLATFORMS.includes(platform as BioPlatform) || !NICHES.includes(niche as BioNiche)) return {};
   const platformInfo = PLATFORM_LABELS[platform as BioPlatform];
   const nicheInfo = NICHE_LABELS[niche as BioNiche];
-  const title = `${platformInfo.name} Bio for ${nicheInfo.name}s | Free AI Generator | CreatorAITools`;
   const description = `Generate the perfect ${platformInfo.name} bio for ${nicheInfo.name.toLowerCase()}s. Our free AI bio generator creates ${niche}-specific bios optimized for ${platformInfo.name}'s ${PLATFORM_CHAR_LIMITS[platform as BioPlatform]}-character limit.`;
-  return {
-    title,
+  return buildMetadata({
+    keyword: `${platformInfo.name} ${nicheInfo.name} Bio Generator`,
     description,
-    openGraph: {
-      title,
-      description,
-      url: `/bio-generator/${platform}/${niche}`,
-    },
-    alternates: {
-      canonical: `/bio-generator/${platform}/${niche}`,
-    },
-  };
+    path: `/bio-generator/${platform}/${niche}`,
+  });
 }
 
 export default async function BioNichePage({ params }: { params: Promise<{ platform: string; niche: string }> }) {

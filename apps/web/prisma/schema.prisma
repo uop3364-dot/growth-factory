@@ -203,6 +203,26 @@ model Feedback {
   @@map("feedback")
 }
 
+model ToolFeedback {
+  id         String   @id @default(cuid())
+  toolSlug   String   @map("tool_slug")
+  routePath  String   @map("route_path")
+  sentiment  String                        // yes | no
+  message    String?  @db.Text
+  ctaShown   Boolean  @default(false) @map("cta_shown")
+  ctaClicked Boolean  @default(false) @map("cta_clicked")
+  ctaTarget  String?  @map("cta_target")  // vidiq | title_pack | metricool
+  sessionId  String?  @map("session_id")
+  userAgent  String?  @map("user_agent") @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([toolSlug])
+  @@index([sentiment])
+  @@index([createdAt])
+  @@map("tool_feedback")
+}
+
 model LlmUsageLog {
   id         String   @id @default(cuid())
   tool       String                         // captions | titles | bios | hashtags

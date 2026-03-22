@@ -15,7 +15,7 @@ import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    title: 'Free AI Bio Generator for Instagram, TikTok & LinkedIn (Instant)',
+    keyword: 'Bio Generator',
     description: 'Generate the perfect social media bio with AI. Free bio generator for Instagram, TikTok, LinkedIn, YouTube, and X. No signup, instant results. Try now.',
     path: '/bio-generator',
   });

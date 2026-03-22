@@ -8,6 +8,7 @@ import HeroCTA from '@/components/HeroCTA';
 import { ToolPageLayout } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 import {
   BIO_PLATFORMS,
@@ -127,18 +128,11 @@ export async function generateMetadata({ params }: { params: Promise<{ platform:
   if (!PLATFORMS.includes(platform as BioPlatform)) return {};
   const info = PLATFORM_LABELS[platform as BioPlatform];
   const tips = PLATFORM_TIPS[platform as BioPlatform];
-  return {
-    title: `Free AI ${info.name} Bio Generator | CreatorAITools`,
+  return buildMetadata({
+    keyword: `${info.name} Bio Generator`,
     description: tips.description,
-    openGraph: {
-      title: `Free AI ${info.name} Bio Generator | CreatorAITools`,
-      description: tips.description,
-      url: `/bio-generator/${platform}`,
-    },
-    alternates: {
-      canonical: `/bio-generator/${platform}`,
-    },
-  };
+    path: `/bio-generator/${platform}`,
+  });
 }
 
 export default async function BioPlatformPage({ params }: { params: Promise<{ platform: string }> }) {

@@ -5,7 +5,7 @@ import { trackEvent } from '@/lib/analytics';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from '@/lib/seo-data';
 import type { Platform, Topic, Tone } from '@/lib/seo-data';
 import { SUPPORTED_LANGUAGES } from '@/lib/caption-generator';
-import { EmptyStateMascot, ResultFrame, ResultGuidance, SocialHandoff } from '@/components/brand';
+import { EmptyStateMascot, ResultFrame, ResultFeedbackCard, ResultGuidance, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import FeedbackButton from './FeedbackButton';
 import FeedbackModal from './FeedbackModal';
@@ -217,11 +217,11 @@ export default function CaptionGenerator({
         <>
         <ResultFrame>
           <div className="space-y-6">
-            {/* Captions */}
+            {/* Captions (limited to 3) */}
             <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
               <h3 className="text-lg font-semibold mb-4">Generated Captions</h3>
               <div className="space-y-3">
-                {result.captions.map((caption, i) => (
+                {result.captions.slice(0, 3).map((caption, i) => (
                   <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                     <p className="text-gray-800 flex-1 break-words">{caption}</p>
                     <button
@@ -234,6 +234,13 @@ export default function CaptionGenerator({
                 ))}
               </div>
             </div>
+
+            {/* Locked results overlay */}
+            <LockedResultsOverlay
+              totalCount={result.captions.length}
+              visibleCount={3}
+              toolSlug="caption-generator"
+            />
 
             {/* Short Variants */}
             <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
@@ -299,12 +306,10 @@ export default function CaptionGenerator({
               </button>
             </div>
 
-            {/* Ad Placeholder */}
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-400">
-              <p className="text-sm">Ad Space - Premium Caption Tools Coming Soon</p>
-            </div>
           </div>
         </ResultFrame>
+
+        <ResultFeedbackCard toolSlug="caption-generator" routePath="/caption-generator" />
 
         {/* Post-generation guidance + social handoff */}
         <ResultGuidance

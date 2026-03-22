@@ -15,7 +15,7 @@ import { getOverride } from '@/lib/seo-overrides';
 
 export function generateMetadata(): Metadata {
   return buildMetadata({
-    title: 'Free AI Hashtag Generator for Instagram & TikTok (30+ Tags, Instant)',
+    keyword: 'Hashtag Generator',
     description: 'Generate trending hashtags for Instagram, TikTok, YouTube, and X with AI. Get 30+ niche-specific hashtags in seconds. Free, no signup. Try now.',
     path: '/hashtag-generator',
   });

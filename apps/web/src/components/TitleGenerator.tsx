@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, SocialHandoff } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
 import {
   CONTENT_TYPES,
   NICHES,
@@ -60,6 +60,7 @@ export default function TitleGenerator() {
   };
 
   const charLimit = CONTENT_TYPES.find(c => c.value === contentType)?.maxChars || 70;
+  const FREE_LIMIT = 3;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -142,11 +143,11 @@ export default function TitleGenerator() {
       {result && (
         <>
         <div className="space-y-6">
-          {/* Titles */}
+          {/* Titles (limited to FREE_LIMIT) */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h3 className="text-lg font-semibold mb-4">Generated Titles</h3>
             <div className="space-y-3">
-              {result.titles.map((title, i) => (
+              {result.titles.slice(0, FREE_LIMIT).map((title, i) => (
                 <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                   <div className="flex-1">
                     <p className="text-gray-800">{title}</p>
@@ -164,6 +165,13 @@ export default function TitleGenerator() {
               ))}
             </div>
           </div>
+
+          {/* Locked results overlay */}
+          <LockedResultsOverlay
+            totalCount={result.titles.length}
+            visibleCount={FREE_LIMIT}
+            toolSlug="title-generator"
+          />
 
           {/* Variations */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -224,12 +232,9 @@ export default function TitleGenerator() {
             <p className="text-gray-700 font-medium">{result.suggestion}</p>
           </div>
 
-          {/* Ad Placeholder */}
-          <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-400">
-            <p className="text-sm">Ad Space - Premium Title Tools Coming Soon</p>
-          </div>
         </div>
 
+        <ResultFeedbackCard toolSlug="title-generator" routePath="/title-generator" />
         <ResultGuidance currentTool="/title-generator" onGenerateAgain={handleGenerate} />
         <SocialHandoff toolPath="/title-generator" toolLabel="titles" />
         </>

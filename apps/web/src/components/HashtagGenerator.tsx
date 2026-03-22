@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, SocialHandoff } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
 
 const PLATFORMS = [
   { value: 'instagram', label: 'Instagram', emoji: '📸' },
@@ -182,22 +182,13 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
       {result && (
         <>
         <div className="space-y-6">
-          {/* All Hashtags */}
+          {/* All Hashtags (limited to 3 visible) */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">All Hashtags ({result.hashtags.length})</h3>
-              <button
-                onClick={() => copyAllHashtags(result.hashtags)}
-                className="px-4 py-2 bg-pink-500 text-white rounded-lg text-sm font-medium hover:bg-pink-600 transition-colors"
-              >
-                {copied === 'all' ? 'Copied!' : 'Copy All'}
-              </button>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-4 mb-3">
-              <p className="text-gray-800 text-sm leading-relaxed break-words">{result.hashtags.join(' ')}</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              {result.hashtags.map((tag, i) => (
+              {result.hashtags.slice(0, 3).map((tag, i) => (
                 <button
                   key={i}
                   onClick={() => copyToClipboard(tag, `tag-${i}`)}
@@ -208,6 +199,13 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
               ))}
             </div>
           </div>
+
+          {/* Locked results overlay */}
+          <LockedResultsOverlay
+            totalCount={result.hashtags.length}
+            visibleCount={3}
+            toolSlug="hashtag-generator"
+          />
 
           {/* Trending Hashtags */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -291,6 +289,7 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
           </div>
         </div>
 
+        <ResultFeedbackCard toolSlug="hashtag-generator" routePath="/hashtag-generator" />
         <ResultGuidance currentTool="/hashtag-generator" onGenerateAgain={handleGenerate} />
         <SocialHandoff toolPath="/hashtag-generator" toolLabel="hashtags" />
         </>

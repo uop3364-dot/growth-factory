@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, SocialHandoff } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
 import {
   BIO_PLATFORMS,
   BIO_NICHES,
@@ -161,11 +161,11 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
       {result && (
         <>
         <div className="space-y-6">
-          {/* Main Bios */}
+          {/* Main Bios (limited to 3) */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h3 className="text-lg font-semibold mb-4">Generated Bios</h3>
             <div className="space-y-3">
-              {result.bios.map((bio, i) => (
+              {result.bios.slice(0, 3).map((bio, i) => (
                 <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                   <div className="flex-1">
                     <p className="text-gray-800">{bio}</p>
@@ -183,6 +183,13 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
               ))}
             </div>
           </div>
+
+          {/* Locked results overlay */}
+          <LockedResultsOverlay
+            totalCount={result.bios.length}
+            visibleCount={3}
+            toolSlug="bio-generator"
+          />
 
           {/* Short Bios */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -228,12 +235,9 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
             <p className="text-gray-700 font-medium">{result.callToAction}</p>
           </div>
 
-          {/* Ad Placeholder */}
-          <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-400">
-            <p className="text-sm">Ad Space - Premium Bio Tools Coming Soon</p>
-          </div>
         </div>
 
+        <ResultFeedbackCard toolSlug="bio-generator" routePath="/bio-generator" />
         <ResultGuidance currentTool="/bio-generator" onGenerateAgain={handleGenerate} />
         <SocialHandoff toolPath="/bio-generator" toolLabel="bios" />
         </>

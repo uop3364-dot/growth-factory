@@ -7,6 +7,7 @@ import HeroCTA from '@/components/HeroCTA';
 import { ToolPageLayout } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import { buildToolSchema, buildBreadcrumbSchema } from '@/lib/jsonld';
+import { buildMetadata } from '@/lib/metadata';
 import Link from 'next/link';
 
 const PLATFORMS = ['instagram', 'tiktok', 'youtube', 'x', 'linkedin'] as const;
@@ -225,15 +226,12 @@ export async function generateMetadata({ params }: { params: Promise<{ platform:
   if (!PLATFORMS.includes(platform as Platform) || !NICHES.includes(niche as Niche)) return {};
   const pInfo = PLATFORM_NAMES[platform as Platform];
   const nInfo = NICHE_INFO[niche as Niche];
-  const title = `Best ${pInfo.name} ${nInfo.name} Hashtags | Free AI Generator | CreatorAITools`;
   const description = `Generate the best ${nInfo.name.toLowerCase()} hashtags for ${pInfo.name}. Our free AI tool creates trending, niche, and high-performing hashtag sets to boost your ${nInfo.name.toLowerCase()} content.`;
-  return {
-    title,
+  return buildMetadata({
+    keyword: `${pInfo.name} ${nInfo.name} Hashtag Generator`,
     description,
-    openGraph: { title, description, url: `/hashtag-generator/${platform}/${niche}` },
-    twitter: { card: 'summary_large_image', title, description },
-    alternates: { canonical: `/hashtag-generator/${platform}/${niche}` },
-  };
+    path: `/hashtag-generator/${platform}/${niche}`,
+  });
 }
 
 export default async function NicheHashtagPage({ params }: { params: Promise<{ platform: string; niche: string }> }) {

@@ -16,4 +16,6 @@ export { default as SocialHandoff } from './SocialHandoff';
 export { default as DinoHero } from './DinoHero';
 export { default as DinoSection } from './DinoSection';
 export { default as PageWrapper } from './PageWrapper';
+export { default as ResultFeedbackCard } from './ResultFeedbackCard';
+export { default as LockedResultsOverlay } from './LockedResultsOverlay';
 export type { MascotSize } from './MascotSvg';
