@@ -1,10 +1,12 @@
 /**
- * Affiliate links — replace empty strings with actual affiliate URLs after approval.
- * Until approved, the site should use fallbackLinks (official homepage URLs).
+ * Affiliate links — active referral URLs for approved partners.
+ * This file is a secondary reference; the runtime source of truth is
+ * apps/web/src/lib/affiliate-links.ts (getAffiliateLink).
  */
 
 export const affiliateLinks: Record<string, string> = {
-  vidiq: "",
+  vidiq: "https://vidiq.com/molinkai-ai",
+  metricool: "https://f.mtr.cool/Molink",
   canva: "",
   opusclip: "",
   pictory: "",
@@ -19,11 +21,12 @@ export const fallbackLinks: Record<string, string> = {
   pictory: "https://pictory.ai",
   descript: "https://www.descript.com",
   tubebuddy: "https://www.tubebuddy.com",
+  metricool: "https://metricool.com",
 };
 
 /**
  * Returns the affiliate link if available, otherwise the fallback (official site).
  */
-export function getLink(slug: keyof typeof affiliateLinks): string {
-  return affiliateLinks[slug] || fallbackLinks[slug];
+export function getLink(slug: string): string {
+  return affiliateLinks[slug] || fallbackLinks[slug] || '#';
 }

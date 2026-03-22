@@ -20,7 +20,7 @@ describe('affiliate-links config', () => {
   });
 
   it('returns a valid URL for metricool', () => {
-    expect(getAffiliateLink('metricool')).toMatch(/^https:\/\/.*metricool/);
+    expect(getAffiliateLink('metricool')).toMatch(/^https:\/\/.*(metricool|mtr\.cool)/);
   });
 
   it('returns "#" for unknown partners', () => {
@@ -49,7 +49,7 @@ describe('AffiliateCTA component', () => {
     render(<AffiliateCTA />);
     const link = screen.getByText('Track with Metricool');
     expect(link).toBeDefined();
-    expect(link.getAttribute('href')).toContain('metricool.com');
+    expect(link.getAttribute('href')).toMatch(/metricool\.com|mtr\.cool/);
   });
 
   it('all links have rel="sponsored"', () => {
@@ -133,13 +133,13 @@ describe('HomeAffiliate component', () => {
   it('vidIQ link points to correct affiliate URL', () => {
     render(<HomeAffiliate />);
     const link = screen.getByText(/Try vidIQ Free/);
-    expect(link.getAttribute('href')).toContain('vidiq.com');
+    expect(link.getAttribute('href')).toContain('vidiq.com/molinkai-ai');
   });
 
   it('Metricool link points to correct affiliate URL', () => {
     render(<HomeAffiliate />);
     const link = screen.getByText(/Track with Metricool/);
-    expect(link.getAttribute('href')).toContain('metricool.com');
+    expect(link.getAttribute('href')).toMatch(/metricool\.com|mtr\.cool/);
   });
 });
 

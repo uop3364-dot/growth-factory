@@ -8,8 +8,8 @@
     "official_site": "https://vidiq.com",
     "affiliate_page": "https://vidiq.com/affiliates",
     "application_required": true,
-    "application_status": "not_applied",
-    "affiliate_url": "",
+    "application_status": "active",
+    "affiliate_url": "https://vidiq.com/molinkai-ai",
     "fallback_url": "https://vidiq.com",
     "approval_notes": "Impact Radius platform. Requires active site or channel with YouTube/creator content.",
     "payment_notes": "Net-30 via PayPal or direct deposit. 25% recurring commission.",
@@ -250,5 +250,44 @@
     "payout_method": "",
     "payout_email": "",
     "notes": ""
+  },
+  {
+    "tool_name": "Metricool",
+    "slug": "metricool",
+    "category": "social-analytics",
+    "priority": 2,
+    "backup": false,
+    "official_site": "https://metricool.com",
+    "affiliate_page": "https://metricool.com/affiliates/",
+    "application_required": true,
+    "application_status": "active",
+    "affiliate_url": "https://f.mtr.cool/Molink",
+    "fallback_url": "https://metricool.com",
+    "approval_notes": "Referral program via Metricool dashboard.",
+    "payment_notes": "Referral credits / commission via Metricool partner program.",
+    "landing_pages": [
+      "/caption-generator",
+      "/hashtag-generator",
+      "/bio-generator"
+    ],
+    "cta_texts": [
+      "Track with Metricool",
+      "Analyze your growth with Metricool",
+      "Schedule & measure with Metricool"
+    ],
+    "comparison_pages": [],
+    "social_angles": [
+      "Problem: Posting without knowing what works? Metricool shows you the data",
+      "Comparison: Metricool vs Later — which scheduler gives better analytics?",
+      "Speed: Schedule a full week of content in 10 minutes",
+      "Beginner: New to analytics? Metricool makes it visual and simple",
+      "ROI: Stop guessing — know exactly which posts drive engagement"
+    ],
+    "applied_at": "2026-03-22",
+    "approved_at": "2026-03-22",
+    "affiliate_dashboard_url": "",
+    "payout_method": "",
+    "payout_email": "",
+    "notes": "Referral link format: https://f.mtr.cool/Molink"
   }
 ]

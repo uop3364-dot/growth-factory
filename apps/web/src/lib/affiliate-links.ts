@@ -1,14 +1,16 @@
 /**
- * Affiliate link configuration.
+ * Affiliate link configuration — SINGLE SOURCE OF TRUTH for all CTA components.
  *
- * Affiliate URLs are read from NEXT_PUBLIC_AFFILIATE_* env vars when available.
- * Falls back to official homepage URLs (no affiliate tracking).
+ * Priority: NEXT_PUBLIC_AFFILIATE_* env var > affiliateLinks > fallbackLinks
  *
- * To set affiliate links, add to .env.local:
- *   NEXT_PUBLIC_AFFILIATE_TUBEBUDDY=https://www.tubebuddy.com/...
- *   NEXT_PUBLIC_AFFILIATE_VIDIQ=https://vidiq.com/...
- *   NEXT_PUBLIC_AFFILIATE_CANVA=https://www.canva.com/...
+ * affiliateLinks: real affiliate/referral URLs (earn commission)
+ * fallbackLinks:  official homepage URLs (no commission, last resort)
  */
+
+const affiliateLinks: Record<string, string> = {
+  vidiq: 'https://vidiq.com/molinkai-ai',
+  metricool: 'https://f.mtr.cool/Molink',
+};
 
 const fallbackLinks: Record<string, string> = {
   tubebuddy: 'https://www.tubebuddy.com',
@@ -21,11 +23,12 @@ const fallbackLinks: Record<string, string> = {
 };
 
 /**
- * Returns the affiliate link for a partner. Reads from env first, falls back to official URL.
+ * Returns the affiliate link for a partner.
+ * Reads from env first, then affiliateLinks, then fallbackLinks.
  */
 export function getAffiliateLink(slug: string): string {
   const envKey = `NEXT_PUBLIC_AFFILIATE_${slug.toUpperCase()}`;
   const envValue = typeof process !== 'undefined' ? process.env?.[envKey] : undefined;
   if (envValue) return envValue;
-  return fallbackLinks[slug] || '#';
+  return affiliateLinks[slug] || fallbackLinks[slug] || '#';
 }
