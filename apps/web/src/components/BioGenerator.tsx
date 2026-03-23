@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton, LeadMagnetCard, InlineSubscribe } from '@/components/brand';
 import {
   BIO_PLATFORMS,
   BIO_NICHES,
@@ -241,11 +241,15 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
           {/* Contextual CTA */}
           <ContextualCTA toolSlug="bio-generator" />
 
+          {/* Inline subscribe */}
+          <InlineSubscribe toolSlug="bio-generator" />
+
         </div>
 
         <ResultFeedbackCard toolSlug="bio-generator" routePath="/bio-generator" />
         <ResultGuidance currentTool="/bio-generator" onGenerateAgain={handleGenerate} />
         <SocialHandoff toolPath="/bio-generator" toolLabel="bios" />
+        <LeadMagnetCard toolSlug="bio-generator" />
         </>
       )}
     </div>

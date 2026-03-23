@@ -20,5 +20,8 @@ export { default as ResultFeedbackCard } from './ResultFeedbackCard';
 export { default as LockedResultsOverlay } from './LockedResultsOverlay';
 export { default as ContextualCTA } from './ContextualCTA';
 export { default as ShareToolButton } from './ShareToolButton';
+export { default as LeadMagnetCard } from './LeadMagnetCard';
+export { default as InlineSubscribe } from './InlineSubscribe';
 export type { ToolType } from './ContextualCTA';
+export type { LeadMagnetTool } from './LeadMagnetCard';
 export type { MascotSize } from './MascotSvg';

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton, LeadMagnetCard, InlineSubscribe } from '@/components/brand';
 import {
   CONTENT_TYPES,
   NICHES,
@@ -238,11 +238,15 @@ export default function TitleGenerator() {
           {/* Contextual CTA */}
           <ContextualCTA toolSlug="title-generator" />
 
+          {/* Inline subscribe */}
+          <InlineSubscribe toolSlug="title-generator" />
+
         </div>
 
         <ResultFeedbackCard toolSlug="title-generator" routePath="/title-generator" />
         <ResultGuidance currentTool="/title-generator" onGenerateAgain={handleGenerate} />
         <SocialHandoff toolPath="/title-generator" toolLabel="titles" />
+        <LeadMagnetCard toolSlug="title-generator" />
         </>
       )}
     </div>

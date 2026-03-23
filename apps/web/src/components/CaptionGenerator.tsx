@@ -5,7 +5,7 @@ import { trackEvent } from '@/lib/analytics';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from '@/lib/seo-data';
 import type { Platform, Topic, Tone } from '@/lib/seo-data';
 import { SUPPORTED_LANGUAGES } from '@/lib/caption-generator';
-import { EmptyStateMascot, ResultFrame, ResultFeedbackCard, ResultGuidance, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
+import { EmptyStateMascot, ResultFrame, ResultFeedbackCard, ResultGuidance, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton, LeadMagnetCard, InlineSubscribe } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import FeedbackButton from './FeedbackButton';
 import FeedbackModal from './FeedbackModal';
@@ -285,6 +285,9 @@ export default function CaptionGenerator({
             {/* Contextual CTA */}
             <ContextualCTA toolSlug="caption-generator" />
 
+            {/* Inline subscribe */}
+            <InlineSubscribe toolSlug="caption-generator" />
+
             {/* Thumbs + feedback link */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 py-3">
               <div className="flex items-center gap-3">
@@ -326,6 +329,7 @@ export default function CaptionGenerator({
           toolPath="/caption-generator"
           toolLabel="captions"
         />
+        <LeadMagnetCard toolSlug="caption-generator" />
         </>
       )}
 

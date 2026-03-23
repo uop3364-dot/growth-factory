@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton, LeadMagnetCard, InlineSubscribe } from '@/components/brand';
 
 const PLATFORMS = [
   { value: 'instagram', label: 'Instagram', emoji: '📸' },
@@ -291,11 +291,15 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
 
           {/* Contextual CTA */}
           <ContextualCTA toolSlug="hashtag-generator" />
+
+          {/* Inline subscribe */}
+          <InlineSubscribe toolSlug="hashtag-generator" />
         </div>
 
         <ResultFeedbackCard toolSlug="hashtag-generator" routePath="/hashtag-generator" />
         <ResultGuidance currentTool="/hashtag-generator" onGenerateAgain={handleGenerate} />
         <SocialHandoff toolPath="/hashtag-generator" toolLabel="hashtags" />
+        <LeadMagnetCard toolSlug="hashtag-generator" />
         </>
       )}
     </div>
