@@ -18,4 +18,7 @@ export { default as DinoSection } from './DinoSection';
 export { default as PageWrapper } from './PageWrapper';
 export { default as ResultFeedbackCard } from './ResultFeedbackCard';
 export { default as LockedResultsOverlay } from './LockedResultsOverlay';
+export { default as ContextualCTA } from './ContextualCTA';
+export { default as ShareToolButton } from './ShareToolButton';
+export type { ToolType } from './ContextualCTA';
 export type { MascotSize } from './MascotSvg';

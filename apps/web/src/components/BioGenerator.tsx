@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
 import {
   BIO_PLATFORMS,
   BIO_NICHES,
@@ -163,7 +163,10 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
         <div className="space-y-6">
           {/* Main Bios (limited to 3) */}
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Generated Bios</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Generated Bios</h3>
+              <ShareToolButton toolSlug="bio-generator" />
+            </div>
             <div className="space-y-3">
               {result.bios.slice(0, 3).map((bio, i) => (
                 <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
@@ -234,6 +237,9 @@ export default function BioGenerator({ defaultPlatform, defaultNiche }: BioGener
           <div className="bg-gradient-to-r from-green-50 to-teal-50 rounded-xl p-6">
             <p className="text-gray-700 font-medium">{result.callToAction}</p>
           </div>
+
+          {/* Contextual CTA */}
+          <ContextualCTA toolSlug="bio-generator" />
 
         </div>
 

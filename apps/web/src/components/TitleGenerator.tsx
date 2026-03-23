@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
 import {
   CONTENT_TYPES,
   NICHES,
@@ -145,7 +145,10 @@ export default function TitleGenerator() {
         <div className="space-y-6">
           {/* Titles (limited to FREE_LIMIT) */}
           <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Generated Titles</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Generated Titles</h3>
+              <ShareToolButton toolSlug="title-generator" />
+            </div>
             <div className="space-y-3">
               {result.titles.slice(0, FREE_LIMIT).map((title, i) => (
                 <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
@@ -231,6 +234,9 @@ export default function TitleGenerator() {
           <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6">
             <p className="text-gray-700 font-medium">{result.suggestion}</p>
           </div>
+
+          {/* Contextual CTA */}
+          <ContextualCTA toolSlug="title-generator" />
 
         </div>
 

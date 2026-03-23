@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
+import { ResultGuidance, ResultFeedbackCard, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
 
 const PLATFORMS = [
   { value: 'instagram', label: 'Instagram', emoji: '📸' },
@@ -186,6 +186,7 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">All Hashtags ({result.hashtags.length})</h3>
+              <ShareToolButton toolSlug="hashtag-generator" />
             </div>
             <div className="flex flex-wrap gap-2">
               {result.hashtags.slice(0, 3).map((tag, i) => (
@@ -287,6 +288,9 @@ export default function HashtagGenerator({ defaultPlatform, defaultNiche }: Hash
             <h3 className="text-sm font-semibold text-pink-800 mb-2">Pro Tip</h3>
             <p className="text-gray-700">{result.tip}</p>
           </div>
+
+          {/* Contextual CTA */}
+          <ContextualCTA toolSlug="hashtag-generator" />
         </div>
 
         <ResultFeedbackCard toolSlug="hashtag-generator" routePath="/hashtag-generator" />

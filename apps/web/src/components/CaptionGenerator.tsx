@@ -5,7 +5,7 @@ import { trackEvent } from '@/lib/analytics';
 import { PLATFORMS, TOPICS, TONES, PLATFORM_INFO, TOPIC_INFO, TONE_INFO } from '@/lib/seo-data';
 import type { Platform, Topic, Tone } from '@/lib/seo-data';
 import { SUPPORTED_LANGUAGES } from '@/lib/caption-generator';
-import { EmptyStateMascot, ResultFrame, ResultFeedbackCard, ResultGuidance, SocialHandoff, LockedResultsOverlay } from '@/components/brand';
+import { EmptyStateMascot, ResultFrame, ResultFeedbackCard, ResultGuidance, SocialHandoff, LockedResultsOverlay, ContextualCTA, ShareToolButton } from '@/components/brand';
 import { brandCopy } from '@/lib/brandCopy';
 import FeedbackButton from './FeedbackButton';
 import FeedbackModal from './FeedbackModal';
@@ -219,7 +219,10 @@ export default function CaptionGenerator({
           <div className="space-y-6">
             {/* Captions (limited to 3) */}
             <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-              <h3 className="text-lg font-semibold mb-4">Generated Captions</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Generated Captions</h3>
+                <ShareToolButton toolSlug="caption-generator" />
+              </div>
               <div className="space-y-3">
                 {result.captions.slice(0, 3).map((caption, i) => (
                   <div key={i} className="flex items-start justify-between gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
@@ -278,6 +281,9 @@ export default function CaptionGenerator({
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 sm:p-6">
               <p className="text-gray-700 font-medium">{result.ctaSuggestion}</p>
             </div>
+
+            {/* Contextual CTA */}
+            <ContextualCTA toolSlug="caption-generator" />
 
             {/* Thumbs + feedback link */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 py-3">
